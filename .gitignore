@@ -1,0 +1,5 @@
+# OpenCode internal state
+.omo/
+
+# Codegraph index
+.codegraph/
