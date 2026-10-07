@@ -1,51 +1,31 @@
-# پایگاه دانش هوش مصنوعی در آموزش
-## AI in Education Knowledge Base
-
-**هدف**: فعال‌سازی و توانمندسازی افراد موسسه آموزشی برای استفاده مؤثر از ابزارهای هوش مصنوعی
-
-**اصل اساسی**: خروجی‌محوری بجای تمام کردن کتاب‌ها
-
----
-
-## طرح توجیهی
-
-### وضعیت فعلی
-امروزه بیشتر استفاده از هوش مصنوعی محدود به **سوال و جواب ساده** است. کاربران فقط می‌پرسند و جواب می‌گیرند، بدون اینکه بدانند چطور می‌توان از هوش مصنوعی به عنوان یک **دستیار هوشمند** واقعی استفاده کرد. این محدودیت باعث می‌شود پتانسیل واقعی هوش مصنوعی هدر برود.
-
-### چارچوب پیشنهادی
-برای تبدیل هوش مصنوعی از یک ابزار ساده به یک **مغز کمکی**، سه بخش کلیدی لازم است:
-
-#### ۱. دانش (Knowledge)
-شامل تعریفات، اهداف، ماموریت، چشم‌انداز و رویکردهای استراتژیک. این بخش به هوش مصنوعی کمک می‌کند **زمینه** کار را بفهمد و پاسخ‌های مرتبط‌تری ارائه دهد.
-
-#### ۲. جریان کار (Workflow)
-شامل درختی از مهارت‌ها، نحوه راستی‌آزمایی لوپ برای حصول به نتیجه و به طور خلاصه **Harnessing**. این بخش به هوش مصنوعی کمک می‌کند مراحل کار را به ترتیب و با کیفیت انجام دهد.
-
-#### ۳. ابزارها (Tools)
-شامل ابزارهای نوشتن، خواندن، جستجو در وب و اتصال به سیستم‌های دیگر. این بخش به هوش مصنوعی امکان **عمل کردن** در دنیای واقعی را می‌دهد.
-
-### کاربردهای دستیار هوشمند
-با داشتن این سه بخش، دستیار هوشمند می‌تواند در طیف وسیعی از نیازمندی‌ها کمک کند:
-
-| حوزه | نمونه کاربرد |
-|------|-------------|
-| **مدیریت** | تحلیل داده‌ها، تهیه گزارش، برنامه‌ریزی استراتژیک |
-| **پژوهشی** | جستجوی اطلاعات، خلاصه‌نویسی مقالات، تحلیل محتوا |
-| **تولید محتوا** | نوشتن متن، ترجمه، ویرایش، طراحی ارائه |
-
-### نتیجه
-به این ترتیب هوش مصنوعی به عنوان یک **مغز کمکی** به کار گرفته می‌شود که نه جایگزین انسان است، نه فقط یک ابزار ساده. بلکه **شریک فکری** شماست که در تصمیم‌گیری، اجرا و بهبود مستمر کمک می‌کند.
+# پایگاه دانش دستیار هوشمند آموزش
+## AI Training Assistant Knowledge Base
 
 ---
 
 ## ساختار درختی
 
-### ۱. [آموزش هوش مصنوعی](ai-literacy/)
+### ۱. [پداگوژی](pedagogy/)
+- [CLIL - یادگیری یکپارچه محتوا و زبان](pedagogy/clil/)
+  - [چارچوب ۴Cs](pedagogy/clil/framework-4cs.md)
+  - [برنامه‌ریزی درسی](pedagogy/clil/lesson-planning.md)
+  - [داربست‌زنی](pedagogy/clil/scaffolding.md)
+  - [ارزیابی](pedagogy/clil/assessment.md)
+  - [فعالیت‌ها](pedagogy/clil/activities.md)
+  - [بلوم و CLIL](pedagogy/clil/bloom-integration.md)
+  - [راهنمای جامع](pedagogy/clil/comprehensive-guide.md)
+- [هوش مصنوعی در تربیت](pedagogy/ai-pedagogy.md)
+
+### ۲. [اصول ارائه](presentation/)
+- [اصول ارائه مطالب و مثال‌های کارشده](presentation/README.md)
+- [ابزارهای تولید پاورپوینت](presentation/pptx-tools.md)
+
+### ۳. [آموزش هوش مصنوعی](ai-literacy/)
 - [چارچوب‌های سواد هوش مصنوعی](ai-literacy/frameworks.md)
 - [سطوح یادگیری نقش‌محور](ai-literacy/role-based-levels.md)
 - [پیش‌نیازهای سازمانی](ai-literacy/organizational-readiness.md)
 
-### ۲. [استفاده از هوش مصنوعی در آموزش](education/)
+### ۴. [استفاده از هوش مصنوعی در آموزش](education/)
 - [تدریس و یادگیری هوشمند](education/smart-teaching.md)
 - [سیستم‌های تطبیقی](education/adaptive-systems.md)
 - [ارزیابی و نمره‌دهی خودکار](education/auto-grading.md)
@@ -53,45 +33,24 @@
 - [مشاوران هوش مصنوعی](education/ai-tutoring.md)
 - [تحلیل مشارکت دانش‌آموزان](education/student-analytics.md)
 
-### ۳. [هوش مصنوعی در مالی](finance/)
-- [تحلیل و پیش‌بینی مالی](finance/analysis-forecasting.md)
-- [مدیریت ریسک](finance/risk-management.md)
-- [تصمیم‌گیری مالی](finance/decision-making.md)
-
-### ۴. [هوش مصنوعی در مدیریت](management/)
-- [تصمیم‌گیری مدیریتی](management/decision-intelligence.md)
-- [تحلیل نیروی کار](management/workforce-analytics.md)
-- [ برنامه‌ریزی استراتژیک](management/strategic-planning.md)
-
-### ۵. [هوش مصنوعی در مدیریت نیروی انسانی](hr/)
-- [پشتیبانی کارکنان](hr/employee-support.md)
-- [اتوماسیون فرآیندها](hr/process-automation.md)
-- [تحلیل عملکرد](hr/performance-analytics.md)
-- [جذب و استخدام](hr/talent-acquisition.md)
-
-### ۶. [آموزش و توسعه مهارت‌ها](training/)
+### ۵. [آموزش و توسعه مهارت‌ها](training/)
 - [روش‌های آموزش عملی](training/hands-on-methods.md)
 - [آموزش مهندسی پرامپت](training/prompt-engineering.md)
 - [اتوماسیون جریان کار](training/workflow-automation.md)
 - [مسیرهای توسعه مهارت](training/skill-pathways.md)
 
-### ۷. [ابزارها و بسترهای هوش مصنوعی](tools/)
+### ۶. [ابزارها و بسترهای هوش مصنوعی](tools/)
 - [ابزارهای بدون کد](tools/no-code.md)
 - [پلتفرم‌های یادگیری](tools/learning-platforms.md)
 - [ابزارهای ارزیابی](tools/assessment-tools.md)
 
-### ۸. [اخلاق و حکمرانی](ethics/)
-- [چارچوب‌های اخلاقی](ethics/frameworks.md)
-- [رعایت مقررات](ethics/compliance.md)
-- [حریم خصوصی](ethics/privacy.md)
+---
 
-### ۹. [هوش مصنوعی در تربیت](pedagogy/)
-- [هوش مصنوعی در تربیت](pedagogy/ai-pedagogy.md)
+## مهارت‌های دستیار
 
-### ۱۰. [پیاده‌سازی و تغییر سازمانی](implementation/)
-- [مدیریت تغییر](implementation/change-management.md)
-- [اندازه‌گیری موفقیت](implementation/measurement.md)
-- [مطالعات موردی](implementation/case-studies.md)
+### [.agents/skills/](../.agents/skills/)
+- [تولید محتوای کارگاه](../.agents/skills/workshop-generator/SKILL.md)
+- [تولید اسلاید](../.agents/skills/slide-generator/SKILL.md)
 
 ---
 
@@ -108,3 +67,7 @@
 
 ### ۴. نظارت انسانی
 > هوش مصنوعی ابزار است، نه جایگزین قضاوت انسانی
+
+---
+
+**آخرین بروزرسانی**: ۱۴۰۵/۰۷/۰۹

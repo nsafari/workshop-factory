@@ -1,110 +1,179 @@
-# پایگاه دانش هوش مصنوعی در آموزش
-## AI in Education Knowledge Base
+# دستیار هوشمند آموزش
+## AI Training Assistant
 
-**هدف**: فعال‌سازی و توانمندسازی افراد موسسه آموزشی برای استفاده مؤثر از ابزارهای هوش مصنوعی
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**اصل اساسی**: خروجی‌محوری بجای تمام کردن کتاب‌ها
+**Goal**: An intelligent assistant that generates educational content and workshop materials.
 
----
-
-## طرح توجیهی
-
-### وضعیت فعلی
-امروزه بیشتر استفاده از هوش مصنوعی محدود به **سوال و جواب ساده** است. کاربران فقط می‌پرسند و جواب می‌گیرند، بدون اینکه بدانند چطور می‌توان از هوش مصنوعی به عنوان یک **دستیار هوشمند** واقعی استفاده کرد. این محدودیت باعث می‌شود پتانسیل واقعی هوش مصنوعی هدر برود.
-
-### چارچوب پیشنهادی
-برای تبدیل هوش مصنوعی از یک ابزار ساده به یک **مغز کمکی**، سه بخش کلیدی لازم است:
-
-#### ۱. دانش (Knowledge)
-شامل تعریفات، اهداف، ماموریت، چشم‌انداز و رویکردهای استراتژیک. این بخش به هوش مصنوعی کمک می‌کند **زمینه** کار را بفهمد و پاسخ‌های مرتبط‌تری ارائه دهد.
-
-#### ۲. جریان کار (Workflow)
-شامل درختی از مهارت‌ها، نحوه راستی‌آزمایی لوپ برای حصول به نتیجه و به طور خلاصه **Harnessing**. این بخش به هوش مصنوعی کمک می‌کند مراحل کار را به ترتیب و با کیفیت انجام دهد.
-
-#### ۳. ابزارها (Tools)
-شامل ابزارهای نوشتن، خواندن، جستجو در وب و اتصال به سیستم‌های دیگر. این بخش به هوش مصنوعی امکان **عمل کردن** در دنیای واقعی را می‌دهد.
-
-### کاربردهای دستیار هوشمند
-با داشتن این سه بخش، دستیار هوشمند می‌تواند در طیف وسیعی از نیازمندی‌ها کمک کند:
-
-| حوزه | نمونه کاربرد |
-|------|-------------|
-| **مدیریت** | تحلیل داده‌ها، تهیه گزارش، برنامه‌ریزی استراتژیک |
-| **پژوهشی** | جستجوی اطلاعات، خلاصه‌نویسی مقالات، تحلیل محتوا |
-| **تولید محتوا** | نوشتن متن، ترجمه، ویرایش، طراحی ارائه |
-
-### نتیجه
-به این ترتیب هوش مصنوعی به عنوان یک **مغز کمکی** به کار گرفته می‌شود که نه جایگزین انسان است، نه فقط یک ابزار ساده. بلکه **شریک فکری** شماست که در تصمیم‌گیری، اجرا و بهبود مستمر کمک می‌کند.
+**Core principle**: Self-referential — this repository is itself an example of the assistant's output.
 
 ---
 
-## ساختار درختی
+## Overview / نمای کلی
 
-### ۱. [آموزش هوش مصنوعی](ai-literacy/)
-- [چارچوب‌های سواد هوش مصنوعی](ai-literacy/frameworks.md)
-- [سطوح یادگیری نقش‌محور](ai-literacy/role-based-levels.md)
-- [پیش‌نیازهای سازمانی](ai-literacy/organizational-readiness.md)
+This project combines:
 
-### ۲. [استفاده از هوش مصنوعی در آموزش](education/)
-- [تدریس و یادگیری هوشمند](education/smart-teaching.md)
-- [سیستم‌های تطبیقی](education/adaptive-systems.md)
-- [ارزیابی و نمره‌دهی خودکار](education/auto-grading.md)
-- [طراحی برنامه درسی](education/curriculum-design.md)
-- [مشاوران هوش مصنوعی](education/ai-tutoring.md)
-- [تحلیل مشارکت دانش‌آموزان](education/student-analytics.md)
+1. **Knowledge base** (`knowledge/`) — pedagogy, presentation skills, AI literacy, and tools for AI-enabled training
+2. **Workshops** (`workshops/`) — ready-to-run workshop materials with generated PowerPoint decks
+3. **Assistant skills** (`.agents/skills/`) — reusable skills for generating workshop content and RTL slides
 
-### ۳. [هوش مصنوعی در مالی](finance/)
-- [تحلیل و پیش‌بینی مالی](finance/analysis-forecasting.md)
-- [مدیریت ریسک](finance/risk-management.md)
-- [تصمیم‌گیری مالی](finance/decision-making.md)
-
-### ۴. [هوش مصنوعی در مدیریت](management/)
-- [تصمیم‌گیری مدیریتی](management/decision-intelligence.md)
-- [تحلیل نیروی کار](management/workforce-analytics.md)
-- [ برنامه‌ریزی استراتژیک](management/strategic-planning.md)
-
-### ۵. [هوش مصنوعی در مدیریت نیروی انسانی](hr/)
-- [پشتیبانی کارکنان](hr/employee-support.md)
-- [اتوماسیون فرآیندها](hr/process-automation.md)
-- [تحلیل عملکرد](hr/performance-analytics.md)
-- [جذب و استخدام](hr/talent-acquisition.md)
-
-### ۶. [آموزش و توسعه مهارت‌ها](training/)
-- [روش‌های آموزش عملی](training/hands-on-methods.md)
-- [آموزش مهندسی پرامپت](training/prompt-engineering.md)
-- [اتوماسیون جریان کار](training/workflow-automation.md)
-- [مسیرهای توسعه مهارت](training/skill-pathways.md)
-
-### ۷. [ابزارها و بسترهای هوش مصنوعی](tools/)
-- [ابزارهای بدون کد](tools/no-code.md)
-- [پلتفرم‌های یادگیری](tools/learning-platforms.md)
-- [ابزارهای ارزیابی](tools/assessment-tools.md)
-
-### ۸. [اخلاق و حکمرانی](ethics/)
-- [چارچوب‌های اخلاقی](ethics/frameworks.md)
-- [رعایت مقررات](ethics/compliance.md)
-- [حریم خصوصی](ethics/privacy.md)
-
-### ۹. [هوش مصنوعی در تربیت](pedagogy/)
-- [هوش مصنوعی در تربیت](pedagogy/ai-pedagogy.md)
-
-### ۱۰. [پیاده‌سازی و تغییر سازمانی](implementation/)
-- [مدیریت تغییر](implementation/change-management.md)
-- [اندازه‌گیری موفقیت](implementation/measurement.md)
-- [مطالعات موردی](implementation/case-studies.md)
+Content is primarily in Persian (RTL), with English structure labels for broader accessibility.
 
 ---
 
-## اصول کلیدی
+## Project Structure / ساختار پروژه
 
-### ۱. فعال‌سازی بجای آموزش صرف
-> هدف این نیست افراد فقط درباره هوش مصنوعی بدانند، بلکه بتوانند از آن استفاده کنند
+```
+ai-training/
+├── knowledge/                    # Knowledge base
+│   ├── pedagogy/                 # Pedagogy
+│   │   ├── clil/                 # CLIL (Content and Language Integrated Learning)
+│   │   └── ai-pedagogy.md        # AI in education
+│   ├── presentation/             # Presentation best practices
+│   │   ├── README.md             # Presentation principles
+│   │   └── pptx-tools.md         # PowerPoint generation tools
+│   ├── ai-literacy/              # AI literacy frameworks
+│   ├── education/                # AI in teaching & learning
+│   ├── training/                 # Skill development methods
+│   └── tools/                    # AI platforms & tooling
+│
+├── workshops/                    # Workshop materials
+│   ├── package.json              # Slide-generation dependencies
+│   ├── generate-slides.mjs       # PptxGenJS slide builder (RTL/Persian)
+│   ├── workshop-1-ai-concepts.md # Workshop 1
+│   ├── workshop-2-agents.md      # Workshop 2
+│   ├── workshop-3-opencode.md    # Workshop 3
+│   └── slide-assets/             # Images used in slides
+│
+└── .agents/skills/               # Assistant skills
+    ├── workshop-generator/       # Workshop content generation
+    └── slide-generator/          # PowerPoint slide generation
+```
 
-### ۲. خروجی‌محوری
-> مبنای ارزیابی، توانایی تولید خروجی با کمک هوش مصنوعی است، نه تمام کردن محتوای آموزشی
+---
 
-### ۳. یادگیری مبتنی بر پروژه
-> افراد باید روی پروژه‌های واقعی خودشان با هوش مصنوعی کار کنند
+## Knowledge Base / پایگاه دانش
 
-### ۴. نظارت انسانی
-> هوش مصنوعی ابزار است، نه جایگزین قضاوت انسانی
+### 1. CLIL Pedagogy
+Content and Language Integrated Learning:
+- **4Cs**: Content, Communication, Cognition, Culture
+- **Lesson planning**: Dual objectives, three-stage structure
+- **Scaffolding**: Language, visual, and content support
+- **Assessment**: Formative, summative, rubrics
+- **Activities**: Input, processing, output
+- **Bloom**: Cognitive levels, learning verbs
+
+### 2. Presentation Principles
+Instructional design practices:
+- **SMART objectives**: Specific, measurable, achievable
+- **Worked examples**: Step-by-step with think-aloud
+- **Slides**: 10-20-30 rule, clear structure
+- **Interaction**: Active participation, group discussion
+- **Assessment**: Diagnostic, formative, summative
+
+### 3. PPTX Tooling
+PowerPoint generation:
+- **PptxGenJS**: JavaScript library (primary tool)
+- **python-pptx**: Python library
+- **Slidev**: Web-based presentations
+
+See [`knowledge/README.md`](knowledge/README.md) for the full tree.
+
+---
+
+## Assistant Skills / مهارت‌های دستیار
+
+### 1. `workshop-generator`
+Generates workshop content:
+- Collects audience and topic requirements
+- Designs workshop structure
+- Writes learning objectives
+- Produces worked examples
+- Designs activities and assessments
+
+### 2. `slide-generator`
+Generates PowerPoint slides:
+- Designs slide structure
+- Emits PptxGenJS code
+- Supports Persian (RTL)
+- Ships reusable workshop patterns
+
+---
+
+## Getting Started / نحوه استفاده
+
+### Generate a new workshop
+Ask the assistant:
+> «یک کارگاه آموزشی درباره [موضوع] برای [مخاطب] طراحی کن»
+
+The assistant will:
+1. Ask for clarifying details
+2. Design the workshop structure
+3. Generate content for each section
+4. Build the slides
+
+### Generate slides
+Ask the assistant:
+> «اسلایدهای [موضوع] را بساز»
+
+Or run the builder directly:
+
+```bash
+cd workshops
+npm install
+npm run slides
+```
+
+Requires **Node.js 16+**. The Vazirmatn font should be installed on the viewer's system for correct Persian rendering.
+
+---
+
+## Example Output / مثال: خروجی دستیار
+
+This repository is itself sample assistant output.
+
+**User input**:
+> «یک کارگاه آموزشی درباره هوش مصنوعی برای کارمندان اداری طراحی کن»
+
+**Assistant output**:
+1. **Structure**: 8 sessions × 20 minutes
+2. **Content**: `workshops/workshop-1-ai-concepts.md`
+3. **Slides**: `session1` … `session8.pptx`
+4. **Code**: `workshops/generate-slides.mjs`
+
+---
+
+## Requirements / پیش‌نیازها
+
+| Component | Requirement |
+|-----------|-------------|
+| Node.js | 16+ (for slide generation) |
+| Python | 3.8+ (optional, workshop 1 exercises) |
+| Font | [Vazirmatn](https://github.com/rastikerdar/vazirmatn) for Persian slides |
+
+---
+
+## References / منابع اصلی
+
+### Pedagogy
+- Coyle, D., Hood, P., & Marsh, D. (2010). *CLIL: Content and Language Integrated Learning*. Cambridge.
+- Anderson, L.W. & Krathwohl, D.R. (2001). *A Taxonomy for Learning, Teaching, and Assessing*. Longman.
+
+### Instructional Design
+- Rosenshine, B. (2012). *Principles of Instruction*. American Educator.
+- Sweller, J. (2006). *The Worked Example Effect and Human Cognition*. Learning and Instruction.
+- Mayer, R.E. (2009). *Multimedia Learning*. Cambridge University Press.
+
+### Tools
+- [PptxGenJS](https://gitbrent.github.io/PptxGenJS/)
+- [Vazirmatn Font](https://github.com/rastikerdar/vazirmatn)
+
+---
+
+## License / مجوز
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+**Maintainer**: Nasser Safarinia
