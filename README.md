@@ -3,120 +3,137 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**Goal**: An intelligent assistant that generates educational content and workshop materials.
+**هدف**: دستیاری هوشمند برای تولید محتوای آموزشی و منابع کارگاه.
 
-**Core principle**: Self-referential — this repository is itself an example of the assistant's output.
-
----
-
-## Overview / نمای کلی
-
-This project combines:
-
-1. **Knowledge base** (`knowledge/`) — pedagogy, presentation skills, AI literacy, and tools for AI-enabled training
-2. **Workshops** (`workshops/`) — ready-to-run workshop materials with generated PowerPoint decks
-3. **Assistant skills** (`.agents/skills/`) — reusable skills for generating workshop content and RTL slides
-
-Content is primarily in Persian (RTL), with English structure labels for broader accessibility.
+**اصل اصلی**: خودارجاعی. همین مخزن، نمونه‌ای از خروجی دستیار است.
 
 ---
 
-## Project Structure / ساختار پروژه
+## نمای کلی
+
+این پروژه سه بخش دارد:
+
+۱. **پایگاه دانش** (`knowledge/`) شامل پداگوژی، اصول ارائه، سواد هوش مصنوعی و ابزارهای آموزش
+
+۲. **کارگاه‌ها** (`workshops/`) شامل منابع آماده و اسلایدهای تولیدشده
+
+۳. **مهارت‌های دستیار** (`.agents/skills/`) شامل مهارت‌های قابل استفاده‌ی مجدد برای تولید کارگاه و اسلاید راست‌به‌چپ
+
+محتوای اصلی فارسی است؛ برچسب‌های ساختاری انگلیسی هم دیده می‌شود تا دسترسی گسترده‌تر شود.
+
+---
+
+## ساختار پروژه
 
 ```
 ai-training/
-├── knowledge/                    # Knowledge base
-│   ├── pedagogy/                 # Pedagogy
-│   │   ├── clil/                 # CLIL (Content and Language Integrated Learning)
-│   │   └── ai-pedagogy.md        # AI in education
-│   ├── presentation/             # Presentation best practices
-│   │   ├── README.md             # Presentation principles
-│   │   └── pptx-tools.md         # PowerPoint generation tools
-│   ├── ai-literacy/              # AI literacy frameworks
-│   ├── education/                # AI in teaching & learning
-│   ├── training/                 # Skill development methods
-│   └── tools/                    # AI platforms & tooling
+├── knowledge/                    # پایگاه دانش
+│   ├── pedagogy/                 # پداگوژی
+│   │   ├── clil/                 # CLIL (یادگیری یکپارچه‌ی محتوا و زبان)
+│   │   └── ai-pedagogy.md        # هوش مصنوعی در تعلیم و تربیت
+│   ├── presentation/             # اصول ارائه
+│   │   ├── README.md             # اصول ارائه
+│   │   └── pptx-tools.md         # ابزارهای تولید پاورپوینت
+│   ├── ai-literacy/              # چارچوب‌های سواد هوش مصنوعی
+│   ├── education/                # هوش مصنوعی در آموزش
+│   ├── training/                 # روش‌های توسعه‌ی مهارت
+│   └── tools/                    # پلتفرم‌ها و ابزارهای هوش مصنوعی
 │
-├── workshops/                    # Workshop materials
-│   ├── package.json              # Slide-generation dependencies
-│   ├── generate-slides.mjs       # PptxGenJS slide builder (RTL/Persian)
-│   ├── workshop-1-ai-concepts.md # Workshop 1
-│   ├── workshop-2-agents.md      # Workshop 2
-│   ├── workshop-3-opencode.md    # Workshop 3
-│   └── slide-assets/             # Images used in slides
+├── workshops/                    # منابع کارگاه
+│   ├── package.json              # وابستگی‌های تولید اسلاید
+│   ├── generate-slides.mjs       # سازنده‌ی اسلاید با PptxGenJS (راست‌به‌چپ/فارسی)
+│   ├── workshop-1-ai-concepts.md # کارگاه ۱
+│   ├── workshop-2-agents.md      # کارگاه ۲
+│   ├── workshop-3-opencode.md    # کارگاه ۳
+│   └── slide-assets/             # تصاویر استفاده‌شده در اسلایدها
 │
-└── .agents/skills/               # Assistant skills
-    ├── workshop-generator/       # Workshop content generation
-    └── slide-generator/          # PowerPoint slide generation
+└── .agents/skills/               # مهارت‌های دستیار
+    ├── workshop-generator/       # تولید محتوای کارگاه
+    └── slide-generator/          # تولید اسلاید پاورپوینت
 ```
 
 ---
 
-## Knowledge Base / پایگاه دانش
+## پایگاه دانش
 
-### 1. CLIL Pedagogy
-Content and Language Integrated Learning:
-- **4Cs**: Content, Communication, Cognition, Culture
-- **Lesson planning**: Dual objectives, three-stage structure
-- **Scaffolding**: Language, visual, and content support
-- **Assessment**: Formative, summative, rubrics
-- **Activities**: Input, processing, output
-- **Bloom**: Cognitive levels, learning verbs
+### ۱. پداگوژی CLIL
 
-### 2. Presentation Principles
-Instructional design practices:
-- **SMART objectives**: Specific, measurable, achievable
-- **Worked examples**: Step-by-step with think-aloud
-- **Slides**: 10-20-30 rule, clear structure
-- **Interaction**: Active participation, group discussion
-- **Assessment**: Diagnostic, formative, summative
+یادگیری یکپارچه‌ی محتوا و زبان:
 
-### 3. PPTX Tooling
-PowerPoint generation:
-- **PptxGenJS**: JavaScript library (primary tool)
-- **python-pptx**: Python library
-- **Slidev**: Web-based presentations
+- **۴Cs**: محتوا، ارتباط، شناخت، فرهنگ
+- **برنامه‌ریزی درسی**: اهداف دوگانه و ساختار سه‌مرحله‌ای
+- **داربست‌زنی**: پشتیبانی زبانی، بصری و محتوایی
+- **ارزیابی**: تکوینی، تراکمی، روبریک
+- **فعالیت‌ها**: ورودی، پردازش، خروجی
+- **بلوم**: سطوح شناختی و فعل‌های یادگیری
 
-See [`knowledge/README.md`](knowledge/README.md) for the full tree.
+### ۲. اصول ارائه
 
----
+اصول طراحی آموزشی:
 
-## Assistant Skills / مهارت‌های دستیار
+- **اهداف SMART**: مشخص، قابل اندازه‌گیری، دست‌یافتنی
+- **مثال‌های کارشده**: گام‌به‌گام، همراه با تفکر بلند
+- **اسلاید**: قانون ۱۰-۲۰-۳۰ و ساختار شفاف
+- **تعامل**: مشارکت فعال و بحث گروهی
+- **ارزیابی**: تشخیصی، تکوینی، تراکمی
 
-### 1. `workshop-generator`
-Generates workshop content:
-- Collects audience and topic requirements
-- Designs workshop structure
-- Writes learning objectives
-- Produces worked examples
-- Designs activities and assessments
+### ۳. ابزارهای PPTX
 
-### 2. `slide-generator`
-Generates PowerPoint slides:
-- Designs slide structure
-- Emits PptxGenJS code
-- Supports Persian (RTL)
-- Ships reusable workshop patterns
+تولید پاورپوینت:
+
+- **PptxGenJS**: کتابخانه‌ی جاوااسکریپت (ابزار اصلی)
+- **python-pptx**: کتابخانه‌ی پایتون
+- **Slidev**: ارائه‌های مبتنی بر وب
+
+درخت کامل در [`knowledge/README.md`](knowledge/README.md) آمده است.
 
 ---
 
-## Getting Started / نحوه استفاده
+## مهارت‌های دستیار
 
-### Generate a new workshop
-Ask the assistant:
-> «یک کارگاه آموزشی درباره [موضوع] برای [مخاطب] طراحی کن»
+### ۱. `workshop-generator`
 
-The assistant will:
-1. Ask for clarifying details
-2. Design the workshop structure
-3. Generate content for each section
-4. Build the slides
+تولید محتوای کارگاه:
 
-### Generate slides
-Ask the assistant:
+- پرسش درباره‌ی مخاطب و موضوع
+- طراحی ساختار کارگاه
+- نگارش اهداف یادگیری
+- تولید مثال‌های کارشده
+- طراحی فعالیت‌ها و ارزیابی‌ها
+
+### ۲. `slide-generator`
+
+تولید اسلاید پاورپوینت:
+
+- طراحی ساختار اسلایدها
+- تولید کد PptxGenJS
+- پشتیبانی از فارسی (راست‌به‌چپ)
+- الگوهای قابل استفاده‌ی مجدد برای کارگاه
+
+---
+
+## نحوه استفاده
+
+### تولید کارگاه جدید
+
+از دستیار بخواهید:
+
+> «یک کارگاه آموزشی درباره‌ی [موضوع] برای [مخاطب] طراحی کن»
+
+دستیار:
+
+۱. جزئیات تکمیلی را می‌پرسد
+۲. ساختار کارگاه را طراحی می‌کند
+۳. محتوای هر بخش را تولید می‌کند
+۴. اسلایدها را می‌سازد
+
+### تولید اسلاید
+
+از دستیار بخواهید:
+
 > «اسلایدهای [موضوع] را بساز»
 
-Or run the builder directly:
+یا ابزار تولید را مستقیم اجرا کنید:
 
 ```bash
 cd workshops
@@ -124,56 +141,61 @@ npm install
 npm run slides
 ```
 
-Requires **Node.js 16+**. The Vazirmatn font should be installed on the viewer's system for correct Persian rendering.
+**Node.js نسخه‌ی ۱۶ یا بالاتر** لازم است. برای نمایش درست فارسی، فونت Vazirmatn باید روی سیستم بیننده نصب باشد.
 
 ---
 
-## Example Output / مثال: خروجی دستیار
+## مثال: خروجی دستیار
 
-This repository is itself sample assistant output.
+همین مخزن نمونه‌ای از خروجی دستیار است.
 
-**User input**:
-> «یک کارگاه آموزشی درباره هوش مصنوعی برای کارمندان اداری طراحی کن»
+**ورودی کاربر**:
 
-**Assistant output**:
-1. **Structure**: 8 sessions × 20 minutes
-2. **Content**: `workshops/workshop-1-ai-concepts.md`
-3. **Slides**: `session1` … `session8.pptx`
-4. **Code**: `workshops/generate-slides.mjs`
+> «یک کارگاه آموزشی درباره‌ی هوش مصنوعی برای کارمندان اداری طراحی کن»
 
----
+**خروجی دستیار**:
 
-## Requirements / پیش‌نیازها
-
-| Component | Requirement |
-|-----------|-------------|
-| Node.js | 16+ (for slide generation) |
-| Python | 3.8+ (optional, workshop 1 exercises) |
-| Font | [Vazirmatn](https://github.com/rastikerdar/vazirmatn) for Persian slides |
+۱. **ساختار**: ۸ جلسه‌ی ۲۰ دقیقه‌ای
+۲. **محتوا**: `workshops/workshop-1-ai-concepts.md`
+۳. **اسلایدها**: `session1` تا `session8.pptx`
+۴. **کد**: `workshops/generate-slides.mjs`
 
 ---
 
-## References / منابع اصلی
+## پیش‌نیازها
 
-### Pedagogy
+| جزئیات | نیاز |
+|--------|------|
+| Node.js | نسخه‌ی ۱۶ یا بالاتر (برای تولید اسلاید) |
+| Python | نسخه‌ی ۳.۸ یا بالاتر (اختیاری، تمرین‌های کارگاه ۱) |
+| فونت | [Vazirmatn](https://github.com/rastikerdar/vazirmatn) برای اسلایدهای فارسی |
+
+---
+
+## منابع اصلی
+
+### پداگوژی
+
 - Coyle, D., Hood, P., & Marsh, D. (2010). *CLIL: Content and Language Integrated Learning*. Cambridge.
 - Anderson, L.W. & Krathwohl, D.R. (2001). *A Taxonomy for Learning, Teaching, and Assessing*. Longman.
 
-### Instructional Design
+### طراحی آموزشی
+
 - Rosenshine, B. (2012). *Principles of Instruction*. American Educator.
 - Sweller, J. (2006). *The Worked Example Effect and Human Cognition*. Learning and Instruction.
 - Mayer, R.E. (2009). *Multimedia Learning*. Cambridge University Press.
 
-### Tools
+### ابزارها
+
 - [PptxGenJS](https://gitbrent.github.io/PptxGenJS/)
-- [Vazirmatn Font](https://github.com/rastikerdar/vazirmatn)
+- [فونت Vazirmatn](https://github.com/rastikerdar/vazirmatn)
 
 ---
 
-## License / مجوز
+## مجوز
 
-This project is licensed under the [MIT License](LICENSE).
+این پروژه تحت [مجوز MIT](LICENSE) منتشر شده است.
 
 ---
 
-**Maintainer**: Nasser Safarinia
+**نگهدارنده**: Nasser Safarinia
