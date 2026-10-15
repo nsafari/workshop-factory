@@ -57,7 +57,8 @@ const SESSIONS = [
       'دستیار هوشمند شما ایمیل‌های دیشب را خوانده (ابزار)',
       'دو طرح جدید را با اهداف سازمان تطبیق داده (دانش)',
       'چون مهلت ثبت‌نام یکی از طرح‌ها فردا تمام می‌شود، هشدار داده (مهارت)',
-    ], size: 22, gap: 20 },
+    ], size: 22, gap: 20, stagger: 700 },
+    { visual: 'pillars' },
     { accent: 'کدام بخش این صبح را یک جست‌وجوی ساده می‌توانست انجام دهد؟ هیچ‌کدام؛ چون هر سه رکن با هم کار می‌کنند.', bold: true },
   ], notes: 'نکتهٔ مدرس: این سناریو را زنده اجرا کنید؛ هر بار که کلمهٔ «ابزار»، «دانش» یا «مهارت» را می‌گویید، از شرکت‌کننده‌ها بخواهید تکرار کنند. هدف این است که سه رکن از همین دقیقهٔ سوم در ذهن بماند.\nسؤال از شرکت‌کنندگان: «کدام بخش این صبح را یک جست‌وجوی ساده می‌توانست انجام دهد؟» پاسخ: هیچ‌کدام؛ چون هر سه رکن با هم کار می‌کنند.' },
   // اسلاید ۳ - چرا با چت کردن ساده کافی نیست؟
@@ -112,17 +113,21 @@ const SESSIONS = [
   ], notes: 'نکتهٔ مدرس: رابطهٔ تودرتو (AI ⊃ ML ⊃ DL ⊃ GenAI) را همین‌جا با اشاره به تایم‌لاین بگویید: «هر مرحله زیرمجموعهٔ مرحلهٔ قبلی است.» تاریخ‌ها برای حفظ کردن نیست؛ روند را نشان می‌دهد.\nچه چیزی ظاهر شد: قوانین دست‌نویس ← کشف الگو از داده ← شبکه‌های عصبی ← Transformer + آموزش روی کل اینترنت.' },
   // اسلاید ۹ - از قانون‌نویسی تا یادگیری از داده + بازی قیمت خانه
   { title: 'از قانون‌نویسی تا یادگیری از داده', blocks: [
-    { bullets: [
-      'سیستم‌های خبره: انسان همهٔ قوانین را دست‌نویس می‌کرد؛ هر جا شرایط عوض می‌شد، قانون جدید می‌خواست',
-      'یادگیری ماشین: به‌جای قانون، داده می‌دهیم؛ الگو خودش کشف می‌شود',
-    ], size: 21, gap: 14 },
-    { lead: 'بازی قیمت خانه' },
-    { bullets: [
-      '۸۰ متری = ۸ میلیارد تومان',
-      '۱۰۰ متری = ۱۰ میلیارد تومان',
-      '۱۲۰ متری = ۱۲ میلیارد تومان',
-    ], size: 20, gap: 8 },
-    { accent: 'خانهٔ ۱۱۰ متری چقدر؟', bold: true },
+    { split: { ratio: [46, 54], right: [
+      { bullets: [
+        'سیستم‌های خبره: انسان همهٔ قوانین را دست‌نویس می‌کرد؛ هر جا شرایط عوض می‌شد، قانون جدید می‌خواست',
+        'یادگیری ماشین: به‌جای قانون، داده می‌دهیم؛ الگو خودش کشف می‌شود',
+      ], size: 21, gap: 14 },
+      { lead: 'بازی قیمت خانه' },
+    ], left: [
+      { bullets: [
+        '۸۰ متری = ۸ میلیارد تومان',
+        '۱۰۰ متری = ۱۰ میلیارد تومان',
+        '۱۲۰ متری = ۱۲ میلیارد تومان',
+      ], size: 20, gap: 8 },
+      { accent: 'خانهٔ ۱۱۰ متری چقدر؟', bold: true },
+      { visual: 'regression' },
+    ] } },
   ], notes: 'بازی قیمت خانه (۲ دقیقه): سؤال: «خانهٔ ۱۱۰ متری چقدر؟» همه فوری می‌گویند ۱۱ میلیارد.\nنکتهٔ کلیدی: «شما همین‌الان یک مدل یادگیری ماشین شدید؛ الگو را از داده کشف کردید، کسی فرمول را به شما نگفته بود.»\nنکتهٔ مدرس: این مثال در جلسهٔ ۲ (مقیاس پارامتر) و در تکلیف پایانی دوباره باز می‌گردد.' },
   // اسلاید ۱۰ - شبکه‌های عصبی
   { title: 'شبکه‌های عصبی', blocks: [
@@ -132,6 +137,7 @@ const SESSIONS = [
       'لایه‌ها: لایه‌های اول چیزهای ساده (لبه و رنگ) می‌بینند، لایه‌های آخر مفاهیم کامل (چهره)',
       'کاربرد: تشخیص چهره در عکس‌ها',
     ], size: 22, gap: 20 },
+    { visual: 'layers' },
   ], notes: 'نکتهٔ مدرس: فقط یک خط بگویید: «شبکهٔ عصبی یعنی ردیف‌هایی از این داورها که هر لایه کار لایهٔ قبلی را کامل‌تر می‌کند.» جزئیات عددی وارد نشوید.' },
   // اسلاید ۱۱ - LLMها + بازی «آسمان امروز ...»
   { title: 'LLMها', blocks: [
@@ -151,6 +157,7 @@ const SESSIONS = [
       'برچسب انسانی لازم نیست؛ هر جملهٔ اینترنت یک تمرین رایگان است',
       'به همین دلیل مدل‌ها کل اینترنت را می‌توانند بخوانند؛ میلیاردها تمرین',
     ], size: 22, gap: 20 },
+    { visual: 'mask' },
     { accent: 'خودنظارتی یعنی معلم، خودِ داده است.', bold: true },
   ], notes: 'جملهٔ کلیدی: خودنظارتی یعنی معلم، خودِ داده است.' },
   // اسلاید ۱۳ - خلاصه + سؤال استراحت
@@ -182,6 +189,7 @@ const SESSIONS = [
       'قیاس: دستگاهی با هزاران ولوم کوچک؛ همگی آن‌قدر چرخانده شده‌اند تا خروجی درست بدهد',
       'مجموعهٔ این عددها، دانش آموخته‌شدهٔ مدل است؛ نه پایگاه داده، نه جست‌وجو',
     ], size: 22, gap: 20 },
+    { visual: 'knobs' },
     { accent: 'اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.', bold: true },
   ], notes: 'آزمایش ذهنی (یک جمله): اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.\nنکتهٔ مدرس: قیاس قورمه‌سبزی را بزنید: ۲ مادهٔ اصلی تنظیمش ساده است؛ ۱۷۵ میلیارد ادویه تنظیم دستی‌اش غیرممکن است.' },
   // اسلاید ۱۷ - جدول مقیاس
@@ -195,10 +203,11 @@ const SESSIONS = [
   ], notes: 'نکته: بزرگ‌تر همیشه بهتر نیست؛ کیفیت داده و آموزش درست، به اندازهٔ اندازهٔ مدل مهم است.\nپل به جلسهٔ ۱: مدل قیمت خانهٔ ما فقط ۲ عدد داشت (شیب ۰٫۱ و عدد ثابت ۰)؛ حالا آن میلیاردها عدد جلسهٔ قبل ملموس می‌شود.' },
   // اسلاید ۱۸ - Transformer در دو کارت
   { title: 'مغز مدل‌های امروزی: Transformer', blocks: [
-    { cards: { h: 300, items: [
+    { cards: { h: 220, items: [
       { t: 'دیدن هم‌زمان', b: 'به‌جای خواندن کلمه‌به‌کلمه، همهٔ کلمات جمله را با هم می‌بیند (مدل‌های قدیمی کلمه‌به‌کلمه می‌خواندند و ابتدا را گم می‌کردند)' },
       { t: 'قیاس میزگرد', b: 'هر نفر (کلمه) می‌پرسد «برای فهم نقشم در این بحث، به حرف چه کسانی گوش بدهم؟» و به همان‌ها بیشتر گوش می‌دهد' },
     ] } },
+    { visual: 'roundtable' },
   ], notes: 'دو کارت را بخوانید و قیاس میزگرد را زنده اجرا کنید.' },
   // اسلاید ۱۹ - بازی «او»
   { title: 'بازی «او»', blocks: [
@@ -279,24 +288,27 @@ function vTimeline() {
 
 //  ب) ردیف چیپ‌های مرور (اسلاید ۱۵) و مسیر کامل (اسلاید ۲۰)
 //  جریان راست‌به‌چپ؛ آیتم اول در راست‌ترین موقعیت
-function vChipFlow(chips) {
-  return `<div class="chipflow">` + chips.map((c, i) =>
+function vChipFlow(chips, cls = '') {
+  return `<div class="chipflow${cls ? ' ' + cls : ''}">` + chips.map((c, i) =>
     (i ? `<span class="flow-arrow">←</span>` : '') +
-    `<span class="flow-chip${c.hl ? ' hl' : ''}">${esc(c.t)}${c.sub ? `<span class="flow-sub">${esc(c.sub)}</span>` : ''}</span>`
+    `<span class="flow-chip${c.hl ? ' hl' : ''}" style="--d:${i}">${esc(c.t)}${c.sub ? `<span class="flow-sub">${esc(c.sub)}</span>` : ''}</span>`
   ).join('') + `</div>`;
 }
 const vReviewChips = () => vChipFlow([
   { t: 'داده و الگو' }, { t: 'شبکه‌ای که یاد می‌گیرد' }, { t: 'پارامترها' }, { t: 'توجه', hl: true },
 ]);
-const vPipeline = () => vChipFlow([
-  { t: 'داده' },
-  { t: 'پیش‌بینی کلمهٔ بعد' },
-  { t: 'تکرار میلیاردها بار', sub: 'آموزش' },
-  { t: 'پارامترها', sub: 'دانش در عددها' },
-  { t: 'توجه', sub: 'معنی از زمینه' },
-]);
+//  نقاط درخشانی که یک‌بار از راست به چپ روی چیپ‌ها می‌گردد (اسلاید ۲۰)
+const vPipeline = () =>
+  `<div class="travel">` + vChipFlow([
+    { t: 'داده' },
+    { t: 'پیش‌بینی کلمهٔ بعد' },
+    { t: 'تکرار میلیاردها بار', sub: 'آموزش' },
+    { t: 'پارامترها', sub: 'دانش در عددها' },
+    { t: 'توجه', sub: 'معنی از زمینه' },
+  ], 'flow-travel') + `<span class="tdot"></span></div>`;
 
 //  ج) ماتریس توجه: ردیف «او» به «علی» ۷۰٪ توجه می‌کند (اسلاید ۱۹)
+//  سلول‌ها ردیف‌به‌ردیف پر می‌شوند و خانهٔ داغ یک‌بار می‌تپد
 function vAttention() {
   const words = ['علی', 'بانک', 'او', 'پول'];
   const M = [
@@ -305,14 +317,15 @@ function vAttention() {
     [.70, .05, null, .05],
     [.05, .30, .05, null],
   ];
-  const head = `<div class="att-cell att-head att-corner"></div>` +
-    words.map(w => `<div class="att-cell att-head">${w}</div>`).join('');
+  let ai = 0; // شاخص تأخیر پلکانی سلول‌ها
+  const head = `<div class="att-cell att-head att-corner anim" style="--i:${ai++}"></div>` +
+    words.map(w => `<div class="att-cell att-head anim" style="--i:${ai++}">${w}</div>`).join('');
   const rows = words.map((w, r) =>
-    `<div class="att-cell att-head">${w}</div>` +
+    `<div class="att-cell att-head anim" style="--i:${ai++}">${w}</div>` +
     M[r].map((v, c) => {
-      if (v === null) return `<div class="att-cell att-self">—</div>`;
+      if (v === null) return `<div class="att-cell att-self anim" style="--i:${ai++}">—</div>`;
       const hot = r === 2 && c === 0;
-      return `<div class="att-cell" style="background:rgba(14,124,123,${v})">${hot ? '<b class="att-hot">۷۰٪</b>' : ''}</div>`;
+      return `<div class="att-cell anim${hot ? ' hot-cell' : ''}" style="--i:${ai++};background:rgba(14,124,123,${v})">${hot ? '<b class="att-hot">۷۰٪</b>' : ''}</div>`;
     }).join('')).join('');
   return `<div class="att-wrap">
   <div class="att-grid">${head}${rows}</div>
@@ -320,15 +333,128 @@ function vAttention() {
 </div>`;
 }
 
-//  د) میله‌های احتمال کلمهٔ بعد (اسلاید ۱۱): آبی ۶۰٪، ابری ۲۵٪، صاف ۱۵٪
+//  د) میله‌های احتمال کلمهٔ بعد (اسلاید ۱۱): دو حالتی
+//  حالت A (آسمان امروز ...): آبی ۶۰٪، ابری ۲۵٪، صاف ۱۵٪
+//  حالت B (آسمان امروز ابری است و هوا ...): سرد ۵۰٪، بارانی ۳۵٪، گرم ۱۵٪
 function vProbBars() {
-  const opts = [['آبی', 60, ACC], ['ابری', 25, '#8FA3BF'], ['صاف', 15, '#C9CFD8']];
-  return `<div class="bars">` + opts.map(([w, pr, c]) =>
+  const rows = [
+    { a: ['آبی', 60], b: ['سرد', 50], c: ACC },
+    { a: ['ابری', 25], b: ['بارانی', 35], c: '#8FA3BF' },
+    { a: ['صاف', 15], b: ['گرم', 15], c: '#C9CFD8' },
+  ];
+  const capA = 'جملهٔ فعال: «آسمان امروز ...»';
+  const capB = 'جملهٔ فعال: «آسمان امروز ابری است و هوا ...»';
+  return `<div class="bars">
+  <div class="bars-cap"><span class="bw a">${capA}</span><span class="bw b">${capB}</span></div>` +
+  rows.map(r =>
     `<div class="bar-row">
-    <span class="bar-word">${w}</span>
-    <span class="bar-track"><span class="bar-fill" style="width:${pr}%;background:${c}"></span></span>
-    <span class="bar-pct">${fa(pr)}٪</span>
+    <span class="bar-word"><span class="bw a">${r.a[0]}</span><span class="bw b">${r.b[0]}</span></span>
+    <span class="bar-track"><span class="bar-fill" style="--wa:${r.a[1]}%;--wb:${r.b[1]}%;background:${r.c}"></span></span>
+    <span class="bar-pct"><span class="bw a">${fa(r.a[1])}٪</span><span class="bw b">${fa(r.b[1])}٪</span></span>
   </div>`).join('') + `</div>`;
+}
+
+//  هـ) نشانگرهای سه‌رکن: زیر سناریوی صبح (اسلاید ۲)؛ هر نشانگر هنگام رسیدن رویدادش می‌درخشد
+const vPillars = () => `<div class="pillars">` + [['ابزار', 0], ['دانش', 1], ['مهارت', 2]].map(([t, d]) =>
+  `<span class="pillar" style="--d:${d}">${t}</span>`).join('') + `</div>`;
+
+//  و) نمودار رگرسیون قیمت خانه (اسلاید ۹): سه نقطه، خط الگو، سپس پیش‌بینی ۱۱۰ متری
+//  محور افقی راست‌به‌چپ مثل جهت خواندن: ۸۰ متر در راست → ۱۲۰ متر در چپ
+function vRegression() {
+  // مختصات: x برای ۸۰=۴۶۰، ۱۰۰=۲۶۰، ۱۲۰=۶۰، ۱۱۰=۱۶۰ ؛ y برای ۸=۲۰۰، ۱۰=۱۳۰، ۱۲=۶۰
+  return `<div class="regz">
+  <svg viewBox="0 0 520 250" class="reg-svg" aria-label="نمودار قیمت خانه بر اساس متراژ">
+    <line class="reg-axis" x1="490" y1="220" x2="30" y2="220"/>
+    <line class="reg-axis" x1="490" y1="220" x2="490" y2="30"/>
+    <text class="reg-lab" x="460" y="242">۸۰</text>
+    <text class="reg-lab" x="260" y="242">۱۰۰</text>
+    <text class="reg-lab" x="60" y="242">۱۲۰</text>
+    <text class="reg-lab" x="502" y="205">۸</text>
+    <text class="reg-lab" x="502" y="135">۱۰</text>
+    <text class="reg-lab" x="502" y="65">۱۲</text>
+    <text class="reg-unit" x="490" y="20">قیمت (میلیارد)</text>
+    <text class="reg-unit" x="30" y="242">متراژ (متر)</text>
+    <line class="reg-fit" x1="460" y1="200" x2="60" y2="60"/>
+    <line class="reg-guide" x1="160" y1="220" x2="160" y2="95"/>
+    <circle class="reg-pt p1" cx="460" cy="200" r="8"/>
+    <circle class="reg-pt p2" cx="260" cy="130" r="8"/>
+    <circle class="reg-pt p3" cx="60" cy="60" r="8"/>
+    <circle class="reg-pt p4" cx="160" cy="95" r="9"/>
+    <text class="reg-ans" x="160" y="80">۱۱ میلیارد؟ — بله، ۱۱</text>
+  </svg>
+  <div class="reg-chip">شیب ۰٫۱ + بایاس ۰ = ۲ پارامتر</div>
+</div>`;
+}
+
+//  ز) لایه‌های شبکهٔ عصبی (اسلاید ۱۰): لبه‌ها ← رنگ و شکل ← چهرهٔ کامل
+function vLayers() {
+  const edges = [20, 75, 130, 50, 105, 15];
+  const r1 = edges.map(a => `<span class="lt lt-edge" style="--r:${a}deg"></span>`).join('');
+  const grads = [
+    'radial-gradient(circle at 30% 40%, #1F3A5F55, #1F3A5F08)',
+    'radial-gradient(circle at 70% 60%, #0E7C7B66, #0E7C7B08)',
+    'linear-gradient(120deg, #C9A22755, #C9A22708)',
+    'radial-gradient(circle at 50% 30%, #16324F66, #16324F08)',
+    'linear-gradient(300deg, #0E7C7B55, #0E7C7B08)',
+    'radial-gradient(circle at 40% 70%, #C9A22744, #C9A22708)',
+  ];
+  const r2 = grads.map(g => `<span class="lt lt-color" style="background:${g}"></span>`).join('');
+  const face = `<svg viewBox="0 0 64 64" class="lface-svg"><circle cx="32" cy="32" r="26" fill="#F5E6C8" stroke="${GOLD}" stroke-width="2.5"/><circle cx="23" cy="27" r="3.6" fill="${NAVY}"/><circle cx="41" cy="27" r="3.6" fill="${NAVY}"/><path d="M21 41 Q32 50 43 41" fill="none" stroke="${NAVY}" stroke-width="2.8" stroke-linecap="round"/></svg>`;
+  return `<div class="layers">
+  <div class="lrow lr1">${r1}</div>
+  <span class="larrow">↓</span>
+  <div class="lrow lr2">${r2}</div>
+  <span class="larrow">↓</span>
+  <div class="lrow lr3"><span class="lt lt-face">${face}</span></div>
+</div>`;
+}
+
+//  ح) ماسک خودپرکننده (اسلاید ۱۲): جمله خودش را تکمیل و تصحیح می‌کند
+function vMask() {
+  const cands = [['کرسی', 0], ['مبل', 1], ['تخت', 2]];
+  return `<div class="maskv">
+  <div class="msent">گربه روی <span class="mslot"><span class="mblank">▇</span><span class="mfill">تخت<svg class="mcheck" viewBox="0 0 16 16"><path d="M2.5 8.5l3.5 3.5 7-8" fill="none" stroke="#15803D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></span> نشست</div>
+  <div class="mcands">${cands.map(([c, k]) =>
+    `<span class="mc${k === 2 ? ' win' : ''}" style="--d:${(k * 0.45).toFixed(2)}s">${c}</span>`).join('')}</div>
+</div>`;
+}
+
+//  ط) شبکهٔ ولوم‌ها (اسلاید ۱۶): ۴۰ ولوم اول تکان می‌خورند، بعد روی زاویهٔ درست می‌نشینند
+function vKnobs() {
+  let cells = '';
+  for (let k = 0; k < 40; k++) {
+    const a = (k * 53 + 17) % 360; // زاویهٔ نهایی هر ولوم پس از آموزش
+    cells += `<span class="knob" style="--a:${a}deg;--i:${k}"><i></i></span>`;
+  }
+  return `<div class="knobs">
+  <div class="kgrid">${cells}</div>
+  <div class="kbadge">خروجی درست ✓</div>
+</div>`;
+}
+
+//  ی) میزگرد توجه (اسلاید ۱۸): توکن‌ها دایره‌وار چیده می‌شوند و پرتوها نشان می‌دهند هر کلمه به چه کسی گوش می‌دهد
+function vRoundtable() {
+  // مختصات نسبی روی بیضی میز؛ «او» و «چون» پرتو دارند
+  const T = [
+    { t: 'او', x: 16, y: 12, cls: 'key', d: '.4s' },
+    { t: 'علی', x: 76, y: 12, cls: 'recv', d: '1s' },
+    { t: 'چون', x: 24, y: 88, cls: 'key', d: '1.3s' },
+    { t: 'رفت', x: 70, y: 88, cls: 'recv', d: '1.9s' },
+    { t: 'پول', x: 8, y: 50, cls: 'recv', d: '2s' },
+    { t: 'بانک', x: 88, y: 50, cls: '', d: '2.4s' },
+  ];
+  const tokens = T.map(k =>
+    `<span class="rt-tok${k.cls ? ' ' + k.cls : ''}" style="left:${k.x}%;top:${k.y}%;--d:${k.d}">${k.t}</span>`).join('');
+  return `<div class="rt">
+  <span class="rt-table"></span>
+  <svg class="rt-beams" viewBox="0 0 660 170" aria-hidden="true">
+    <line class="beam b1" x1="106" y1="22" x2="500" y2="22" stroke-dasharray="400" style="--len:400"/>
+    <line class="beam b2" x1="160" y1="148" x2="460" y2="148" stroke-dasharray="310" style="--len:310"/>
+    <line class="beam b3" x1="152" y1="140" x2="55" y2="86" stroke-dasharray="120" style="--len:120"/>
+  </svg>
+  ${tokens}
+</div>
+<div class="viz-caption">«او» بیشتر از همه به «علی» گوش می‌دهد؛ «چون» به «رفت» و «پول» — هر کلمه به کلمهٔ مرتبط‌تر</div>`;
 }
 
 const VISUALS = {
@@ -337,6 +463,12 @@ const VISUALS = {
   'pipeline': vPipeline,
   'attention': vAttention,
   'prob-bars': vProbBars,
+  'pillars': vPillars,
+  'regression': vRegression,
+  'layers': vLayers,
+  'mask': vMask,
+  'knobs': vKnobs,
+  'roundtable': vRoundtable,
 };
 
 // ============================================================
@@ -344,33 +476,38 @@ const VISUALS = {
 // ============================================================
 const isFa = t => /[\u0600-\u06FF]/.test(t);
 
+//  شمارندهٔ تأخیر پلکانی (G1): هر عنصر متحرک شاخص --i می‌گیرد و با ۱۲۰ میلی‌ثانیه جا می‌افتد
+//  برای هر اسلاید از نو صفر می‌شود تا انیمیشن با هر بار فعال شدن اسلاید تازه شود
+let animI = 0;
+
 function renderBlock(b) {
   if (b.bullets) {
-    const { size = 22, gap = 14, noBullet = false } = b;
+    const { size = 22, gap = 14, noBullet = false, stagger } = b;
     const items = b.bullets.map(it => {
       const [t, lvl] = Array.isArray(it) ? it : [it, 0];
-      return `<li${lvl ? ' class="sub"' : ''} style="margin-bottom:${gap}px">${esc(t)}</li>`;
+      return `<li class="anim${lvl ? ' sub' : ''}" style="margin-bottom:${gap}px;--i:${animI++}">${esc(t)}</li>`;
     }).join('');
-    return `<ul class="bl${noBullet ? ' nb' : ''}" style="font-size:${size}px">${items}</ul>`;
+    const st = stagger ? `;--st:${stagger}ms` : '';
+    return `<ul class="bl${noBullet ? ' nb' : ''}" style="font-size:${size}px${st}">${items}</ul>`;
   }
   if (b.cards) {
     const cards = b.cards.items.map(d =>
-      `<div class="card"><h3>${esc(d.t)}</h3><p>${esc(d.b)}</p></div>`).join('');
+      `<div class="card anim" style="--i:${animI++}"><h3>${esc(d.t)}</h3><p>${esc(d.b)}</p></div>`).join('');
     return `<div class="cards" style="min-height:${b.cards.h}px">${cards}</div>`;
   }
   if (b.table) {
     const { head, rows, colW, size = 18 } = b.table;
     const th = head.map((h, i) =>
       `<th${colW ? ` style="width:${colW[i]}%"` : ''}>${esc(h)}</th>`).join('');
-    const trs = rows.map(r => `<tr>` + r.map(c =>
+    const trs = rows.map(r => `<tr class="anim" style="--i:${animI++}">` + r.map(c =>
       `<td style="text-align:${isFa(c) ? 'right' : 'center'}">${esc(c)}</td>`).join('') + `</tr>`).join('');
-    return `<table class="tbl" style="font-size:${size}px"><thead><tr>${th}</tr></thead><tbody>${trs}</tbody></table>`;
+    return `<table class="tbl" style="font-size:${size}px"><thead><tr class="anim" style="--i:${animI++}">${th}</tr></thead><tbody>${trs}</tbody></table>`;
   }
-  if (b.accent) return `<p class="accent"${b.bold ? ' style="font-weight:700"' : ''}>${esc(b.accent)}</p>`;
-  if (b.muted) return `<p class="muted">${esc(b.muted)}</p>`;
-  if (b.lead) return `<p class="lead">${esc(b.lead)}</p>`;
-  if (b.text) return `<p class="plain">${esc(b.text)}</p>`;
-  if (b.visual) return `<div class="viz-box">${VISUALS[b.visual]()}</div>`;
+  if (b.accent) return `<p class="accent anim" style="--i:${animI++}${b.bold ? ';font-weight:700' : ''}">${esc(b.accent)}</p>`;
+  if (b.muted) return `<p class="muted anim" style="--i:${animI++}">${esc(b.muted)}</p>`;
+  if (b.lead) return `<p class="lead anim" style="--i:${animI++}">${esc(b.lead)}</p>`;
+  if (b.text) return `<p class="plain anim" style="--i:${animI++}">${esc(b.text)}</p>`;
+  if (b.visual) return `<div class="viz-box anim" style="--i:${animI++}">${VISUALS[b.visual]()}</div>`;
   if (b.split) {
     const [r, l] = b.split.ratio;
     return `<div class="split">
@@ -393,6 +530,7 @@ function renderSlide(s, session, idx, total) {
   </div>
 </section>`;
   }
+  animI = 0; // شاخص انیمیشن برای هر اسلاید از نو شروع می‌شود
   return `<section class="slide content" data-i="${idx}">
   <header class="chead">
     <div class="trow"><span class="tbar"></span><h2>${esc(s.title)}</h2></div>
@@ -496,6 +634,148 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
 .bar-track{flex:1;height:26px;background:var(--light);border-radius:6px;position:relative;overflow:hidden}
 .bar-fill{position:absolute;top:0;bottom:0;right:0;border-radius:6px}
 .bar-pct{flex:0 0 70px;font-size:19px;color:var(--mut)}
+/* ============================================================
+   انیمیشن‌ها — همه با .slide.active کلید خورده‌اند تا با هر بار
+   فعال شدن اسلاید از نو اجرا شوند؛ حالت پیش‌فرض CSS = حالت پایانی
+   ============================================================ */
+/* G1: ظاهرشدن پلکانی محتوا (هر عنصر با شاخص --i، ۱۲۰ میلی‌ثانیه جا می‌افتد) */
+@keyframes riseIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.slide.active .anim{animation:riseIn .5s cubic-bezier(.22,.8,.3,1) both;animation-delay:calc(var(--i,0)*var(--st,.12s))}
+/* S2: نشانگرهای سه‌رکن زیر سناریوی صبح */
+@keyframes pillarGlow{
+  0%{background:var(--light);border-color:var(--soft);color:var(--mut);box-shadow:none}
+  40%{background:#E3F2F2;border-color:var(--acc);color:var(--acc);box-shadow:0 0 0 5px rgba(14,124,123,.18)}
+  100%{background:#E3F2F2;border-color:var(--acc);color:var(--acc);box-shadow:0 0 0 1px rgba(14,124,123,.28)}}
+.pillars{display:flex;gap:20px;justify-content:center;margin:14px 0 4px}
+.pillar{padding:10px 30px;border-radius:999px;font-size:21px;font-weight:700;background:#E3F2F2;border:2px solid var(--acc);color:var(--acc)}
+.slide.active .pillar{animation:pillarGlow 1s ease both;animation-delay:calc(.55s + var(--d)*.7s)}
+/* S9: نمودار رگرسیون قیمت خانه */
+.regz{display:flex;flex-direction:column;align-items:center;margin-top:2px}
+.reg-svg{width:100%;max-width:560px;height:auto}
+.reg-svg text{font-family:inherit;fill:var(--ink)}
+.reg-axis{stroke:var(--mut);stroke-width:2}
+.reg-lab{font-size:16px;text-anchor:middle}
+.reg-unit{font-size:13px;fill:var(--mut)}
+.reg-fit{stroke:var(--acc);stroke-width:3.5;stroke-linecap:round;stroke-dasharray:430;stroke-dashoffset:0}
+.reg-guide{stroke:var(--gold);stroke-width:2.5;stroke-dasharray:7 6;opacity:1}
+.reg-pt{fill:${WHT};stroke:var(--acc);stroke-width:3.5;transform-box:fill-box;transform-origin:center}
+.reg-pt.p4{stroke:var(--gold);fill:#FBF3D5}
+.reg-ans{font-size:15px;font-weight:700;fill:var(--gold);text-anchor:middle}
+.reg-chip{margin-top:6px;padding:7px 20px;border-radius:999px;background:#E3F2F2;border:1.5px solid var(--acc);color:var(--acc);font-size:17px;font-weight:700}
+@keyframes ptPop{from{transform:scale(0)}70%{transform:scale(1.25)}to{transform:scale(1)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fitDraw{from{stroke-dashoffset:430}to{stroke-dashoffset:0}}
+@keyframes guideDraw{from{opacity:0;transform:scaleY(0)}to{opacity:1;transform:scaleY(1)}}
+.slide.active .reg-pt.p1{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:.35s}
+.slide.active .reg-pt.p2{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:.75s}
+.slide.active .reg-pt.p3{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:1.15s}
+.slide.active .reg-fit{animation:fitDraw 1s ease both;animation-delay:1.55s}
+.slide.active .reg-guide{animation:fadeIn .5s ease both;animation-delay:2.55s}
+.slide.active .reg-pt.p4{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:2.95s}
+.slide.active .reg-ans{animation:fadeIn .5s ease both;animation-delay:3.2s}
+.slide.active .reg-chip{animation:fadeIn .5s ease both;animation-delay:3.4s}
+/* S10: لایه‌های شبکهٔ عصبی */
+.layers{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:4px}
+.lrow{display:flex;gap:10px;justify-content:center}
+.lt{width:64px;height:36px;border-radius:8px;background:var(--light);border:1px solid var(--soft);position:relative;overflow:hidden}
+.lt-edge::after{content:'';position:absolute;top:50%;right:50%;width:44px;height:3px;background:var(--navy);border-radius:2px;transform:translate(50%,-50%) rotate(var(--r,0deg))}
+.lt-color{border-color:var(--soft)}
+.lt-face{width:88px;height:52px;display:flex;align-items:center;justify-content:center;background:${WHT};border:1.5px solid var(--soft)}
+.lface-svg{width:44px;height:44px;filter:blur(0)}
+.larrow{color:var(--mut);font-size:15px;line-height:1}
+@keyframes layerIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes faceSharp{from{filter:blur(7px)}to{filter:blur(0)}}
+.slide.active .lr1{animation:layerIn .5s ease both;animation-delay:.25s}
+.slide.active .lr2{animation:layerIn .5s ease both;animation-delay:.75s}
+.slide.active .lr3{animation:layerIn .5s ease both;animation-delay:1.25s}
+.slide.active .larrow{animation:fadeIn .4s ease both;animation-delay:.6s}
+.slide.active .lr2 + .larrow{animation-delay:1.1s}
+.slide.active .lface-svg{animation:faceSharp 1s ease both;animation-delay:1.45s}
+/* S11: میله‌های احتمال دو حالتی */
+.bars{margin:4px 0 2px;width:100%}
+.bars-cap{position:relative;height:26px;margin-bottom:10px;font-size:16px;color:var(--navy);font-weight:700;text-align:center;white-space:nowrap;overflow:hidden}
+.bars-cap .bw{position:absolute;inset:0}
+.bar-row{width:100%}
+.bar-word,.bar-pct{position:relative;height:32px;display:flex;align-items:center}
+.bar-word .bw,.bar-pct .bw{position:absolute;top:0;bottom:0;display:flex;align-items:center}
+.bar-word .bw{left:0}
+.bar-pct .bw{right:0}
+.bar-fill{width:var(--wb,50%)}
+.bw.a{opacity:0}
+.bw.b{opacity:1}
+@keyframes bwA{0%,52%{opacity:1}64%,100%{opacity:0}}
+@keyframes bwB{0%,52%{opacity:0}64%,100%{opacity:1}}
+@keyframes bfMorph{0%,55%{width:var(--wa)}100%{width:var(--wb)}}
+.slide.active .bw.a{animation:bwA 4s ease both}
+.slide.active .bw.b{animation:bwB 4s ease both}
+.slide.active .bar-fill{animation:bfMorph 4s cubic-bezier(.4,0,.2,1) both}
+/* S12: ماسک خودپرکننده */
+.maskv{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:6px}
+.msent{font-size:26px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px}
+.mslot{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:110px;height:44px;padding:0 14px;border-radius:10px;background:#F0FDF4;border:2px solid #15803D}
+.mblank{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;color:var(--mut);opacity:0}
+.mfill{display:inline-flex;align-items:center;gap:8px;font-size:24px;font-weight:800;color:#15803D;opacity:1;transform:none}
+.mcheck{width:20px;height:20px}
+.mcheck path{stroke-dasharray:18;stroke-dashoffset:0}
+.mcands{display:flex;gap:14px}
+.mc{font-size:20px;padding:7px 18px;border-radius:10px;border:2px dashed var(--soft);color:var(--mut);opacity:.35}
+.mc.win{border-style:solid;border-color:#15803D;color:#15803D;background:#F0FDF4;opacity:1}
+@keyframes mBlink{0%{opacity:1}10%{opacity:.15}20%{opacity:1}30%{opacity:.15}40%{opacity:1}52%{opacity:1}62%,100%{opacity:0}}
+@keyframes mFillIn{0%,52%{opacity:0;transform:scale(.3)}62%{opacity:1;transform:scale(1.28)}72%,100%{opacity:1;transform:scale(1)}}
+@keyframes slotSet{0%,52%{background:var(--light);border-color:var(--mut);border-style:dashed}70%,100%{background:#F0FDF4;border-color:#15803D;border-style:solid}}
+@keyframes mcFlash{0%,100%{opacity:.35;transform:none;border-color:var(--soft);color:var(--mut)}45%,62%{opacity:1;transform:scale(1.12);border-color:var(--navy);color:var(--navy)}}
+@keyframes mcWin{0%,52%{opacity:.35;border-color:var(--soft);color:var(--mut);background:var(--light)}70%,100%{opacity:1;border-color:#15803D;color:#15803D;background:#F0FDF4}}
+@keyframes checkDraw{from{stroke-dashoffset:18}to{stroke-dashoffset:0}}
+.slide.active .mblank{animation:mBlink 3.5s ease both}
+.slide.active .mslot{animation:slotSet 3.5s ease both}
+.slide.active .mfill{animation:mFillIn 3.5s cubic-bezier(.3,1.3,.5,1) both}
+.slide.active .mcheck path{animation:checkDraw .45s ease both;animation-delay:2.35s}
+.slide.active .mc{animation:mcFlash .95s ease both;animation-delay:calc(.95s + var(--d))}
+.slide.active .mc.win{animation:mcWin 3.5s ease both}
+/* S16: شبکهٔ ولوم‌ها */
+.knobs{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:6px}
+.kgrid{display:grid;grid-template-columns:repeat(8,26px);gap:9px;justify-content:center}
+.knob{width:26px;height:26px;border-radius:50%;background:var(--light);border:2px solid var(--soft);position:relative;transform:rotate(var(--a,0deg))}
+.knob i{position:absolute;top:3px;right:50%;width:2.5px;height:10px;background:var(--acc);border-radius:2px;transform:translateX(50%);transform-origin:50% 10px}
+.kbadge{padding:8px 24px;border-radius:999px;background:#E3F2F2;border:2px solid var(--acc);color:var(--acc);font-size:18px;font-weight:800;opacity:1;transform:none}
+@keyframes knobSet{
+  0%{transform:rotate(calc(var(--a) - 32deg))}
+  15%{transform:rotate(calc(var(--a) + 26deg))}
+  30%{transform:rotate(calc(var(--a) - 19deg))}
+  45%{transform:rotate(calc(var(--a) + 13deg))}
+  60%{transform:rotate(calc(var(--a) - 8deg))}
+  78%{transform:rotate(calc(var(--a) + 4deg))}
+  100%{transform:rotate(var(--a))}}
+@keyframes kbadgeIn{0%,72%{opacity:0;transform:scale(.6)}88%,100%{opacity:1;transform:none}}
+.slide.active .knob{animation:knobSet 2.1s cubic-bezier(.35,.75,.4,1) both;animation-delay:calc(var(--i)*.045s)}
+.slide.active .kbadge{animation:kbadgeIn .55s ease both;animation-delay:2.15s}
+/* S18: میزگرد توجه */
+.rt{position:relative;width:100%;max-width:660px;height:170px;margin:2px auto 0}
+.rt-table{position:absolute;left:50%;top:50%;width:44%;height:46%;transform:translate(-50%,-50%);border:2px dashed var(--soft);border-radius:50%;background:var(--light)}
+.rt-beams{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.beam{stroke:var(--acc);stroke-linecap:round;fill:none;stroke-dashoffset:0}
+.b1{stroke-width:5;opacity:.9}
+.b2,.b3{stroke-width:3;opacity:.55}
+.rt-tok{position:absolute;transform:translate(-50%,-50%);padding:8px 22px;border-radius:999px;background:${WHT};border:2px solid var(--soft);font-size:19px;font-weight:800;color:var(--navy);white-space:nowrap;opacity:1}
+@keyframes beamDraw{from{stroke-dashoffset:var(--len,400)}to{stroke-dashoffset:0}}
+@keyframes tokPop{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes tokGlow{0%{box-shadow:none;border-color:var(--soft)}35%,62%{box-shadow:0 0 0 4px rgba(14,124,123,.28);border-color:var(--acc)}100%{box-shadow:none;border-color:var(--soft)}}
+@keyframes tokGlowG{0%{box-shadow:none;border-color:var(--soft)}35%,62%{box-shadow:0 0 0 4px rgba(201,162,39,.4);border-color:var(--gold)}100%{box-shadow:none;border-color:var(--soft)}}
+.slide.active .b1{animation:beamDraw .75s ease both;animation-delay:.4s}
+.slide.active .b2,.slide.active .b3{animation:beamDraw .7s ease both;animation-delay:1.3s}
+.slide.active .rt-tok{animation:tokPop .45s ease both var(--d),tokGlow 1s ease both var(--d)}
+.slide.active .rt-tok.recv{animation:tokPop .45s ease both var(--d),tokGlowG 1s ease both var(--d)}
+/* S19: تپش خانهٔ داغ ماتریس توجه */
+@keyframes hotPulse{0%{box-shadow:0 0 0 0 rgba(14,124,123,.6)}100%{box-shadow:0 0 0 15px rgba(14,124,123,0)}}
+.slide.active .att-cell.hot-cell{animation:riseIn .45s ease both calc(var(--i,0)*.08s),hotPulse 1.1s ease 2.3s 2}
+/* S20: نقطهٔ درحال‌حرکت روی چیپ‌های مسیر */
+.travel{position:relative;display:flex;justify-content:center}
+.chipflow.flow-travel{flex-wrap:nowrap;margin:70px 0}
+.tdot{position:absolute;top:50%;right:0;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px rgba(201,162,39,.85);opacity:0}
+@keyframes chipGlow{0%,100%{box-shadow:0 0 0 0 rgba(14,124,123,0)}50%{box-shadow:0 0 0 5px rgba(14,124,123,.2),0 0 22px rgba(14,124,123,.35)}}
+@keyframes tdotGo{0%{opacity:0;right:0}6%{opacity:1}94%{opacity:1}100%{opacity:0;right:100%}}
+.slide.active .flow-travel .flow-chip{animation:chipGlow .95s ease both;animation-delay:calc(.3s + var(--d,0)*.62s)}
+.slide.active .tdot{animation:tdotGo 3.2s linear both}
 /* کروم پایین */
 #chrome{position:fixed;right:0;left:0;bottom:0;z-index:40;background:rgba(13,27,42,.9);backdrop-filter:blur(4px);display:flex;align-items:center;gap:12px;padding:4px 14px;font-size:12px}
 #chips{display:flex;gap:6px}
@@ -509,6 +789,11 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
 #notes{position:fixed;right:0;left:0;bottom:30px;z-index:50;max-height:46%;overflow-y:auto;background:rgba(16,32,50,.94);color:${LIGHT};border-top:3px solid var(--gold);padding:16px 34px 20px;font-size:20px;line-height:1.9;white-space:pre-line;display:none}
 #notes.show{display:block}
 #notes .nhead{font-size:14px;color:var(--gold);margin-bottom:8px;font-weight:700}
+/* G2: احترام به ترجیح «کاهش حرکت» — همهٔ انیمیشن‌ها خاموش و حالت پایانی نمایش داده می‌شود */
+@media (prefers-reduced-motion:reduce){
+  .slide.active *,.slide.active *::before,.slide.active *::after{animation:none!important}
+  .slide{transition:none}
+}
 `;
 
 const JS = `
