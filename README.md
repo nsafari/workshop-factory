@@ -40,12 +40,15 @@ ai-training/
 │   └── tools/                    # پلتفرم‌ها و ابزارهای هوش مصنوعی
 │
 ├── workshops/                    # منابع کارگاه
-│   ├── package.json              # وابستگی‌های تولید اسلاید
-│   ├── generate-slides.mjs       # سازنده‌ی اسلاید با PptxGenJS (راست‌به‌چپ/فارسی)
+│   ├── package.json              # اسکریپت تولید اسلاید (بدون وابستگی)
+│   ├── generate-slides.mjs       # سازنده‌ی دک اسلاید HTML (راست‌به‌چپ/فارسی)
+│   ├── fonts/                    # فونت Vazirmatn (woff2) که در دک نهفته می‌شود
+│   ├── slides/
+│   │   └── workshop-1-slides.html # دک ۲۴ اسلایدی کارگاه ۱ (خروجی خودکفا)
 │   ├── workshop-1-ai-concepts.md # کارگاه ۱
 │   ├── workshop-2-agents.md      # کارگاه ۲
 │   ├── workshop-3-opencode.md    # کارگاه ۳
-│   └── slide-assets/             # تصاویر استفاده‌شده در اسلایدها
+│   └── slide-assets/             # تصاویر قدیمی اسلایدها (بایگانی)
 │
 └── .agents/skills/               # مهارت‌های دستیار
     ├── workshop-generator/       # تولید محتوای کارگاه
@@ -77,11 +80,11 @@ ai-training/
 - **تعامل**: مشارکت فعال و بحث گروهی
 - **ارزیابی**: تشخیصی، تکوینی، تراکمی
 
-### ۳. ابزارهای PPTX
+### ۳. ابزارهای اسلاید
 
-تولید پاورپوینت:
+تولید اسلایدهای کارگاه:
 
-- **PptxGenJS**: کتابخانه‌ی جاوااسکریپت (ابزار اصلی)
+- **دک HTML خودکفا**: خروجی `workshops/generate-slides.mjs` (ابزار اصلی؛ بدون وابستگی)
 - **python-pptx**: کتابخانه‌ی پایتون
 - **Slidev**: ارائه‌های مبتنی بر وب
 
@@ -103,10 +106,10 @@ ai-training/
 
 ### ۲. `slide-generator`
 
-تولید اسلاید پاورپوینت:
+تولید دک اسلاید HTML:
 
 - طراحی ساختار اسلایدها
-- تولید کد PptxGenJS
+- خروجی HTML خودکفا با ویژوال‌های CSS/SVG
 - پشتیبانی از فارسی (راست‌به‌چپ)
 - الگوهای قابل استفاده‌ی مجدد برای کارگاه
 
@@ -137,11 +140,12 @@ ai-training/
 
 ```bash
 cd workshops
-npm install
 npm run slides
 ```
 
-**Node.js نسخه‌ی ۱۶ یا بالاتر** لازم است. برای نمایش درست فارسی، فونت Vazirmatn باید روی سیستم بیننده نصب باشد.
+خروجی یک فایل خودکفاست: `workshops/slides/workshop-1-slides.html` — آن را در مرورگر باز کنید (بدون هیچ وابستگی npm). کلیدهای ناوبری: `Space` بعدی، `Backspace` قبلی، `N` یادداشت‌های سخنران، `F` تمام‌صفحه، `۱` و `۲` پرش به هر جلسه.
+
+**Node.js نسخه‌ی ۱۶ یا بالاتر** لازم است. فایل HTML کاملاً خودکفاست: فونت Vazirmatn (متغیر، وزن ۱۰۰ تا ۹۰۰) به‌صورت base64 در همان فایل نهفته شده و حتی بدون اینترنت دقیقاً یکسان رندر می‌شود؛ هیچ درخواست خارجی ندارد.
 
 ---
 
@@ -155,9 +159,9 @@ npm run slides
 
 **خروجی دستیار**:
 
-۱. **ساختار**: ۸ جلسه‌ی ۲۰ دقیقه‌ای
+۱. **ساختار**: دو جلسه‌ی ۲۰ دقیقه‌ای + ۱۵ دقیقه استراحت
 ۲. **محتوا**: `workshops/workshop-1-ai-concepts.md`
-۳. **اسلایدها**: `session1` تا `session8.pptx`
+۳. **اسلایدها**: `workshops/slides/workshop-1-slides.html` (۲۴ اسلاید، یک فایل خودکفا)
 ۴. **کد**: `workshops/generate-slides.mjs`
 
 ---
@@ -167,8 +171,8 @@ npm run slides
 | جزئیات | نیاز |
 |--------|------|
 | Node.js | نسخه‌ی ۱۶ یا بالاتر (برای تولید اسلاید) |
-| Python | نسخه‌ی ۳.۸ یا بالاتر (اختیاری، تمرین‌های کارگاه ۱) |
-| فونت | [Vazirmatn](https://github.com/rastikerdar/vazirmatn) برای اسلایدهای فارسی |
+| Python | نسخه‌ی ۳.۸ یا بالاتر (اختیاری، تمرین‌های کارگاه ۲) |
+| فونت | [Vazirmatn](https://github.com/rastikerdar/vazirmatn) — در فایل HTML نهفته است؛ نصب محلی یا اینترنت لازم نیست |
 
 ---
 
@@ -187,7 +191,6 @@ npm run slides
 
 ### ابزارها
 
-- [PptxGenJS](https://gitbrent.github.io/PptxGenJS/)
 - [فونت Vazirmatn](https://github.com/rastikerdar/vazirmatn)
 
 ---
