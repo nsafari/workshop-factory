@@ -190,8 +190,9 @@ const SESSIONS = [
       'مجموعهٔ این عددها، دانش آموخته‌شدهٔ مدل است؛ نه پایگاه داده، نه جست‌وجو',
     ], size: 22, gap: 20, frag: 1 },
     { visual: 'knobs', frag: 2 },
-    { accent: 'اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.', bold: true, frag: 3 },
-  ], notes: 'آزمایش ذهنی (یک جمله): اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.\nنکتهٔ مدرس: قیاس قورمه‌سبزی را بزنید: ۲ مادهٔ اصلی تنظیمش ساده است؛ ۱۷۵ میلیارد ادویه تنظیم دستی‌اش غیرممکن است.' },
+    { visual: 'paramSpace', frag: 3 },
+    { accent: 'اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.', bold: true, frag: 4 },
+  ], notes: 'آزمایش ذهنی (یک جمله): اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.\nنکتهٔ مدرس: قیاس قورمه‌سبزی را بزنید: ۲ مادهٔ اصلی تنظیمش ساده است؛ ۱۷۵ میلیارد ادویه تنظیم دستی‌اش غیرممکن است.\nگام ۳ (فضا): هر پیش‌بینی یک حرکت کوچک از نقطهٔ معنی کلمه در فضای هزارانبُعدی است؛ پارامترها قوانین آن حرکت‌اند. همین فضا را در اسلاید «بازی او» دوباره می‌بینید.' },
   // اسلاید ۱۷ - جدول مقیاس
   { title: 'مقیاس واقعی', sub: 'از ۲ پارامتر تا ۱۷۵ میلیارد', blocks: [
     { table: { size: 19, colW: [37, 27, 36], head: ['مدل', 'تعداد پارامتر', 'نکته'], rows: [
@@ -212,9 +213,13 @@ const SESSIONS = [
   // اسلاید ۱۹ - بازی «او»
   { title: 'بازی «او»', blocks: [
     { lead: '«علی به بانک رفت چون او پول لازم داشت.»', frag: 1 },
-    { visual: 'attention', frag: 2 },
+    { split: {
+      ratio: [40, 60],
+      right: [ { visual: 'attention', frag: 2 } ],
+      left: [ { visual: 'tokenSpace', frag: 4 } ],
+    } },
     { text: '«او» به چه کسی برمی‌گردد؟ علی. چرا؟ چون مدل برای کلمهٔ «او» بیشتر از همه به «علی» توجه می‌کند (امتیاز فرضی: علی ۷۰٪، بقیهٔ کلمات ۳۰٪).', frag: 3 },
-  ], notes: 'سؤال: «او» به چه کسی برمی‌گردد؟ علی. چرا؟ چون مدل برای کلمهٔ «او» بیشتر از همه به «علی» توجه می‌کند (امتیاز فرضی: علی ۷۰٪، بقیهٔ کلمات ۳۰٪).\nبازی گروهی (۳ دقیقه): هر گروه ۴ نفره، هر نفر یک کلمه از جمله باشد و بگوید «من به چه کسی بیشتر گوش می‌دهم؟»\n• «چون» به «رفت» و «پول» گوش می‌دهد\n• «او» به «علی» گوش می‌دهد\n• هر کلمه به کلمات مرتبط‌تر توجه می‌کند؛ این همان کاری است که Transformer انجام می‌دهد\nنکتهٔ مدرس: در این کارگاه جزئیات معماری (لایه‌ها، ماتریس، feed-forward) را عمداً نمی‌گوییم؛ فقط باید بدانید معنای هر کلمه بر اساس زمینه اصلاح می‌شود. مثال «شیر»: در «شیر جنگل» حیوان، در «شیر آب» وسیله، در «شیر خوردن» نوشیدنی.' },
+  ], notes: 'سؤال: «او» به چه کسی برمی‌گردد؟ علی. چرا؟ چون مدل برای کلمهٔ «او» بیشتر از همه به «علی» توجه می‌کند (امتیاز فرضی: علی ۷۰٪، بقیهٔ کلمات ۳۰٪).\nگام ۴ (فضا): در ذهن مدل، هر کلمه نقطه‌ای در فضایی با حدود ۱۲٬۰۰۰ محور است؛ توجه یعنی کشیدن نقطهٔ «او» به سمت «علی». ۱۲٬۰۰۰ محور را نمی‌شود ترسیم کرد؛ فقط می‌شود عددش را گفت.\nبازی گروهی (۳ دقیقه): هر گروه ۴ نفره، هر نفر یک کلمه از جمله باشد و بگوید «من به چه کسی بیشتر گوش می‌دهم؟»\n• «چون» به «رفت» و «پول» گوش می‌دهد\n• «او» به «علی» گوش می‌دهد\n• هر کلمه به کلمات مرتبط‌تر توجه می‌کند؛ این همان کاری است که Transformer انجام می‌دهد\nنکتهٔ مدرس: در این کارگاه جزئیات معماری (لایه‌ها، ماتریس، feed-forward) را عمداً نمی‌گوییم؛ فقط باید بدانید معنای هر کلمه بر اساس زمینه اصلاح می‌شود. مثال «شیر»: در «شیر جنگل» حیوان، در «شیر آب» وسیله، در «شیر خوردن» نوشیدنی.' },
   // اسلاید ۲۰ - هوش مصنوعی در یک تصویر
   { title: 'هوش مصنوعی در یک تصویر', sub: 'کل مسیر در یک خط', blocks: [
     { visual: 'pipeline' },
@@ -463,6 +468,65 @@ function vRoundtable() {
 <div class="viz-caption" data-frag="2">«او» بیشتر از همه به «علی» گوش می‌دهد؛ «چون» به «رفت» و «پول» — هر کلمه به کلمهٔ مرتبط‌تر</div>`;
 }
 
+//  ف) فضای هزارانبُعدی توکن‌ها — پس‌زمینهٔ مشترک: شبکهٔ محو + خطوط عمق + چیپ
+//  (اسلایدهای ۱۶ و ۱۹؛ زبان بصری 3Blue1Brown: فضا با محورهای «نامشهود»)
+const spGrid = (() => {
+  let g = '';
+  for (let x = 20; x <= 540; x += 40) g += `<line x1="${x}" y1="10" x2="${x}" y2="180"/>`;
+  for (let y = 10; y <= 180; y += 30) g += `<line x1="10" y1="${y}" x2="550" y2="${y}"/>`;
+  return g;
+})();
+//  اسلاید ۱۶: نقطهٔ معنیِ کلمه با دو قانون حرکت — پارامتر درست به هدف می‌رسد
+function vParamSpace() {
+  return `<div class="spz">
+  <span class="sp-chip anim">… ۱۲٬۰۰۰ بُعد</span>
+  <svg viewBox="0 0 560 190" class="sp-svg" aria-label="حرکت نقطهٔ معنی کلمه در فضا">
+    <defs>
+      <marker id="psArrowB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#C25B5B"/></marker>
+      <marker id="psArrowG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${ACC}"/></marker>
+    </defs>
+    <g class="sp-grid">${spGrid}</g>
+    <g class="sp-deep"><line x1="70" y1="184" x2="230" y2="14"/><line x1="490" y1="184" x2="330" y2="14"/></g>
+    <circle class="ps-target" cx="170" cy="62" r="20"/>
+    <text class="ps-mark ps-hit" x="170" y="68" text-anchor="middle">✓</text>
+    <path class="ps-path ps-bad" pathLength="1" d="M420,140 C 400,80 375,45 350,38" marker-end="url(#psArrowB)"/>
+    <circle class="ps-end ps-end-bad" cx="350" cy="38" r="6"/>
+    <text class="ps-mark ps-x" x="370" y="44" text-anchor="middle">✗</text>
+    <text class="ps-lab ps-lab-bad" x="390" y="90" text-anchor="middle">پارامترهای نادرست</text>
+    <path class="ps-path ps-good" pathLength="1" d="M420,140 C 330,140 240,115 182,70" marker-end="url(#psArrowG)"/>
+    <text class="ps-lab ps-lab-good" x="240" y="160" text-anchor="middle">پارامترهای درست</text>
+    <circle class="ps-start" cx="420" cy="140" r="8"/>
+    <text class="ps-lab ps-lab-start" x="428" y="172" text-anchor="middle">نقطهٔ معنیِ کلمه</text>
+  </svg>
+  <div class="viz-caption">هر پیش‌بینی = حرکت کوچکی از این نقطه در فضا؛ پارامترها = قوانین حرکت، یادگیری = تنظیم آن قوانین</div>
+</div>`;
+}
+//  اسلاید ۱۹: کلمات به‌مثابهٔ نقاط؛ توجه = کشیدن «او» به سمت «علی»
+function vTokenSpace() {
+  return `<div class="spz">
+  <span class="sp-chip anim">… ۱۲٬۰۰۰ بُعد</span>
+  <svg viewBox="0 0 560 190" class="sp-svg" aria-label="کلمات به‌مثابهٔ نقاط در فضا">
+    <defs>
+      <marker id="tsArrowT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="${ACC}"/></marker>
+      <marker id="tsArrowF" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#8FA3BF"/></marker>
+    </defs>
+    <g class="sp-grid">${spGrid}</g>
+    <g class="sp-deep"><line x1="70" y1="184" x2="230" y2="14"/><line x1="490" y1="184" x2="330" y2="14"/></g>
+    <line class="ts-beam ts-beam-f" pathLength="1" x1="290" y1="115" x2="120" y2="84" marker-end="url(#tsArrowF)"/>
+    <line class="ts-beam ts-beam-f" pathLength="1" x1="290" y1="115" x2="159" y2="154" marker-end="url(#tsArrowF)"/>
+    <line class="ts-beam ts-beam-t" pathLength="1" x1="290" y1="115" x2="383" y2="52" marker-end="url(#tsArrowT)"/>
+    <g class="ts-word anim" style="--i:0"><circle class="ts-pt" cx="405" cy="42" r="7"/><text class="ts-lab" x="405" y="26" text-anchor="middle">علی</text></g>
+    <g class="ts-word anim" style="--i:1"><circle class="ts-pt" cx="100" cy="80" r="7"/><text class="ts-lab" x="100" y="64" text-anchor="middle">بانک</text></g>
+    <g class="ts-word anim" style="--i:2"><circle class="ts-pt" cx="140" cy="160" r="7"/><text class="ts-lab" x="140" y="180" text-anchor="middle">پول</text></g>
+    <g class="ts-ou">
+      <circle class="ts-pt ts-pt-ou" cx="290" cy="115" r="10"/>
+      <text class="ts-lab ts-lab-ou" x="290" y="94" text-anchor="middle">او</text>
+    </g>
+  </svg>
+  <div class="viz-caption">در ذهن مدل: هر کلمه نقطه‌ای در فضایی با هزاران محور؛ توجه، نقطهٔ «او» را به سمت «علی» می‌کشد</div>
+</div>`;
+}
+
 const VISUALS = {
   'timeline': vTimeline,
   'review-chips': vReviewChips,
@@ -475,6 +539,8 @@ const VISUALS = {
   'mask': vMask,
   'knobs': vKnobs,
   'roundtable': vRoundtable,
+  'paramSpace': vParamSpace,
+  'tokenSpace': vTokenSpace,
 };
 
 // ============================================================
@@ -801,6 +867,53 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
 .att-cell.hot-cell::after{content:'';position:absolute;inset:0;border-radius:8px;box-shadow:0 0 0 0 rgba(14,124,123,.6);opacity:0;pointer-events:none}
 .slide[data-step="3"] .att-cell.hot-cell::after{animation:hotRing 1.1s ease 2.3s 2}
 @keyframes hotRing{0%{box-shadow:0 0 0 0 rgba(14,124,123,.6);opacity:1}100%{box-shadow:0 0 0 15px rgba(14,124,123,0);opacity:1}}
+/* S16/S19: فضای هزارانبُعدی توکن‌ها (شبکهٔ محو + خطوط عمق + چیپ بُعد) */
+.spz{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:2px}
+.sp-svg{width:100%;max-width:500px;height:auto}
+.sp-svg text{font-family:inherit;font-size:15px;fill:var(--navy)}
+.sp-grid line{stroke:var(--navy);stroke-opacity:.08;stroke-width:1}
+.sp-deep line{stroke:var(--navy);stroke-opacity:.05;stroke-width:1.2}
+.sp-chip{position:absolute;top:-8px;left:0;padding:5px 16px;border-radius:999px;background:var(--light);border:1.5px solid var(--soft);color:var(--mut);font-size:14px;font-weight:700}
+.revealed .sp-grid,.revealed .sp-deep{animation:fadeIn .8s ease both}
+.revealed .sp-chip{animation:riseIn .5s ease both;animation-delay:.3s}
+/* S16 گام ۳: مسیرهای حرکت در فضا — حالت پیش‌فرض = حالت پایانی (خط کشیده‌شده) */
+.ps-target{fill:none;stroke:var(--acc);stroke-width:2;stroke-dasharray:5 5;stroke-opacity:.55}
+.ps-start{fill:${WHT};stroke:var(--navy);stroke-width:3;transform-box:fill-box;transform-origin:center}
+.ps-end{transform-box:fill-box;transform-origin:center}
+.ps-end-bad{fill:#C25B5B}
+.ps-path{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0}
+.ps-good{stroke:var(--acc);stroke-width:4}
+.ps-bad{stroke:#C25B5B;stroke-width:3;stroke-opacity:.8}
+.ps-mark{font-size:17px;font-weight:800}
+.ps-hit{fill:var(--acc)}
+.ps-x{fill:#C25B5B}
+.ps-lab{fill:var(--mut)}
+.ps-lab-good{fill:var(--acc);font-weight:700}
+.ps-lab-bad{fill:#C25B5B;font-weight:700}
+.ps-lab-start{fill:var(--navy);font-weight:700}
+@keyframes pathDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.revealed .ps-start{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:.1s}
+.revealed .ps-bad{animation:pathDraw .7s ease both;animation-delay:.45s}
+.revealed .ps-end-bad,.revealed .ps-x{animation:fadeIn .4s ease both;animation-delay:1.1s}
+.revealed .ps-lab-bad{animation:fadeIn .5s ease both;animation-delay:1.2s}
+.revealed .ps-good{animation:pathDraw .9s ease both;animation-delay:.8s}
+.revealed .ps-lab-good{animation:fadeIn .5s ease both;animation-delay:1.5s}
+.revealed .ps-hit{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:1.6s}
+.revealed .ps-lab-start{animation:fadeIn .5s ease both;animation-delay:.2s}
+/* S19 گام ۴: نقاط کلمات، پرتوهای توجه، سپس کشش «او» به سمت «علی» */
+.ts-pt{fill:${WHT};stroke:var(--navy);stroke-width:3}
+.ts-pt-ou{stroke:var(--acc);stroke-width:3.5;fill:#E3F2F2}
+.ts-lab{font-weight:700}
+.ts-lab-ou{fill:var(--acc);font-size:18px}
+.ts-beam{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0}
+.ts-beam-t{stroke:var(--acc);stroke-width:5;stroke-opacity:.9}
+.ts-beam-f{stroke:#8FA3BF;stroke-width:2.5;stroke-opacity:.45}
+.ts-ou{transform:translate(-12px,-8px)}
+@keyframes tsPull{from{transform:translate(0,0)}to{transform:translate(-12px,-8px)}}
+.revealed .ts-word{animation:riseIn .5s cubic-bezier(.22,.8,.3,1) both;animation-delay:calc(var(--i)*.15s)}
+.revealed .ts-beam-t{animation:pathDraw .6s ease both;animation-delay:.6s}
+.revealed .ts-beam-f{animation:pathDraw .5s ease both;animation-delay:.95s}
+.revealed .ts-ou{animation:riseIn .45s ease both .25s,tsPull .7s cubic-bezier(.3,.9,.4,1) both 1.5s}
 /* S20: نقطهٔ درحال‌حرکت روی چیپ‌های مسیر */
 .travel{position:relative;display:flex;justify-content:center}
 .chipflow.flow-travel{flex-wrap:nowrap;margin:70px 0}

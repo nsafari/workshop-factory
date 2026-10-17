@@ -251,6 +251,53 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
 .att-cell.hot-cell::after{content:'';position:absolute;inset:0;border-radius:8px;box-shadow:0 0 0 0 rgba(14,124,123,.6);opacity:0;pointer-events:none}
 .slide[data-step="3"] .att-cell.hot-cell::after{animation:hotRing 1.1s ease 2.3s 2}
 @keyframes hotRing{0%{box-shadow:0 0 0 0 rgba(14,124,123,.6);opacity:1}100%{box-shadow:0 0 0 15px rgba(14,124,123,0);opacity:1}}
+/* S16/S19: فضای هزارانبُعدی توکن‌ها (شبکهٔ محو + خطوط عمق + چیپ بُعد) */
+.spz{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:2px}
+.sp-svg{width:100%;max-width:500px;height:auto}
+.sp-svg text{font-family:inherit;font-size:15px;fill:var(--navy)}
+.sp-grid line{stroke:var(--navy);stroke-opacity:.08;stroke-width:1}
+.sp-deep line{stroke:var(--navy);stroke-opacity:.05;stroke-width:1.2}
+.sp-chip{position:absolute;top:-8px;left:0;padding:5px 16px;border-radius:999px;background:var(--light);border:1.5px solid var(--soft);color:var(--mut);font-size:14px;font-weight:700}
+.revealed .sp-grid,.revealed .sp-deep{animation:fadeIn .8s ease both}
+.revealed .sp-chip{animation:riseIn .5s ease both;animation-delay:.3s}
+/* S16 گام ۳: مسیرهای حرکت در فضا — حالت پیش‌فرض = حالت پایانی (خط کشیده‌شده) */
+.ps-target{fill:none;stroke:var(--acc);stroke-width:2;stroke-dasharray:5 5;stroke-opacity:.55}
+.ps-start{fill:#FFFFFF;stroke:var(--navy);stroke-width:3;transform-box:fill-box;transform-origin:center}
+.ps-end{transform-box:fill-box;transform-origin:center}
+.ps-end-bad{fill:#C25B5B}
+.ps-path{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0}
+.ps-good{stroke:var(--acc);stroke-width:4}
+.ps-bad{stroke:#C25B5B;stroke-width:3;stroke-opacity:.8}
+.ps-mark{font-size:17px;font-weight:800}
+.ps-hit{fill:var(--acc)}
+.ps-x{fill:#C25B5B}
+.ps-lab{fill:var(--mut)}
+.ps-lab-good{fill:var(--acc);font-weight:700}
+.ps-lab-bad{fill:#C25B5B;font-weight:700}
+.ps-lab-start{fill:var(--navy);font-weight:700}
+@keyframes pathDraw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.revealed .ps-start{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:.1s}
+.revealed .ps-bad{animation:pathDraw .7s ease both;animation-delay:.45s}
+.revealed .ps-end-bad,.revealed .ps-x{animation:fadeIn .4s ease both;animation-delay:1.1s}
+.revealed .ps-lab-bad{animation:fadeIn .5s ease both;animation-delay:1.2s}
+.revealed .ps-good{animation:pathDraw .9s ease both;animation-delay:.8s}
+.revealed .ps-lab-good{animation:fadeIn .5s ease both;animation-delay:1.5s}
+.revealed .ps-hit{animation:ptPop .5s cubic-bezier(.3,1.4,.5,1) both;animation-delay:1.6s}
+.revealed .ps-lab-start{animation:fadeIn .5s ease both;animation-delay:.2s}
+/* S19 گام ۴: نقاط کلمات، پرتوهای توجه، سپس کشش «او» به سمت «علی» */
+.ts-pt{fill:#FFFFFF;stroke:var(--navy);stroke-width:3}
+.ts-pt-ou{stroke:var(--acc);stroke-width:3.5;fill:#E3F2F2}
+.ts-lab{font-weight:700}
+.ts-lab-ou{fill:var(--acc);font-size:18px}
+.ts-beam{fill:none;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0}
+.ts-beam-t{stroke:var(--acc);stroke-width:5;stroke-opacity:.9}
+.ts-beam-f{stroke:#8FA3BF;stroke-width:2.5;stroke-opacity:.45}
+.ts-ou{transform:translate(-12px,-8px)}
+@keyframes tsPull{from{transform:translate(0,0)}to{transform:translate(-12px,-8px)}}
+.revealed .ts-word{animation:riseIn .5s cubic-bezier(.22,.8,.3,1) both;animation-delay:calc(var(--i)*.15s)}
+.revealed .ts-beam-t{animation:pathDraw .6s ease both;animation-delay:.6s}
+.revealed .ts-beam-f{animation:pathDraw .5s ease both;animation-delay:.95s}
+.revealed .ts-ou{animation:riseIn .45s ease both .25s,tsPull .7s cubic-bezier(.3,.9,.4,1) both 1.5s}
 /* S20: نقطهٔ درحال‌حرکت روی چیپ‌های مسیر */
 .travel{position:relative;display:flex;justify-content:center}
 .chipflow.flow-travel{flex-wrap:nowrap;margin:70px 0}
@@ -519,7 +566,29 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
   <div class="kgrid"><span class="knob" style="--a:17deg;--i:0"><i></i></span><span class="knob" style="--a:70deg;--i:1"><i></i></span><span class="knob" style="--a:123deg;--i:2"><i></i></span><span class="knob" style="--a:176deg;--i:3"><i></i></span><span class="knob" style="--a:229deg;--i:4"><i></i></span><span class="knob" style="--a:282deg;--i:5"><i></i></span><span class="knob" style="--a:335deg;--i:6"><i></i></span><span class="knob" style="--a:28deg;--i:7"><i></i></span><span class="knob" style="--a:81deg;--i:8"><i></i></span><span class="knob" style="--a:134deg;--i:9"><i></i></span><span class="knob" style="--a:187deg;--i:10"><i></i></span><span class="knob" style="--a:240deg;--i:11"><i></i></span><span class="knob" style="--a:293deg;--i:12"><i></i></span><span class="knob" style="--a:346deg;--i:13"><i></i></span><span class="knob" style="--a:39deg;--i:14"><i></i></span><span class="knob" style="--a:92deg;--i:15"><i></i></span><span class="knob" style="--a:145deg;--i:16"><i></i></span><span class="knob" style="--a:198deg;--i:17"><i></i></span><span class="knob" style="--a:251deg;--i:18"><i></i></span><span class="knob" style="--a:304deg;--i:19"><i></i></span><span class="knob" style="--a:357deg;--i:20"><i></i></span><span class="knob" style="--a:50deg;--i:21"><i></i></span><span class="knob" style="--a:103deg;--i:22"><i></i></span><span class="knob" style="--a:156deg;--i:23"><i></i></span><span class="knob" style="--a:209deg;--i:24"><i></i></span><span class="knob" style="--a:262deg;--i:25"><i></i></span><span class="knob" style="--a:315deg;--i:26"><i></i></span><span class="knob" style="--a:8deg;--i:27"><i></i></span><span class="knob" style="--a:61deg;--i:28"><i></i></span><span class="knob" style="--a:114deg;--i:29"><i></i></span><span class="knob" style="--a:167deg;--i:30"><i></i></span><span class="knob" style="--a:220deg;--i:31"><i></i></span><span class="knob" style="--a:273deg;--i:32"><i></i></span><span class="knob" style="--a:326deg;--i:33"><i></i></span><span class="knob" style="--a:19deg;--i:34"><i></i></span><span class="knob" style="--a:72deg;--i:35"><i></i></span><span class="knob" style="--a:125deg;--i:36"><i></i></span><span class="knob" style="--a:178deg;--i:37"><i></i></span><span class="knob" style="--a:231deg;--i:38"><i></i></span><span class="knob" style="--a:284deg;--i:39"><i></i></span></div>
   <div class="kbadge">خروجی درست ✓</div>
 </div></div>
-  <p class="accent" data-frag="3" style="--i:3;font-weight:700">اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.</p></div>
+  <div class="viz-box" data-frag="3"><div class="spz">
+  <span class="sp-chip anim">… ۱۲٬۰۰۰ بُعد</span>
+  <svg viewBox="0 0 560 190" class="sp-svg" aria-label="حرکت نقطهٔ معنی کلمه در فضا">
+    <defs>
+      <marker id="psArrowB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#C25B5B"/></marker>
+      <marker id="psArrowG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#0E7C7B"/></marker>
+    </defs>
+    <g class="sp-grid"><line x1="20" y1="10" x2="20" y2="180"/><line x1="60" y1="10" x2="60" y2="180"/><line x1="100" y1="10" x2="100" y2="180"/><line x1="140" y1="10" x2="140" y2="180"/><line x1="180" y1="10" x2="180" y2="180"/><line x1="220" y1="10" x2="220" y2="180"/><line x1="260" y1="10" x2="260" y2="180"/><line x1="300" y1="10" x2="300" y2="180"/><line x1="340" y1="10" x2="340" y2="180"/><line x1="380" y1="10" x2="380" y2="180"/><line x1="420" y1="10" x2="420" y2="180"/><line x1="460" y1="10" x2="460" y2="180"/><line x1="500" y1="10" x2="500" y2="180"/><line x1="540" y1="10" x2="540" y2="180"/><line x1="10" y1="10" x2="550" y2="10"/><line x1="10" y1="40" x2="550" y2="40"/><line x1="10" y1="70" x2="550" y2="70"/><line x1="10" y1="100" x2="550" y2="100"/><line x1="10" y1="130" x2="550" y2="130"/><line x1="10" y1="160" x2="550" y2="160"/></g>
+    <g class="sp-deep"><line x1="70" y1="184" x2="230" y2="14"/><line x1="490" y1="184" x2="330" y2="14"/></g>
+    <circle class="ps-target" cx="170" cy="62" r="20"/>
+    <text class="ps-mark ps-hit" x="170" y="68" text-anchor="middle">✓</text>
+    <path class="ps-path ps-bad" pathLength="1" d="M420,140 C 400,80 375,45 350,38" marker-end="url(#psArrowB)"/>
+    <circle class="ps-end ps-end-bad" cx="350" cy="38" r="6"/>
+    <text class="ps-mark ps-x" x="370" y="44" text-anchor="middle">✗</text>
+    <text class="ps-lab ps-lab-bad" x="390" y="90" text-anchor="middle">پارامترهای نادرست</text>
+    <path class="ps-path ps-good" pathLength="1" d="M420,140 C 330,140 240,115 182,70" marker-end="url(#psArrowG)"/>
+    <text class="ps-lab ps-lab-good" x="240" y="160" text-anchor="middle">پارامترهای درست</text>
+    <circle class="ps-start" cx="420" cy="140" r="8"/>
+    <text class="ps-lab ps-lab-start" x="428" y="172" text-anchor="middle">نقطهٔ معنیِ کلمه</text>
+  </svg>
+  <div class="viz-caption">هر پیش‌بینی = حرکت کوچکی از این نقطه در فضا؛ پارامترها = قوانین حرکت، یادگیری = تنظیم آن قوانین</div>
+</div></div>
+  <p class="accent" data-frag="4" style="--i:3;font-weight:700">اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.</p></div>
   <footer class="cfoot"><span>کارگاه ۱ • جلسهٔ ۲: پشت صحنه: هوش مصنوعی چطور کار می‌کند؟</span><span class="cpos"><span class="sdots"></span><span>۱۶ از ۲۴</span></span></footer>
 </section>
 <section class="slide content" data-i="16">
@@ -555,10 +624,34 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
     
   </header>
   <div class="cbody"><p class="lead" data-frag="1" style="--i:0">«علی به بانک رفت چون او پول لازم داشت.»</p>
-  <div class="viz-box" data-frag="2"><div class="att-wrap">
+  <div class="split">
+    <div class="col" style="flex:0 0 40%"><div class="viz-box" data-frag="2"><div class="att-wrap">
   <div class="att-grid"><div class="att-cell att-head att-corner anim" style="--i:0"></div><div class="att-cell att-head anim" style="--i:1">علی</div><div class="att-cell att-head anim" style="--i:2">بانک</div><div class="att-cell att-head anim" style="--i:3">او</div><div class="att-cell att-head anim" style="--i:4">پول</div><div class="att-cell att-head anim" style="--i:5">علی</div><div class="att-cell att-self anim" style="--i:6">—</div><div class="att-cell anim" style="--i:7;background:rgba(14,124,123,0.1)"></div><div class="att-cell anim" style="--i:8;background:rgba(14,124,123,0.05)"></div><div class="att-cell anim" style="--i:9;background:rgba(14,124,123,0.05)"></div><div class="att-cell att-head anim" style="--i:10">بانک</div><div class="att-cell anim" style="--i:11;background:rgba(14,124,123,0.08)"></div><div class="att-cell att-self anim" style="--i:12">—</div><div class="att-cell anim" style="--i:13;background:rgba(14,124,123,0.04)"></div><div class="att-cell anim" style="--i:14;background:rgba(14,124,123,0.3)"></div><div class="att-cell att-head anim" style="--i:15">او</div><div class="att-cell anim hot-cell" style="--i:16;background:rgba(14,124,123,0.7)"><b class="att-hot">۷۰٪</b></div><div class="att-cell anim" style="--i:17;background:rgba(14,124,123,0.05)"></div><div class="att-cell att-self anim" style="--i:18">—</div><div class="att-cell anim" style="--i:19;background:rgba(14,124,123,0.05)"></div><div class="att-cell att-head anim" style="--i:20">پول</div><div class="att-cell anim" style="--i:21;background:rgba(14,124,123,0.05)"></div><div class="att-cell anim" style="--i:22;background:rgba(14,124,123,0.3)"></div><div class="att-cell anim" style="--i:23;background:rgba(14,124,123,0.05)"></div><div class="att-cell att-self anim" style="--i:24">—</div></div>
   <div class="viz-caption">شدت رنگ = میزان توجه؛ «او» بیشتر از همه به «علی» توجه می‌کند</div>
-</div></div>
+</div></div></div>
+    <div class="col" style="flex:1"><div class="viz-box" data-frag="4"><div class="spz">
+  <span class="sp-chip anim">… ۱۲٬۰۰۰ بُعد</span>
+  <svg viewBox="0 0 560 190" class="sp-svg" aria-label="کلمات به‌مثابهٔ نقاط در فضا">
+    <defs>
+      <marker id="tsArrowT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#0E7C7B"/></marker>
+      <marker id="tsArrowF" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,0L10,5L0,10z" fill="#8FA3BF"/></marker>
+    </defs>
+    <g class="sp-grid"><line x1="20" y1="10" x2="20" y2="180"/><line x1="60" y1="10" x2="60" y2="180"/><line x1="100" y1="10" x2="100" y2="180"/><line x1="140" y1="10" x2="140" y2="180"/><line x1="180" y1="10" x2="180" y2="180"/><line x1="220" y1="10" x2="220" y2="180"/><line x1="260" y1="10" x2="260" y2="180"/><line x1="300" y1="10" x2="300" y2="180"/><line x1="340" y1="10" x2="340" y2="180"/><line x1="380" y1="10" x2="380" y2="180"/><line x1="420" y1="10" x2="420" y2="180"/><line x1="460" y1="10" x2="460" y2="180"/><line x1="500" y1="10" x2="500" y2="180"/><line x1="540" y1="10" x2="540" y2="180"/><line x1="10" y1="10" x2="550" y2="10"/><line x1="10" y1="40" x2="550" y2="40"/><line x1="10" y1="70" x2="550" y2="70"/><line x1="10" y1="100" x2="550" y2="100"/><line x1="10" y1="130" x2="550" y2="130"/><line x1="10" y1="160" x2="550" y2="160"/></g>
+    <g class="sp-deep"><line x1="70" y1="184" x2="230" y2="14"/><line x1="490" y1="184" x2="330" y2="14"/></g>
+    <line class="ts-beam ts-beam-f" pathLength="1" x1="290" y1="115" x2="120" y2="84" marker-end="url(#tsArrowF)"/>
+    <line class="ts-beam ts-beam-f" pathLength="1" x1="290" y1="115" x2="159" y2="154" marker-end="url(#tsArrowF)"/>
+    <line class="ts-beam ts-beam-t" pathLength="1" x1="290" y1="115" x2="383" y2="52" marker-end="url(#tsArrowT)"/>
+    <g class="ts-word anim" style="--i:0"><circle class="ts-pt" cx="405" cy="42" r="7"/><text class="ts-lab" x="405" y="26" text-anchor="middle">علی</text></g>
+    <g class="ts-word anim" style="--i:1"><circle class="ts-pt" cx="100" cy="80" r="7"/><text class="ts-lab" x="100" y="64" text-anchor="middle">بانک</text></g>
+    <g class="ts-word anim" style="--i:2"><circle class="ts-pt" cx="140" cy="160" r="7"/><text class="ts-lab" x="140" y="180" text-anchor="middle">پول</text></g>
+    <g class="ts-ou">
+      <circle class="ts-pt ts-pt-ou" cx="290" cy="115" r="10"/>
+      <text class="ts-lab ts-lab-ou" x="290" y="94" text-anchor="middle">او</text>
+    </g>
+  </svg>
+  <div class="viz-caption">در ذهن مدل: هر کلمه نقطه‌ای در فضایی با هزاران محور؛ توجه، نقطهٔ «او» را به سمت «علی» می‌کشد</div>
+</div></div></div>
+  </div>
   <p class="plain" data-frag="3" style="--i:1">«او» به چه کسی برمی‌گردد؟ علی. چرا؟ چون مدل برای کلمهٔ «او» بیشتر از همه به «علی» توجه می‌کند (امتیاز فرضی: علی ۷۰٪، بقیهٔ کلمات ۳۰٪).</p></div>
   <footer class="cfoot"><span>کارگاه ۱ • جلسهٔ ۲: پشت صحنه: هوش مصنوعی چطور کار می‌کند؟</span><span class="cpos"><span class="sdots"></span><span>۱۹ از ۲۴</span></span></footer>
 </section>
@@ -614,7 +707,7 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
 <script>
 const slides=[...document.querySelectorAll('.slide')];
 const TOTAL=slides.length;
-const NOTES=["خوش‌آمدگویی.\nهدف جلسهٔ ۱: انگیزه + نقشهٔ کل کارگاه.\nاین کارگاه برای همهٔ اعضای موسسه است؛ پیش‌نیاز فنی لازم نیست.","نکتهٔ مدرس: این سناریو را زنده اجرا کنید؛ هر بار که کلمهٔ «ابزار»، «دانش» یا «مهارت» را می‌گویید، از شرکت‌کننده‌ها بخواهید تکرار کنند. هدف این است که سه رکن از همین دقیقهٔ سوم در ذهن بماند.\nسؤال از شرکت‌کنندگان: «کدام بخش این صبح را یک جست‌وجوی ساده می‌توانست انجام دهد؟» پاسخ: هیچ‌کدام؛ چون هر سه رکن با هم کار می‌کنند.","نکتهٔ مدرس: اگر یک مدل زبانی به اطلاعات شخصی و ابزارهای شما دسترسی نداشته باشد، نمی‌تواند وظایف اجرایی را انجام دهد.\nبپرسید: «اگر هر سه رکن فراهم شود، چه اتفاقی می‌افتد؟» پاسخ: دستیار هوشمند.","جملهٔ کلیدی: در این دوره هر سه رکن را روی نمونه‌های واقعی خودمان می‌سازیم.\nهر کارت را با یک مثال از محیط کار شرکت‌کننده‌ها باز کنید.","از شرکت‌کننده‌ها بخواهید خودشان را پیدا کنند.\nاگر یکی از این‌ها شبیه مشکل شماست، این کارگاه دقیقاً برای شماست.","جملهٔ کلیدی: هدف نهایی سه کارگاه: ساختن دستیار هوشمند خودتان.","نکتهٔ مدرس: اهداف را فقط مرور کنید؛ «در پایان کارگاه می‌توانید...» هدف ایجاد نقشهٔ ذهنی است.","نکتهٔ مدرس: رابطهٔ تودرتو (AI ⊃ ML ⊃ DL ⊃ GenAI) را همین‌جا با اشاره به تایم‌لاین بگویید: «هر مرحله زیرمجموعهٔ مرحلهٔ قبلی است.» تاریخ‌ها برای حفظ کردن نیست؛ روند را نشان می‌دهد.\nچه چیزی ظاهر شد: قوانین دست‌نویس ← کشف الگو از داده ← شبکه‌های عصبی ← Transformer + آموزش روی کل اینترنت.","بازی قیمت خانه (۲ دقیقه): سؤال: «خانهٔ ۱۱۰ متری چقدر؟» همه فوری می‌گویند ۱۱ میلیارد.\nنکتهٔ کلیدی: «شما همین‌الان یک مدل یادگیری ماشین شدید؛ الگو را از داده کشف کردید، کسی فرمول را به شما نگفته بود.»\nنکتهٔ مدرس: این مثال در جلسهٔ ۲ (مقیاس پارامتر) و در تکلیف پایانی دوباره باز می‌گردد.","نکتهٔ مدرس: فقط یک خط بگویید: «شبکهٔ عصبی یعنی ردیف‌هایی از این داورها که هر لایه کار لایهٔ قبلی را کامل‌تر می‌کند.» جزئیات عددی وارد نشوید.","بازی «آسمان امروز ...» (۲ دقیقه): از کلاس بخواهید جمله را تکمیل کنند، سپس احتمالات را نشان دهید (اعداد فرضی): آبی ۶۰٪، ابری ۲۵٪، صاف ۱۵٪.\nحالا جمله را عوض کنید: «آسمان امروز ابری است و هوا ...» ناگهان «سرد» و «بارانی» بالا می‌آیند؛ یعنی زمینه، احتمال‌ها را عوض می‌کند (پلی به توجه در جلسهٔ ۲).","جملهٔ کلیدی: خودنظارتی یعنی معلم، خودِ داده است.","سؤال استراحت (در ۱۵ دقیقه استراحت): یک کار روزمره انتخاب کنید و برای خود بنویسید: چه دانش، چه مهارت و چه ابزاری لازم دارد؟ در جلسهٔ بعد با هم یکی را می‌سازیم.","هدف جلسهٔ ۲: اعتماد به نفس مدیریت هوش مصنوعی، از موضع فعال.\nمحتوای فنی این جلسه محدود به دو چیز است: پارامتر و توجه؛ هرکدام در حداکثر ۲ تا ۳ دقیقه.","مرور در ۴ کلمه: داده و الگو ← شبکه‌ای که یاد می‌گیرد ← پارامترها ← توجه.\nیک خط برای هرکدام.","آزمایش ذهنی (یک جمله): اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.\nنکتهٔ مدرس: قیاس قورمه‌سبزی را بزنید: ۲ مادهٔ اصلی تنظیمش ساده است؛ ۱۷۵ میلیارد ادویه تنظیم دستی‌اش غیرممکن است.","نکته: بزرگ‌تر همیشه بهتر نیست؛ کیفیت داده و آموزش درست، به اندازهٔ اندازهٔ مدل مهم است.\nپل به جلسهٔ ۱: مدل قیمت خانهٔ ما فقط ۲ عدد داشت (شیب ۰٫۱ و عدد ثابت ۰)؛ حالا آن میلیاردها عدد جلسهٔ قبل ملموس می‌شود.","دو کارت را بخوانید و قیاس میزگرد را زنده اجرا کنید.","سؤال: «او» به چه کسی برمی‌گردد؟ علی. چرا؟ چون مدل برای کلمهٔ «او» بیشتر از همه به «علی» توجه می‌کند (امتیاز فرضی: علی ۷۰٪، بقیهٔ کلمات ۳۰٪).\nبازی گروهی (۳ دقیقه): هر گروه ۴ نفره، هر نفر یک کلمه از جمله باشد و بگوید «من به چه کسی بیشتر گوش می‌دهم؟»\n• «چون» به «رفت» و «پول» گوش می‌دهد\n• «او» به «علی» گوش می‌دهد\n• هر کلمه به کلمات مرتبط‌تر توجه می‌کند؛ این همان کاری است که Transformer انجام می‌دهد\nنکتهٔ مدرس: در این کارگاه جزئیات معماری (لایه‌ها، ماتریس، feed-forward) را عمداً نمی‌گوییم؛ فقط باید بدانید معنای هر کلمه بر اساس زمینه اصلاح می‌شود. مثال «شیر»: در «شیر جنگل» حیوان، در «شیر آب» وسیله، در «شیر خوردن» نوشیدنی.","کل مسیر در یک خط: داده ← پیش‌بینی کلمهٔ بعد ← تکرار میلیاردها بار (آموزش) ← پارامترها (دانش در عددها) ← توجه (معنی از زمینه).","نکتهٔ مدرس: این اسلاید قلب جلسهٔ ۲ است؛ روی هر ردیف یک مثال واقعی از محیط کار شرکت‌کننده‌ها بزنید.","موضع فعال: شما مدیر مدل هستید، نه مشتری منفعل.\nروی هر گلوله یک مثال از محیط کار خودشان بزنید.","تکلیف امروز همان سؤال استراحت است؛ تأکید کنید این تکلیف در کارگاههای ۲ و ۳ ادامه پیدا می‌کند.","جمع‌بندی کل کارگاه و پل به کارگاه ۲: Agent و ابزار، یعنی مهارت و دست برای دستیار."];
+const NOTES=["خوش‌آمدگویی.\nهدف جلسهٔ ۱: انگیزه + نقشهٔ کل کارگاه.\nاین کارگاه برای همهٔ اعضای موسسه است؛ پیش‌نیاز فنی لازم نیست.","نکتهٔ مدرس: این سناریو را زنده اجرا کنید؛ هر بار که کلمهٔ «ابزار»، «دانش» یا «مهارت» را می‌گویید، از شرکت‌کننده‌ها بخواهید تکرار کنند. هدف این است که سه رکن از همین دقیقهٔ سوم در ذهن بماند.\nسؤال از شرکت‌کنندگان: «کدام بخش این صبح را یک جست‌وجوی ساده می‌توانست انجام دهد؟» پاسخ: هیچ‌کدام؛ چون هر سه رکن با هم کار می‌کنند.","نکتهٔ مدرس: اگر یک مدل زبانی به اطلاعات شخصی و ابزارهای شما دسترسی نداشته باشد، نمی‌تواند وظایف اجرایی را انجام دهد.\nبپرسید: «اگر هر سه رکن فراهم شود، چه اتفاقی می‌افتد؟» پاسخ: دستیار هوشمند.","جملهٔ کلیدی: در این دوره هر سه رکن را روی نمونه‌های واقعی خودمان می‌سازیم.\nهر کارت را با یک مثال از محیط کار شرکت‌کننده‌ها باز کنید.","از شرکت‌کننده‌ها بخواهید خودشان را پیدا کنند.\nاگر یکی از این‌ها شبیه مشکل شماست، این کارگاه دقیقاً برای شماست.","جملهٔ کلیدی: هدف نهایی سه کارگاه: ساختن دستیار هوشمند خودتان.","نکتهٔ مدرس: اهداف را فقط مرور کنید؛ «در پایان کارگاه می‌توانید...» هدف ایجاد نقشهٔ ذهنی است.","نکتهٔ مدرس: رابطهٔ تودرتو (AI ⊃ ML ⊃ DL ⊃ GenAI) را همین‌جا با اشاره به تایم‌لاین بگویید: «هر مرحله زیرمجموعهٔ مرحلهٔ قبلی است.» تاریخ‌ها برای حفظ کردن نیست؛ روند را نشان می‌دهد.\nچه چیزی ظاهر شد: قوانین دست‌نویس ← کشف الگو از داده ← شبکه‌های عصبی ← Transformer + آموزش روی کل اینترنت.","بازی قیمت خانه (۲ دقیقه): سؤال: «خانهٔ ۱۱۰ متری چقدر؟» همه فوری می‌گویند ۱۱ میلیارد.\nنکتهٔ کلیدی: «شما همین‌الان یک مدل یادگیری ماشین شدید؛ الگو را از داده کشف کردید، کسی فرمول را به شما نگفته بود.»\nنکتهٔ مدرس: این مثال در جلسهٔ ۲ (مقیاس پارامتر) و در تکلیف پایانی دوباره باز می‌گردد.","نکتهٔ مدرس: فقط یک خط بگویید: «شبکهٔ عصبی یعنی ردیف‌هایی از این داورها که هر لایه کار لایهٔ قبلی را کامل‌تر می‌کند.» جزئیات عددی وارد نشوید.","بازی «آسمان امروز ...» (۲ دقیقه): از کلاس بخواهید جمله را تکمیل کنند، سپس احتمالات را نشان دهید (اعداد فرضی): آبی ۶۰٪، ابری ۲۵٪، صاف ۱۵٪.\nحالا جمله را عوض کنید: «آسمان امروز ابری است و هوا ...» ناگهان «سرد» و «بارانی» بالا می‌آیند؛ یعنی زمینه، احتمال‌ها را عوض می‌کند (پلی به توجه در جلسهٔ ۲).","جملهٔ کلیدی: خودنظارتی یعنی معلم، خودِ داده است.","سؤال استراحت (در ۱۵ دقیقه استراحت): یک کار روزمره انتخاب کنید و برای خود بنویسید: چه دانش، چه مهارت و چه ابزاری لازم دارد؟ در جلسهٔ بعد با هم یکی را می‌سازیم.","هدف جلسهٔ ۲: اعتماد به نفس مدیریت هوش مصنوعی، از موضع فعال.\nمحتوای فنی این جلسه محدود به دو چیز است: پارامتر و توجه؛ هرکدام در حداکثر ۲ تا ۳ دقیقه.","مرور در ۴ کلمه: داده و الگو ← شبکه‌ای که یاد می‌گیرد ← پارامترها ← توجه.\nیک خط برای هرکدام.","آزمایش ذهنی (یک جمله): اگر چرخاندن هر ولوم فقط ۱ ثانیه طول بکشد، تنظیم ۱۷۵ میلیارد ولوم حدود ۵٬۵۰۰ سال طول می‌کشد؛ به همین دلیل آموزش با دست ممکن نیست.\nنکتهٔ مدرس: قیاس قورمه‌سبزی را بزنید: ۲ مادهٔ اصلی تنظیمش ساده است؛ ۱۷۵ میلیارد ادویه تنظیم دستی‌اش غیرممکن است.\nگام ۳ (فضا): هر پیش‌بینی یک حرکت کوچک از نقطهٔ معنی کلمه در فضای هزارانبُعدی است؛ پارامترها قوانین آن حرکت‌اند. همین فضا را در اسلاید «بازی او» دوباره می‌بینید.","نکته: بزرگ‌تر همیشه بهتر نیست؛ کیفیت داده و آموزش درست، به اندازهٔ اندازهٔ مدل مهم است.\nپل به جلسهٔ ۱: مدل قیمت خانهٔ ما فقط ۲ عدد داشت (شیب ۰٫۱ و عدد ثابت ۰)؛ حالا آن میلیاردها عدد جلسهٔ قبل ملموس می‌شود.","دو کارت را بخوانید و قیاس میزگرد را زنده اجرا کنید.","سؤال: «او» به چه کسی برمی‌گردد؟ علی. چرا؟ چون مدل برای کلمهٔ «او» بیشتر از همه به «علی» توجه می‌کند (امتیاز فرضی: علی ۷۰٪، بقیهٔ کلمات ۳۰٪).\nگام ۴ (فضا): در ذهن مدل، هر کلمه نقطه‌ای در فضایی با حدود ۱۲٬۰۰۰ محور است؛ توجه یعنی کشیدن نقطهٔ «او» به سمت «علی». ۱۲٬۰۰۰ محور را نمی‌شود ترسیم کرد؛ فقط می‌شود عددش را گفت.\nبازی گروهی (۳ دقیقه): هر گروه ۴ نفره، هر نفر یک کلمه از جمله باشد و بگوید «من به چه کسی بیشتر گوش می‌دهم؟»\n• «چون» به «رفت» و «پول» گوش می‌دهد\n• «او» به «علی» گوش می‌دهد\n• هر کلمه به کلمات مرتبط‌تر توجه می‌کند؛ این همان کاری است که Transformer انجام می‌دهد\nنکتهٔ مدرس: در این کارگاه جزئیات معماری (لایه‌ها، ماتریس، feed-forward) را عمداً نمی‌گوییم؛ فقط باید بدانید معنای هر کلمه بر اساس زمینه اصلاح می‌شود. مثال «شیر»: در «شیر جنگل» حیوان، در «شیر آب» وسیله، در «شیر خوردن» نوشیدنی.","کل مسیر در یک خط: داده ← پیش‌بینی کلمهٔ بعد ← تکرار میلیاردها بار (آموزش) ← پارامترها (دانش در عددها) ← توجه (معنی از زمینه).","نکتهٔ مدرس: این اسلاید قلب جلسهٔ ۲ است؛ روی هر ردیف یک مثال واقعی از محیط کار شرکت‌کننده‌ها بزنید.","موضع فعال: شما مدیر مدل هستید، نه مشتری منفعل.\nروی هر گلوله یک مثال از محیط کار خودشان بزنید.","تکلیف امروز همان سؤال استراحت است؛ تأکید کنید این تکلیف در کارگاههای ۲ و ۳ ادامه پیدا می‌کند.","جمع‌بندی کل کارگاه و پل به کارگاه ۲: Agent و ابزار، یعنی مهارت و دست برای دستیار."];
 const SESS=[1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2];
 const STARTS=[0,13];
 //  تعداد گام (فرگمنت) هر اسلاید از روی data-fragها
