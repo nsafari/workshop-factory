@@ -26,6 +26,14 @@ const FONT_CSS = [
   fontFace('vazirmatn-variable-latin.woff2', 'U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD'),
 ].join('\n');
 
+// ---------- عکس‌های مفهومی نهفته (base64 — خودکفا، بدون درخواست خارجی) ----------
+//  منبع: مواد ارجاعی کاربر (کتاب Neural Networks for Babies + ویدیوهای 3b1b)؛ در workshops/images/
+const IMG_DIR = path.join(HERE, 'images');
+const imgData = f => `data:image/jpeg;base64,${readFileSync(path.join(IMG_DIR, f)).toString('base64')}`;
+const IMG_BABY = imgData('nn-for-babies.jpg');   // کتاب «Neural Networks for Babies» (ویدیو: Leo Isikdogan)
+const IMG_3B1B = imgData('3b1b-transformers.jpg'); // 3Blue1Brown: Transformers, the tech behind LLMs (Ch.5)
+const IMG_READ = imgData('read-playsing.jpg');   // خواندن همان کتاب (TikTok: @readplaysing)
+
 // ---------- خوش‌رنگ یکدست ----------
 const NAVY = '#1F3A5F', NAVY2 = '#16324F', INK = '#333333', MUT = '#6B7280',
       ACC = '#0E7C7B', LIGHT = '#F2F4F7', SOFT = '#DDE3EA', WHT = '#FFFFFF', GOLD = '#C9A227';
@@ -136,30 +144,41 @@ const SESSIONS = [
       'نورون: مجموع وزن‌دار ورودی‌ها با یک آستانه؛ مثل داور که هر عامل را با وزن می‌سنجد',
       'لایه‌ها: لایه‌های اول چیزهای ساده (لبه و رنگ) می‌بینند، لایه‌های آخر مفاهیم کامل (چهره)',
       'کاربرد: تشخیص چهره در عکس‌ها',
+      'مغز خودش همین‌طور یاد می‌گیرد: هرچه ارتباطی بیشتر استفاده شود، قوی‌تر می‌شود — شبکهٔ مصنوعی همین ایده است (کتاب «شبکه‌های عصبی برای نوزادان»)',
     ], size: 22, gap: 20, frag: 1 },
-    { visual: 'layers', frag: 2 },
-  ], notes: 'نکتهٔ مدرس: فقط یک خط بگویید: «شبکهٔ عصبی یعنی ردیف‌هایی از این داورها که هر لایه کار لایهٔ قبلی را کامل‌تر می‌کند.» جزئیات عددی وارد نشوید.' },
+    { split: { ratio: [44, 56], right: [ { visual: 'layers', frag: 2 } ], left: [ { visual: 'babyImg', frag: 3 } ] } },
+  ], notes: 'نکتهٔ مدرس: فقط یک خط بگویید: «شبکهٔ عصبی یعنی ردیف‌هایی از این داورها که هر لایه کار لایهٔ قبلی را کامل‌تر می‌کند.» جزئیات عددی وارد نشوید.\nگام ۳ (عکس کتاب): پیام اصلی کتاب «Neural Networks for Babies» (فری/کایزر): ماشین از مغز تقلید می‌کند؛ یادگیری یعنی تقویت ارتباط‌ها با تکرار. اگر وقت بود، داستان نوزاد و کلمهٔ «توپ» را همین‌جا بگویید (در اسلاید بعد هم باز می‌گردد).' },
   // اسلاید ۱۱ - LLMها + بازی «آسمان امروز ...»
   { title: 'LLMها', blocks: [
-    { bullets: [
-      'LLM: مدلی که با خواندن متن‌های بسیار زیاد (کتاب، وب، مقاله) الگوی زبان را یاد گرفته',
-      'نمونه‌ها: GPT (OpenAI)، Claude (Anthropic)، Gemini (Google)، Llama (Meta)',
-      'نحوهٔ کار: به کلمهٔ بعدی احتمال می‌دهد',
-    ], size: 20, gap: 10, frag: 1 },
-    { lead: 'بازی: «آسمان امروز ...»', frag: 1 },
+    { split: { ratio: [58, 42], right: [
+      { bullets: [
+        'LLM: مدلی که با خواندن متن‌های بسیار زیاد (کتاب، وب، مقاله) الگوی زبان را یاد گرفته',
+        'نمونه‌ها: GPT (OpenAI)، Claude (Anthropic)، Gemini (Google)، Llama (Meta)',
+        'نحوهٔ کار: به کلمهٔ بعدی احتمال می‌دهد',
+        'هر کلمه در ذهن مدل یک نقطهٔ در فضای بزرگی است؛ پیش‌بینی = حرکت در آن فضا (این فضا را در جلسهٔ ۲ می‌بینیم)',
+      ], size: 20, gap: 10, frag: 1 },
+      { lead: 'بازی: «آسمان امروز ...»', frag: 1 },
+    ], left: [
+      { visual: '3b1bImg', frag: 2 },
+    ] } },
     { visual: 'prob-bars', frag: 2 },
     { text: 'حالا جمله را عوض کنید: «آسمان امروز ابری است و هوا ...» — ناگهان «سرد» و «بارانی» بالا می‌آیند؛ یعنی زمینه، احتمال‌ها را عوض می‌کند.', frag: 3 },
-  ], notes: 'بازی «آسمان امروز ...» (۲ دقیقه): از کلاس بخواهید جمله را تکمیل کنند، سپس احتمالات را نشان دهید (اعداد فرضی): آبی ۶۰٪، ابری ۲۵٪، صاف ۱۵٪.\nحالا جمله را عوض کنید: «آسمان امروز ابری است و هوا ...» ناگهان «سرد» و «بارانی» بالا می‌آیند؛ یعنی زمینه، احتمال‌ها را عوض می‌کند (پلی به توجه در جلسهٔ ۲).' },
+  ], notes: 'بازی «آسمان امروز ...» (۲ دقیقه): از کلاس بخواهید جمله را تکمیل کنند، سپس احتمالات را نشان دهید (اعداد فرضی): آبی ۶۰٪، ابری ۲۵٪، صاف ۱۵٪.\nحالا جمله را عوض کنید: «آسمان امروز ابری است و هوا ...» ناگهان «سرد» و «بارانی» بالا می‌آیند؛ یعنی زمینه، احتمال‌ها را عوض می‌کند (پلی به توجه در جلسهٔ ۲).\nگام ۲ (عکس 3b1b): آخرین گلوله پلی است به جلسهٔ ۲: هر کلمه نقطه‌ای در فضای بزرگ است و پیش‌بینی حرکت در آن فضا است — همان چیزی که در اسلایدهای ۱۶ و ۱۹ جلسهٔ ۲ با جزئیات می‌بینید.' },
   // اسلاید ۱۲ - خودنظارتی
   { title: 'پس چطور یاد گرفته؟ خودنظارتی', blocks: [
-    { bullets: [
-      'پاسخ‌نامه در دل سؤال است: «گربه روی ___ نشست»؛ پاسخ همان کلمه‌ای است که پاک کرده‌اید',
-      'برچسب انسانی لازم نیست؛ هر جملهٔ اینترنت یک تمرین رایگان است',
-      'به همین دلیل مدل‌ها کل اینترنت را می‌توانند بخوانند؛ میلیاردها تمرین',
-    ], size: 22, gap: 20, frag: 1 },
+    { split: { ratio: [58, 42], right: [
+      { bullets: [
+        'پاسخ‌نامه در دل سؤال است: «گربه روی ___ نشست»؛ پاسخ همان کلمه‌ای است که پاک کرده‌اید',
+        'برچسب انسانی لازم نیست؛ هر جملهٔ اینترنت یک تمرین رایگان است',
+        'به همین دلیل مدل‌ها کل اینترنت را می‌توانند بخوانند؛ میلیاردها تمرین',
+        'نوزاد هم همین‌طور «توپ» را یاد می‌گیرد: از تکرارِ دیدن و شنیدن — بدون معلم، بدون برچسب؛ خودِ دنیا پاسخ‌نامه است (کتاب «شبکه‌های عصبی برای نوزادان»)',
+      ], size: 22, gap: 20, frag: 1 },
+    ], left: [
+      { visual: 'readImg', frag: 1 },
+    ] } },
     { visual: 'mask', frag: 2 },
     { accent: 'خودنظارتی یعنی معلم، خودِ داده است.', bold: true, frag: 3 },
-  ], notes: 'جملهٔ کلیدی: خودنظارتی یعنی معلم، خودِ داده است.' },
+  ], notes: 'جملهٔ کلیدی: خودنظارتی یعنی معلم، خودِ داده است.\nقیاس نوزاد (از کتاب «Neural Networks for Babies» فری/کایزر): نوزاد معلمی ندارد که اشتباهش را اصلاح کند؛ دنیا خودش مدام تکرار می‌شود — «توپ، قرمز، گرد، غلتان» — و مغز آن‌ها را به هم گره می‌زند. خودنظارتی هم همین است: متن، پاسخ‌نامهٔ خودش را در دل خود دارد.' },
   // اسلاید ۱۳ - خلاصه + سؤال استراحت
   { title: 'خلاصهٔ جلسهٔ ۱', blocks: [
     { bullets: [
@@ -527,6 +546,15 @@ function vTokenSpace() {
 </div>`;
 }
 
+//  عکس مفهومی با کپشن منبع (اسلایدهای ۱۰ تا ۱۲)
+const imgCard = (src, alt, cap, variant) => `<figure class="imgcard${variant ? ' ' + variant : ''}">
+  <img class="anim" style="--i:0" src="${src}" alt="${alt}">
+  <figcaption class="viz-caption">${cap}</figcaption>
+</figure>`;
+const vBabyImg = () => imgCard(IMG_BABY, 'عکس از کتاب شبکه‌های عصبی برای نوزادان', 'کتاب «Neural Networks for Babies» (کریس فری / سارا کایزر)', 'landscape');
+const v3b1bImg = () => imgCard(IMG_3B1B, 'پوستر ویدیوی 3Blue1Brown دربارهٔ Transformer', '3Blue1Brown: Transformers, the tech behind LLMs (Ch.5)', 'landscape');
+const vReadImg = () => imgCard(IMG_READ, 'عکس خواندن کتاب شبکه‌های عصبی برای نوزادان', 'خواندن همان کتاب (TikTok: @readplaysing)', 'portrait');
+
 const VISUALS = {
   'timeline': vTimeline,
   'review-chips': vReviewChips,
@@ -541,6 +569,9 @@ const VISUALS = {
   'roundtable': vRoundtable,
   'paramSpace': vParamSpace,
   'tokenSpace': vTokenSpace,
+  'babyImg': vBabyImg,
+  '3b1bImg': v3b1bImg,
+  'readImg': vReadImg,
 };
 
 // ============================================================
@@ -689,6 +720,12 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
 .viz-box{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 0}
 .viz{width:100%;height:auto;display:block}
 .viz-caption{margin-top:16px;font-size:15px;color:var(--mut)}
+/* عکس‌های مفهومی (اسلایدهای ۱۰ تا ۱۲) */
+.imgcard{margin:2px 0;display:flex;flex-direction:column;align-items:center}
+.imgcard img{border-radius:10px;border:1.5px solid var(--soft);box-shadow:0 2px 12px rgba(13,27,42,.14);max-width:100%;height:auto}
+.imgcard.landscape img{width:340px}
+.imgcard.portrait img{width:150px}
+.imgcard .viz-caption{margin-top:8px;font-size:13.5px}
 /* تایم‌لاین چهارمرحله‌ای (اسلاید ۸) */
 .timeline{position:relative;display:flex;gap:20px;width:100%;padding-top:34px;margin-top:26px}
 .tl-line{position:absolute;top:7px;right:6%;left:6%;height:3px;background:var(--soft);border-radius:2px}
