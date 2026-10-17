@@ -446,4 +446,4 @@ model.predict([[110]])  # 11
 
 **منابع مفهومی اسلایدهای ۱۶ و ۱۹** (فضای هزارانبُعدی توکن‌ها):
 - 3Blue1Brown, «Transformers, the tech behind LLMs» (Deep Learning, Ch.5) — توکن = بردار در فضای بزرگ، پیش‌بینی = حرکت در آن فضا
-- کتاب «Neural Networks for Babies» (کریس فری و دکتر سارا کایزر) — یادگیری = تقویت ارتباط‌ها با تکرار؛ ویدیو: Leo Isikdogan (YouTube: IX6acE4l1YQ)
+- کتاب «Neural Networks for Babies» (کریس فری و دکتر سارا کایزر) — یادگیری = تقویت ارتباط‌ها با تکرار؛ ویدیوها: Leo Isikdogan (YouTube: IX6acE4l1YQ) و ReadPlaySing (TikTok: @readplaysing/7122193033415773482)
