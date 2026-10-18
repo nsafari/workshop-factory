@@ -30,9 +30,9 @@ const FONT_CSS = [
 //  منبع: مواد ارجاعی کاربر (کتاب Neural Networks for Babies + ویدیوهای 3b1b)؛ در workshops/images/
 const IMG_DIR = path.join(HERE, 'images');
 const imgData = f => `data:image/jpeg;base64,${readFileSync(path.join(IMG_DIR, f)).toString('base64')}`;
-const IMG_BABY = imgData('nn-for-babies.jpg');   // کتاب «Neural Networks for Babies» (ویدیو: Leo Isikdogan)
+const IMG_BABY = imgData('nn-for-babies-layers.jpg'); // صفحهٔ لایه‌های کتاب (TikTok: @readplaysing، فریم d_010)
 const IMG_3B1B = imgData('3b1b-transformers.jpg'); // 3Blue1Brown: Transformers, the tech behind LLMs (Ch.5)
-const IMG_READ = imgData('read-playsing.jpg');   // خواندن همان کتاب (TikTok: @readplaysing)
+const IMG_READ = imgData('nn-for-babies-labels.jpg'); // صفحهٔ داده‌های برچسب‌دار کتاب (TikTok: @readplaysing، فریم e_001)
 
 // ---------- خوش‌رنگ یکدست ----------
 const NAVY = '#1F3A5F', NAVY2 = '#16324F', INK = '#333333', MUT = '#6B7280',
@@ -556,9 +556,9 @@ const imgCard = (src, alt, cap, variant) => `<figure class="imgcard${variant ? '
   <img class="anim" style="--i:0" src="${src}" alt="${alt}">
   <figcaption class="viz-caption">${cap}</figcaption>
 </figure>`;
-const vBabyImg = () => imgCard(IMG_BABY, 'عکس از کتاب شبکه‌های عصبی برای نوزادان', 'کتاب «Neural Networks for Babies» (کریس فری / سارا کایزر)', 'landscape');
+const vBabyImg = () => imgCard(IMG_BABY, 'صفحهٔ لایه‌های کتاب شبکه‌های عصبی برای نوزادان (ورودی/پنهان/خروجی)', 'صفحهٔ لایه‌ها در کتاب «Neural Networks for Babies» — ورودی، پنهان، خروجی (ویدیو: TikTok @readplaysing)', 'book');
 const v3b1bImg = () => imgCard(IMG_3B1B, 'پوستر ویدیوی 3Blue1Brown دربارهٔ Transformer', '3Blue1Brown: Transformers, the tech behind LLMs (Ch.5)', 'landscape');
-const vReadImg = () => imgCard(IMG_READ, 'عکس خواندن کتاب شبکه‌های عصبی برای نوزادان', 'خواندن همان کتاب (TikTok: @readplaysing)', 'portrait');
+const vReadImg = () => imgCard(IMG_READ, 'صفحهٔ داده‌های آموزشی برچسب‌دار کتاب (ستاره‌های دریایی رنگی)', 'در کتاب، برچسب‌ها با دستِ انسان چسبانده شده — ابداع خودنظارتی، حذف همین برچسب است (ویدیو: TikTok @readplaysing)', 'portrait');
 
 const VISUALS = {
   'timeline': vTimeline,
@@ -730,6 +730,7 @@ body{font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;color:var(--ink)}
 .imgcard img{border-radius:10px;border:1.5px solid var(--soft);box-shadow:0 2px 12px rgba(13,27,42,.14);max-width:100%;height:auto}
 .imgcard.landscape img{width:340px}
 .imgcard.portrait img{width:150px}
+.imgcard.book img{width:200px}
 .imgcard .viz-caption{margin-top:8px;font-size:13.5px}
 /* تایم‌لاین چهارمرحله‌ای (اسلاید ۸) */
 .timeline{position:relative;display:flex;gap:20px;width:100%;padding-top:34px;margin-top:26px}
