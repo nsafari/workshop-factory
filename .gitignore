@@ -15,3 +15,6 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# فریم‌های ویدیو (تصاویر سنگین)
+study/frames/
