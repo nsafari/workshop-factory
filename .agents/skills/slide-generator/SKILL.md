@@ -1,234 +1,112 @@
 # Slide Generator Skill
 
 ## توضیح
-این Skill به شما کمک می‌کند اسلایدهای پاورپوینت تولید کنید. از PptxGenJS استفاده می‌کند.
+این Skill **دک اسلاید HTML خودکفا** (تک‌فایل، بدون وابستگی npm، بدون درخواست خارجی) برای کارگاه‌ها و مطالعه‌های بیشتر می‌سازد. دک با **سازندهٔ مشترک** `workshops/lib/deck.mjs` (تابع `buildDeck`) ساخته می‌شود؛ فونت Vazirmatn و همهٔ تصاویر به‌شکل base64 در همان فایل نهفته‌اند و حتی آفلاین دقیقا‌ یکسان رندر می‌شوند.
 
-## نحوه استفاده
-وقتی کاربر می‌خواهد اسلاید بسازد، این مراحل را دنبال کنید:
+خروجی‌های فعلی:
+- `workshops/slides/workshop-1-slides.html` — ۲۴ اسلاید، ۲ جلسه (داده: `workshops/generate-slides.mjs`)
+- `study/slides/study-1-slides.html` — ۴۲ اسلاید، ۳ بخش + ۳۷ فریم ویدیو (داده: `study/generate-slides.mjs`)
 
-### مرحله ۱: جمع‌آوری اطلاعات
-از کاربر بپرسید:
-1. **موضوع ارائه** چیست؟
-2. **تعداد اسلاید** مورد نظر؟
-3. **مخاطب** کیست؟
-4. **زبان** فارسی یا انگلیسی؟
-5. **سبک** رسمی یا غیررسمی؟
+## معماری: چه کجاست
+- **سازندهٔ مشترک**: `workshops/lib/deck.mjs` — رندر، CSS پایه، ناوبری، پالت، فونت، `buildDeck` و توابع کمکی (`fa`, `esc`, `fA`, `imgData`, `imgCard`).
+- **دادهٔ هر دک**: یک فایل `generate-slides.mjs` در کنار محتوا — آرایهٔ `SESSIONS` (اسلایدها) + نگاشت `VISUALS` (ویژوال‌های اختصاصی) + `EXTRA_CSS`.
+- **قانون طلایی**: `deck.mjs` را برای یک دکِ واحد تغییر ندهید. نیازهای خاص با `EXTRA_CSS` و ویژوال‌های اختصاصی داخل فایل همان دک حل می‌شوند. هر تغییری در `deck.mjs` **همهٔ** دک‌ها را درگیر می‌کند → همهٔ خروجی‌ها را بازسازی و با `sha256sum` تطبیق دهید.
 
-### مرحله ۲: طراحی ساختار
-ساختار اسلایدها را طراحی کنید:
+## ساختار فایل داده (هر `generate-slides.mjs`)
+ترتیب استاندارد بخش‌ها (نمونه‌های کامل: `workshops/generate-slides.mjs` و `study/generate-slides.mjs`):
 
-```
-اسلاید ۱: عنوان (Cover)
-├── عنوان اصلی
-├── زیرعنوان
-└── نام ارائه‌دهنده
-
-اسلاید ۲: دستور جلسه (Agenda)
-├── لیست موضوعات
-└── زمان‌بندی
-
-اسلاید ۳-N: محتوا
-├── عنوان
-├── نکات کلیدی
-├── تصویر/نمودار
-└── مثال
-
-اسلاید آخر: خلاصه (Summary)
-├── نکات کلیدی
-├── اقدامات بعدی
-└── اطلاعات تماس
+```js
+// ۱) کامنت سربرگ: عنوان، تعداد جلسه/بخش، مسیر خروجی، منبع محتوا، دستور اجرا
+// ۲) ایمپورت از سازندهٔ مشترک
+import { buildDeck, NAVY, ACC, GOLD, WHT, fa, esc, fA, imgData, imgCard } from '../workshops/lib/deck.mjs';
+// ۳) مسیرها: HERE / OUT_DIR (با env SLIDES_OUT) / OUT / DECK_TITLE
+// ۴) تصاویر نهفته (base64) — هر تصویر با کامنتِ ادعا/منبع
+const IMG = imgData(path.join(HERE, 'images', 'foo.jpg'));
+// ۵) SESSIONS: آرایهٔ جلسات
+const SESSIONS = [{ n: 1, footer: '…', slides: [ /* اسلایدها */ ] }];
+// ۶) ویژوال‌های اختصاصی: توابعِ برگردانندهٔ HTML (SVG/CSS)
+const vPipeline = () => `<div class="viz">…</div>`;
+const VISUALS = { pipeline: vPipeline, /* … */ };
+// ۷) EXTRA_CSS: استایل ویژوال‌های این دک (اختیاری)
+const EXTRA_CSS = `.chipflow{…}`;
+// ۸) فراخوانی سازنده
+buildDeck({ outPath: OUT, title: DECK_TITLE, sessions: SESSIONS, visuals: VISUALS, extraCss: EXTRA_CSS });
 ```
 
-### مرحله ۳: تولید کد
-کد PptxGenJS را تولید کنید:
+## قرارداد داده — شکل دقیق
+**جلسه**: `{ n, footer, slides }` — `n` شمارهٔ جلسه (برای چیپ‌ها و پرش ۱/۲/…)، `footer` متن پایین هر اسلاید.
 
-```javascript
-import pptxgen from 'pptxgenjs';
-
-// تنظیمات پایه
-const NAVY = '1F3A5F', ACC = '0E7C7B', INK = '333333';
-const FONT = 'Vazirmatn';
-
-// ایجاد پرزنتیشن
-const pres = new pptxgen();
-pres.layout = 'LAYOUT_WIDE';
-
-// اسلاید عنوان
-const cover = pres.addSlide();
-cover.background = { color: NAVY };
-cover.addText('عنوان', {
-  x: 1, y: 2, w: 8, h: 1,
-  fontSize: 36, fontFace: FONT,
-  color: 'FFFFFF', rtlMode: true, align: 'right'
-});
-
-// اسلاید محتوا
-const slide = pres.addSlide();
-slide.addText('عنوان بخش', {
-  x: 0.5, y: 0.3, w: 9, h: 0.7,
-  fontSize: 24, fontFace: FONT,
-  color: NAVY, rtlMode: true, align: 'right'
-});
-
-// لیست گلوله‌ای
-slide.addText([
-  { text: 'نکته ۱', options: { bullet: true, fontSize: 16 } },
-  { text: 'نکته ۲', options: { bullet: true, fontSize: 16 } },
-  { text: 'نکته ۳', options: { bullet: true, fontSize: 16 } }
-], {
-  x: 0.5, y: 1.2, w: 9, h: 5,
-  rtlMode: true, align: 'right'
-});
-
-// ذخیره
-pres.writeFile({ fileName: 'output.pptx' });
+**اسلاید جلد** (فقط اول):
+```js
+{ cover: { kicker: 'کارگاه ۱ • جلسهٔ ۱ از ۲', title: 'عنوان اصلی', sub: '۲۰ دقیقه' }, notes: '…' }
+```
+**اسلاید محتوا**:
+```js
+{ title: 'عنوان', sub: 'زیرعنوان اختیاری', blocks: [ /* بلوک‌ها */ ], notes: 'یادداشت سخنران' }
 ```
 
-### مرحله ۴: خروجی
-خروجی را در قالب زیر ارائه دهید:
+**بلوک‌ها** (هر بلوک یک شیء با **یکی** از این کلیدها؛ `frag: N` روی همه اختیاری است و شمارهٔ گام/فرگمنت را تعیین می‌کند):
 
-1. **فایل کد**: `generate-slides.mjs`
-2. **دستور اجرا**: `node generate-slides.mjs`
-3. **فایل خروجی**: `output.pptx`
+| کلید | شکل | کاربرد |
+|---|---|---|
+| `bullets` | `{ bullets: [[متن, سطح?], …], size?, gap?, noBullet?, stagger?, fragItems? }` | لیست گلوله‌ای؛ `fragItems: [1,2,3]` = هر گلوله گام جداگانه |
+| `cards` | `{ cards: { items: [{t, b}], h }, frag? }` | ردیف کارت‌های عنوان+متن |
+| `table` | `{ table: { head: […], rows: [[…]], colW?, size? }, frag? }` | جدول |
+| `lead` | `{ lead: متن, frag? }` | جملهٔนำ بزرگ (سبک، ۲۴px) |
+| `accent` | `{ accent: متن, bold?, frag? }` | خط تأکیدی رنگ ACC |
+| `muted` | `{ muted: متن, frag? }` | خط فرعی کم‌رنگ |
+| `text` | `{ text: متن, frag? }` | متن ساده |
+| `visual` | `{ visual: 'نام', frag? }` | ویژوال اختصاصی از `VISUALS` (در `div.viz-box` رندر می‌شود) |
+| `split` | `{ split: { ratio: [٪ستون_راست], right: [بلوک‌ها], left: [بلوک‌ها] } }` | چیدمان دوتایی (راست=تصویر غالب، چپ=متن) |
 
-## الگوهای آماده
+**فرگمنت (گام‌به‌گام)**:
+- `fA(N)` → ` data-frag="N"` — عنصر تا رسیدن گام به `N` پنهان است.
+- تعداد گام‌های یک اسلاید = بزرگ‌ترین `data-frag` داخلش (اسلاید بدون `data-frag` = یک گام).
+- `Space` اول گام‌ها را جلو می‌برد و بعد اسلاید بعدی را؛ `Backspace` برعکس.
+- **نکتهٔ کلیدی**: اگر عنصر فرزند `data-frag` کوچک‌تری از والدش داشته باشد، بین دو گام «خالی» می‌ماند — شمارهٔ فرگمنت فرزند باید ≥ والد باشد مگر عمداً گام جدا می‌خواهید.
 
-### الگوی کارگاه آموزشی
-```javascript
-function workshopDeck(title, sessions) {
-  const pres = baseDeck();
-  
-  // اسلاید عنوان
-  cover(pres, title);
-  
-  // اسلایدهای هر جلسه
-  sessions.forEach(session => {
-    content(pres, session.title);
-    bullets(pres, session.points);
-  });
-  
-  return pres;
-}
-```
+**ناوبری (در همهٔ دک‌ها یکسان)**: `Space/→/↓/PgDn` بعدی • `Backspace/←/↑/PgUp` قبلی • `Home/End` • `F` تمام‌صفحه • `N` یادداشت‌های سخنران • `1…8` یا ۱…۸/١…٨ پرش به جلسه • دیباگ: `?slide=9&step=3`.
 
-### الگوی ارائه محتوا
-```javascript
-function contentDeck(title, sections) {
-  const pres = baseDeck();
-  
-  // اسلاید عنوان
-  cover(pres, title);
-  
-  // اسلاید دستور جلسه
-  content(pres, 'دستور جلسه');
-  bullets(pres, sections.map(s => s.title));
-  
-  // اسلایدهای محتوا
-  sections.forEach(section => {
-    content(pres, section.title);
-    bullets(pres, section.points);
-    
-    if (section.cards) {
-      cardsRTL(pres.slides[pres.slides.length-1], section.cards);
-    }
-    
-    if (section.table) {
-      tableRTL(pres.slides[pres.slides.length-1], 
-               section.table.head, section.table.rows);
-    }
-  });
-  
-  return pres;
-}
-```
+## سبک خانه (Visuals)
+- **فونت**: Vazirmatn (در دک base64 نهفته است؛ در SVG با `font-family:Vazirmatn`).
+- **چیدمان RTL**: متن راست‌چین؛ در SVG `text-anchor="end"` + مختصات راست‌محور؛ اعداد/برچسب‌ها با `fa()` به ارقام فارسی.
+- **پالت** (از `deck.mjs`، مستقیم از متغیرها استفاده کنید): `NAVY #1F3A5F` (تیتر/ساختار) • `ACC #0E7C7B` (تأکید/روند) • `GOLD #C9A227` (موضوع ویژه — «سه») • `MUT #6B7280` (فرعی) • `LIGHT #F2F4F7` / `SOFT #DDE3EA` (کارت/خط) • `WHT`.
+- **SVG**: `viewBox` صریح + `class="viz"`؛ متن‌ها خوانا (حداقل ۱۱–۱۴px در مقیاس viewBox)؛ بدون هیچ ارجاع خارجی.
+- **کلاس با پیشوند اختصاصی** برای CSS ویژوال هر دک تا با بقیه تداخل نکند؛ استایل‌ها در `EXTRA_CSS`. اگر ترتیب با stylesheet پایه مهم است، از جداکنندهٔ `/*@g1*/` در `EXTRA_CSS` استفاده کنید (پیش = قبل از بلوک انیمیشن‌ها، پس = بعد از آن).
+- **کپشن تصویر**: `.viz-caption` زیر تصویر (در `imgCard` خودکار).
+- `imgCard(src, alt, cap, variant)` — کارت تصویر با کپشن منبع؛ variant‌ها: `landscape` / `portrait` / `book`.
+- `imgData(path)` — تبدیل فایل تصویر به data-URI base64.
 
-## توابع کمکی
+## تصاویر
+- هر تصویر (فریم ویدیو یا عکس مرجع) **base64** در دک می‌نشیند؛ در کامنتِ ثابت، ادعای تصویر + منبع/زمان را بنویسید.
+- فریم‌های ویدیو: نام فایل = زمان دقیق (مثل `00_09_05.jpg`)؛ از ساختار `frame(folder, file)` استفاده کنید.
+- **کد زمانی `[mm:ss]` فقط در `notes`** — نه در متن اسلاید، نه در کپشن.
 
-### baseDeck() - ایجاد پرزنتیشن پایه
-```javascript
-function baseDeck() {
-  const p = new pptxgen();
-  p.defineLayout({ name: 'W', width: 13.33, height: 7.5 });
-  p.layout = 'W';
-  return p;
-}
-```
-
-### cover() - اسلاید عنوان
-```javascript
-function cover(p, kicker, title, sub) {
-  const s = p.addSlide();
-  s.background = { color: NAVY };
-  // افزودن عناصر
-  return s;
-}
-```
-
-### content() - اسلاید محتوا
-```javascript
-function content(p, title, opts = {}) {
-  const s = p.addSlide();
-  s.background = { color: WHT };
-  // افزودن عنوان
-  return s;
-}
-```
-
-### bullets() - لیست گلوله‌ای
-```javascript
-function bullets(s, items, o = {}) {
-  // items: آرایه‌ای از متن یا [متن, سطح]
-}
-```
-
-### cardsRTL() - کارت‌ها
-```javascript
-function cardsRTL(s, defs, o = {}) {
-  // defs: آرایه‌ای از {t: عنوان, b: متن}
-}
-```
-
-### tableRTL() - جدول
-```javascript
-function tableRTL(s, head, rows, o = {}) {
-  // head: عنوان ستون‌ها
-  // rows: داده‌ها
-}
-```
+## چک‌لیست راستی‌آزمایی (قبل از تحویل، همه را بزنید)
+۱. `node --check <فایل>`
+۲. `node <فایل>` — بدون خطا + گزارش تعداد اسلایدها درست.
+۳. **تعداد اسلاید** == آنچه انتظار می‌رود: `grep -c '<section class="slide' <خروجی.html>`
+۴. **هیچ اسلایدی بدون تصویر**: هر `<section>` باید `<img>` یا `<svg>`/کلاس `viz` داشته باشد.
+۵. **فرگمنت‌ها**: بزرگ‌ترین `data-frag` هر اسلاید == تعداد گام‌های طراحی‌شده؛ گامِ خالی ندارید.
+۶. **نیم‌فاصله**: بعد از هر ویرایش فارسی grep کنید که `می` آخرخط/`می‌` نیمه‌کاره نشده باشد.
+۷. **دک‌های دیگر دست‌نخورده** (اگر `deck.mjs` یا فونت/پالت دست خورده): `sha256sum workshops/slides/*.html study/slides/*.html` قبل/بعد.
+۸. **برخورد چیدمان/اسکرول**:
+   ```bash
+   node .agents/skills/self-study-generator/scripts/qa_overflow.cjs <خروجی.html>
+   ```
+   خروجی مورد انتظار: `"issues": []`
+۹. **lint فارسی**: `fa_lint.py` از مهارت persian-writing (اگر در دسترس است) — هشدارهای داخل بلوک کد و timestampها نادیده گرفته می‌شوند.
+۱۰. **مرورگر**: باز کردن خروجی با hard refresh (`Ctrl+Shift+R`) — مرورگر HTML قدیمی را کش می‌کند.
 
 ## نکات مهم
-
-### فونت فارسی
-```javascript
-const FONT = 'Vazirmatn';
-
-// در هر متن
-{
-  fontFace: FONT,
-  rtlMode: true,
-  align: 'right'
-}
-```
-
-### تشخیص خودکار زبان
-```javascript
-const isFa = t => /[\u0600-\u06FF]/.test(t);
-const dir = t => isFa(t) 
-  ? { rtlMode: true, align: 'right' } 
-  : { rtlMode: false, align: 'left' };
-```
-
-### رنگ‌بندی
-```javascript
-const NAVY = '1F3A5F';   // عنوان‌ها
-const ACC = '0E7C7B';    // تأکیدها
-const INK = '333333';    // متن اصلی
-const MUT = '6B7280';    // متن فرعی
-const LIGHT = 'F2F4F7';  // پس‌زمینه کارت
-const WHT = 'FFFFFF';    // پس‌زمینه اصلی
-const GOLD = 'C9A227';   // تأکید ویژه
-```
+- **MD منبع واحد حقیقت است** (برای دک‌هایی که سند `.md` دارند): هر تغییر ساختاری **اول در MD** و سپس پورت به `generate-slides.mjs`. ویرایش تکراری دک بدون به‌روزرسانی MD، سند و دک را از هم دور می‌کند.
+- **نیم‌فاصله (U+200C)** را هنگام ویرایش رشته‌های JS نشکنید.
+- **روی‌جلدِ سازنده فقط متن است** (kicker/عنوان/زیرعنوان/پانوشت) — اگر روی‌جلد به تصویر نیاز دارد، با `EXTRA_CSS` پس‌زمینهٔ تمام‌عرض روی `.cover` تزریق می‌شود.
+- اگر کاربر **PPTX** خواست: آن مسیر جداست (PptxGenJS/python-pptx — ببینید `knowledge/presentation/pptx-tools.md`)؛ خروجی استاندارد این Skill، دک HTML خودکفاست.
 
 ## منابع
-- [PptxGenJS Documentation](https://gitbrent.github.io/PptxGenJS/)
-- [Vazirmatn Font](https://github.com/rastikerdar/vazirmatn)
+- [workshops/lib/deck.mjs](../../../workshops/lib/deck.mjs): سازندهٔ مشترک (منبع قرارداد بالا)
+- [workshops/generate-slides.mjs](../../../workshops/generate-slides.mjs): نمونهٔ دک کارگاه (۲۴ اسلاید)
+- [study/generate-slides.mjs](../../../study/generate-slides.mjs): نمونهٔ کامل‌تر — فریم‌های ویدیو + ده‌ها SVG اختصاصی
+- [self-study-generator](../self-study-generator/SKILL.md): خط لولهٔ بالادست (فریم‌های ویدیو → مستند + دک)
+- [scripts/qa_overflow.cjs](../self-study-generator/scripts/qa_overflow.cjs): چکِ برخورد چیدمان

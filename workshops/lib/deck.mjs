@@ -41,6 +41,15 @@ export const fa = n => String(n).replace(/\d/g, d => FA[d]);
 //  امن‌سازی HTML
 export const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+// ---------- تصاویر نهفته (base64) — مشترک همهٔ دک‌ها ----------
+//  تصویر به‌شکل data-URI (خودکفا، بدون درخواست خارجی)
+export const imgData = p => `data:image/jpeg;base64,${readFileSync(p).toString('base64')}`;
+//  کارت تصویر با کپشن منبع (figure.imgcard — CSS پایهٔ .imgcard در همین فایل)
+export const imgCard = (src, alt, cap, variant) => `<figure class="imgcard${variant ? ' ' + variant : ''}">
+  <img class="anim" style="--i:0" src="${src}" alt="${esc(alt)}">
+  <figcaption class="viz-caption">${cap}</figcaption>
+</figure>`;
+
 
 // ============================================================
 //  رندر بلوک‌ها و اسلایدها

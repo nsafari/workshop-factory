@@ -9,14 +9,12 @@
 //  بدون هیچ وابستگی npm؛ فقط ماژول‌های داخلی Node
 //  اجرا:  node workshops/generate-slides.mjs   (از ریشهٔ مخزن)
 // ============================================================
-import { mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildDeck, NAVY, ACC, GOLD, WHT, fa, esc, fA } from './lib/deck.mjs';
+import { buildDeck, NAVY, ACC, GOLD, WHT, fa, esc, fA, imgData, imgCard } from './lib/deck.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = process.env.SLIDES_OUT || path.join(HERE, 'slides');
-mkdirSync(OUT_DIR, { recursive: true });
 const OUT = path.join(OUT_DIR, 'workshop-1-slides.html');
 const DECK_TITLE = 'آشنایی با مفاهیم هوش مصنوعی • کارگاه ۱';
 
@@ -25,11 +23,11 @@ const DECK_TITLE = 'آشنایی با مفاهیم هوش مصنوعی • کا�
 //  IMG_BABY و IMG_READ: استفاده‌نشده — نگه‌داشته برای ارجاع (ارجاع‌های کتاب از دک حذف شد؛
 //  تعریف داده و توابع کمکی حذف نمی‌شوند، فقط در هیچ اسلایدی استفاده نمی‌شوند)
 const IMG_DIR = path.join(HERE, 'images');
-const imgData = f => `data:image/jpeg;base64,${readFileSync(path.join(IMG_DIR, f)).toString('base64')}`;
-const IMG_BABY = imgData('nn-for-babies-layers.jpg'); // (استفاده‌نشده) صفحهٔ لایه‌های کتاب (TikTok: @readplaysing، فریم d_010)
-const IMG_3B1B = imgData('3b1b-transformers.jpg'); // 3Blue1Brown: Transformers, the tech behind LLMs (Ch.5)
-const IMG_DIGIT3 = imgData('3b1b-digit-3.jpg'); // 3Blue1Brown: «سه»ی دست‌نویس روی شبکه‌ی ۲۸×۲۸ (Ch.1)
-const IMG_READ = imgData('nn-for-babies-labels.jpg'); // (استفاده‌نشده) صفحهٔ داده‌های برچسب‌دار کتاب (TikTok: @readplaysing، فریم e_001)
+const imgIn = f => imgData(path.join(IMG_DIR, f)); // imgData: data-URI مشترک از سازنده (lib/deck.mjs)
+const IMG_BABY = imgIn('nn-for-babies-layers.jpg'); // (استفاده‌نشده) صفحهٔ لایه‌های کتاب (TikTok: @readplaysing، فریم d_010)
+const IMG_3B1B = imgIn('3b1b-transformers.jpg'); // 3Blue1Brown: Transformers, the tech behind LLMs (Ch.5)
+const IMG_DIGIT3 = imgIn('3b1b-digit-3.jpg'); // 3Blue1Brown: «سه»ی دست‌نویس روی شبکه‌ی ۲۸×۲۸ (Ch.1)
+const IMG_READ = imgIn('nn-for-babies-labels.jpg'); // (استفاده‌نشده) صفحهٔ داده‌های برچسب‌دار کتاب (TikTok: @readplaysing، فریم e_001)
 
 // ============================================================
 //  دادهٔ اسلایدها (پورت کامل از workshop-1-ai-concepts.md)
@@ -554,11 +552,7 @@ function vTokenSpace() {
 </div>`;
 }
 
-// عکس مفهومی با کپشن منبع (vBabyImg و vReadImg استفاده‌نشده — نگه‌داشته برای ارجاع؛ فقط 3b1bImg در اسلاید ۹ استفاده می‌شود)
-const imgCard = (src, alt, cap, variant) => `<figure class="imgcard${variant ? ' ' + variant : ''}">
-  <img class="anim" style="--i:0" src="${src}" alt="${alt}">
-  <figcaption class="viz-caption">${cap}</figcaption>
-</figure>`;
+// عکس مفهومی با کپشن منبع (imgCard از سازندهٔ مشترک؛ vBabyImg و vReadImg استفاده‌نشده — نگه‌داشته برای ارجاع؛ فقط 3b1bImg در اسلاید ۹ استفاده می‌شود)
 const vBabyImg = () => imgCard(IMG_BABY, 'صفحهٔ لایه‌های کتاب مرجع (ورودی/پنهان/خروجی)', '(استفاده‌نشده) صفحهٔ لایه‌ها در کتاب مرجع — ورودی، پنهان، خروجی (ویدیو: TikTok @readplaysing)', 'book');
 const v3b1bImg = () => imgCard(IMG_3B1B, 'پوستر ویدیوی 3Blue1Brown دربارهٔ Transformer', '3Blue1Brown: Transformers, the tech behind LLMs (Ch.5)', 'landscape');
 const vDigit3Img = () => imgCard(IMG_DIGIT3, 'رقمِ «سه» دست‌نویس روی شبکه‌ی ۲۸×۲۸', '«سه»ی دست‌نویس روی شبکه‌ی ۲۸×۲۸ = ۷۸۴ عدد (3Blue1Brown, Ch.1)', 'landscape');

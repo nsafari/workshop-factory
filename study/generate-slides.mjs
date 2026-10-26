@@ -9,14 +9,12 @@
 //  بدون هیچ وابستگی npm؛ فقط ماژول‌های داخلی Node
 //  اجرا:  node study/generate-slides.mjs   (از ریشهٔ مخزن)
 // ============================================================
-import { mkdirSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildDeck, ACC, GOLD, WHT, fa, esc } from '../workshops/lib/deck.mjs';
+import { buildDeck, ACC, GOLD, WHT, fa, esc, imgData, imgCard } from '../workshops/lib/deck.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = process.env.SLIDES_OUT || path.join(HERE, 'slides');
-mkdirSync(OUT_DIR, { recursive: true });
 const OUT = path.join(OUT_DIR, 'study-1-slides.html');
 const DECK_TITLE = 'داخل جعبه‌ی سیاه: شبکه‌ی عصبی چیست؟';
 
@@ -24,7 +22,6 @@ const DECK_TITLE = 'داخل جعبه‌ی سیاه: شبکه‌ی عصبی چی
 //  منبع: study/frames/but_what_is_a_neural_network_chapter_1/ (ویدیوی 3Blue1Brown، فصل ۱)
 //  ۳۷ فریمِ انتخاب‌شده توسط کاربر؛ هر فریم هنگام واکشی برای موضوع ادعاشده راستی‌آزمایی شده
 const FR_DIR = path.join(HERE, 'frames', 'but_what_is_a_neural_network_chapter_1');
-const imgData = p => `data:image/jpeg;base64,${readFileSync(p).toString('base64')}`;
 const frame = (folder, file) => imgData(path.join(FR_DIR, folder, file));
 
 const S1 = '01_مسئله_تشخیص_اعداد_دست_نویس';
@@ -36,12 +33,7 @@ const S6 = '06_ضرب_ماتریسی';
 const S7 = '07_شبکه_عصبی_به_عنوان_تابع';
 const S8 = '08_تابع_ReLU';
 
-//  تصویر مفهومی با کپشن منبع (الگو: workshops/generate-slides.mjs)
-const imgCard = (src, alt, cap, variant) => `<figure class="imgcard${variant ? ' ' + variant : ''}">
-  <img class="anim" style="--i:0" src="${src}" alt="${esc(alt)}">
-  <figcaption class="viz-caption">${cap}</figcaption>
-</figure>`;
-//  نوار ۲ تا ۳ فریمِ کنار هم (تمام‌عرض) — برای نشان‌دادن یک توالی یا تغییر
+//  نوار ۲ تا ۳ فریمِ کنار هم (تمام‌عرض) — برای نشان‌دادن یک توالی یا تغییر (imgCard از سازندهٔ مشترک)
 const frameStrip = (items, cls) => `<div class="fstrip${cls ? ' ' + cls : ''}">
 ${items.map(([src, alt, label]) => `<figure class="imgcard landscape">
   <img class="anim" style="--i:0" src="${src}" alt="${esc(alt)}">
@@ -550,26 +542,39 @@ function vCentralQuestion() {
 </div>`;
 }
 
-//  ۳) تعویق مسئله — «حلقه» با خطوط رنگی تجزیه‌شده به لبه‌های کوچک (اسلاید ۱۶)
+//  ۳) تعویق مسئله — رقم «سه» تجزیه‌شده به پنج بلوکِ کوچکِ سازنده‌اش (اسلاید ۱۶)
 function vDelayDecomp() {
-  const ys = [48, 104, 160, 216];
-  const colors = ['var(--acc)', 'var(--gold)', '#C25B5B', 'var(--navy)'];
-  const boxes = ys.map((y, i) => `
-    <g class="dd-e" style="--i:${i}">
-      <line class="dd-line" x1="122" y1="${y}" x2="368" y2="132" stroke="${colors[i]}"/>
-      <rect class="dd-box" x="30" y="${y - 20}" width="92" height="40" rx="8"/>
-      <text class="dd-t" x="76" y="${y + 5}" text-anchor="middle">لبه</text>
-    </g>`).join('');
+  //  پنج بلوکِ سازندهٔ «سه» در فضایی ۱۰۰×۱۴۰
+  const bars = [
+    { x: 18, y: 8,   w: 64, h: 10 },  // خط بالا
+    { x: 70, y: 8,   w: 10, h: 62 },  // شاخهٔ راستِ بالا
+    { x: 30, y: 62,  w: 50, h: 10 },  // خط میانی
+    { x: 70, y: 66,  w: 10, h: 62 },  // شاخهٔ راستِ پایین
+    { x: 18, y: 122, w: 64, h: 10 },  // خط پایین
+  ];
+  const digit = bars.map(b =>
+    `<rect x="${b.x + 402}" y="${b.y + 14}" width="${b.w}" height="${b.h}" rx="4" fill="#C9A227"/>`).join('');
+  const rows = bars.map((b, i) => {
+    const y = 36 + i * 46;
+    const vert = b.h > b.w;
+    const gx = vert ? 38 : 30, gy = vert ? y - 15 : y - 5, gw = vert ? 10 : 36, gh = vert ? 30 : 10;
+    return `
+    <g class="dd3-e" style="--i:${i}">
+      <rect class="dd3-box" x="24" y="${y - 20}" width="120" height="40" rx="8"/>
+      <rect x="${gx}" y="${gy}" width="${gw}" height="${gh}" rx="3" fill="#C9A227"/>
+      <text class="dd3-t" x="103" y="${y + 4.5}" text-anchor="middle">لبهٔ کوچک</text>
+    </g>`;
+  }).join('');
   return `<div class="ddz">
-  <svg viewBox="0 0 540 268" class="dd-svg" aria-label="تجزیهٔ حلقه به لبه‌های کوچک">
-    ${boxes}
-    <g class="dd-loop">
-      <ellipse class="dd-el" cx="434" cy="132" rx="64" ry="78"/>
-      <text class="dd-loop-t" x="434" y="138" text-anchor="middle">حلقه</text>
-    </g>
-    <text class="dd-cap" x="76" y="258" text-anchor="middle">زیرزیرجزا — لبه‌های کوچک</text>
-    <text class="dd-cap" x="434" y="258" text-anchor="middle">زیرجزا</text>
+  <svg viewBox="0 0 540 268" class="dd-svg" aria-label="تجزیهٔ رقم سه به پنج لبهٔ کوچکِ سازنده‌اش">
+    <g>${digit}</g>
+    <text class="dd3-cap" x="452" y="176" text-anchor="middle">رقم «سه»</text>
+    <text class="dd3-arr" x="282" y="116" text-anchor="middle">←</text>
+    <text class="dd3-cap" x="282" y="142" text-anchor="middle">تجزیه — یک سطح پایین‌تر</text>
+    ${rows}
+    <text class="dd3-cap" x="84" y="258" text-anchor="middle">پنج بلوک، مستقیماً با پیکسل‌ها قابل‌تشخیص</text>
   </svg>
+  <div class="viz-caption">تأخیر فقط یک سطح پایین می‌رود — و آنجا زنجیره تمام می‌شود</div>
 </div>`;
 }
 
@@ -587,30 +592,44 @@ function vHonestLadder() {
 </div>`;
 }
 
-//  ۵) دانش شبکه کجاست؟ — اتصالات تند، لایه‌های شفاف (اسلاید ۲۷)
+//  ۵) دانش شبکه کجاست؟ — یک وزنِ بی‌معنا در برابر الگویِ همهٔ وزن‌ها (اسلاید ۲۷)
 function vWhereKnowledge() {
-  const N = [9, 14, 14, 10], X = [570, 400, 230, 70], LAB = ['۷۸۴', '۱۶', '۱۶', '۱۰'];
-  const posOf = n => { const s = 150 / (n - 1); return Array.from({ length: n }, (_, i) => 45 + i * s); };
-  const P = N.map(posOf);
-  let lines = '';
-  for (let p = 0; p < 3; p++)
-    for (let a = 0; a < N[p]; a++)
-      for (let b = 0; b < N[p + 1]; b++)
-        lines += `<line class="wk-edge" x1="${X[p]}" y1="${P[p][a].toFixed(1)}" x2="${X[p + 1]}" y2="${P[p + 1][b].toFixed(1)}"/>`;
-  const dots = N.map((n, p) =>
-    Array.from({ length: n }, (_, i) => `<circle class="wk-dot" cx="${X[p]}" cy="${P[p][i].toFixed(1)}" r="7"/>`).join('')).join('');
-  const labs = N.map((n, p) => `<text class="wk-lab" x="${X[p]}" y="232" text-anchor="middle">${LAB[p]}</text>`).join('');
+  const COLS = 12, ROWS = 12, X0 = 30, Y0 = 20, CW = 20, CH = 16.6;
+  //  الگوی «سه» در شبکهٔ ۱۲×۱۲ (ساده‌شده از الگوی ۲۸×۲۸)
+  const inThree = (r, c) =>
+    (r >= 1 && r <= 2 && c >= 3 && c <= 8) ||
+    (r >= 2 && r <= 5 && c >= 7 && c <= 8) ||
+    (r >= 5 && r <= 6 && c >= 4 && c <= 8) ||
+    (r >= 6 && r <= 9 && c >= 7 && c <= 8) ||
+    (r >= 9 && r <= 10 && c >= 3 && c <= 8);
+  const toFa = s => s.replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]).replace('.', '٫');
+  const valueAt = (r, c) => (Math.abs(Math.sin((r + 1) * 37.7 + (c + 1) * 11.3)) % 1).toFixed(2);
+  const SEL = { r: 5, c: 6 }; // داخل خط میانیِ «سه»
+  let nums = '';
+  for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+    const x = X0 + c * CW + CW / 2, y = Y0 + r * CH + CH / 2 + 2.5;
+    nums += `<text class="wk-num${inThree(r, c) ? ' hot' : ''}" x="${x}" y="${y.toFixed(1)}" text-anchor="middle">${toFa(valueAt(r, c))}</text>`;
+  }
+  const selX = X0 + SEL.c * CW, selY = Y0 + SEL.r * CH, selCy = selY + CH / 2;
+  const selVal = toFa(valueAt(SEL.r, SEL.c));
   return `<div class="wkz">
-  <svg viewBox="0 0 640 250" class="wk-svg" aria-label="اتصالات روشن، لایه‌های شفاف">
-    <g class="wk-edges">${lines}</g>
-    <g class="wk-dots">${dots}</g>
-    ${labs}
+  <svg viewBox="0 0 640 250" class="wk-svg" aria-label="یک وزن به‌تنهایی بی‌معناست؛ الگویِ همهٔ وزن‌ها با هم، رقم سه را می‌سازد">
     <g class="wk-tag">
-      <rect x="228" y="6" width="184" height="34" rx="17"/>
-      <text x="320" y="29" text-anchor="middle">دانش = این اعداد</text>
+      <rect x="250" y="2" width="184" height="34" rx="17"/>
+      <text x="342" y="25" text-anchor="middle">دانش = الگویِ همهٔ اعداد</text>
     </g>
+    ${nums}
+    <rect class="wk-sel" x="${selX}" y="${selY}" width="${CW}" height="${CH.toFixed(1)}"/>
+    <line class="wk-link" x1="${selX + CW}" y1="${selCy.toFixed(1)}" x2="440" y2="111"/>
+    <text class="wk-mid" x="305" y="102" text-anchor="middle">معنا در ترکیبِ همهٔ آن‌هاست</text>
+    <rect class="wk-bigbox" x="440" y="61" width="100" height="100" rx="10"/>
+    <text class="wk-bigtext" x="490" y="125" text-anchor="middle">${selVal}</text>
+    <text class="wk-q" x="524" y="84" text-anchor="middle">؟</text>
+    <text class="wk-lab" x="490" y="186" text-anchor="middle">یک وزن، به‌تنهایی</text>
+    <text class="wk-lab2" x="490" y="206" text-anchor="middle">هیچ معنایی ندارد</text>
+    <text class="wk-lab" x="150" y="238" text-anchor="middle">همهٔ وزن‌ها با هم: الگوی «سه»</text>
   </svg>
-  <div class="viz-caption">لایه‌ها اجرا می‌کنند؛ وزن‌ها و بایاس‌ها ذخیره می‌کنند</div>
+  <div class="viz-caption">هیچ وزنی به‌تنهایی معنایی ندارد؛ «سه» در ترکیبِ همهٔ ۱۳٬۰۰۰ عدد است</div>
 </div>`;
 }
 
@@ -1505,13 +1524,11 @@ const EXTRA_CSS = `/* رویهٔ تیتر: قاب «سه»ی ۲۸×۲۸ (فری�
 .ddz{display:flex;flex-direction:column;align-items:center;margin-top:4px}
 .dd-svg{width:100%;max-width:540px;height:auto}
 .dd-svg text{font-family:inherit}
-.dd-box{fill:var(--light);stroke:var(--soft);stroke-width:1.5}
-.dd-t{font-size:15px;font-weight:700;fill:var(--navy)}
-.dd-line{stroke-width:2.5;stroke-linecap:round}
-.dd-el{fill:none;stroke:var(--navy);stroke-width:3.5}
-.dd-loop-t{font-size:18px;font-weight:800;fill:var(--navy)}
-.dd-cap{font-size:13px;fill:var(--mut)}
-.revealed .dd-e{animation:fadeIn .4s ease both;animation-delay:calc(var(--i)*.15s)}
+.dd3-box{fill:var(--light);stroke:var(--soft);stroke-width:1.5}
+.dd3-t{font-size:13px;font-weight:700;fill:var(--navy)}
+.dd3-cap{font-size:12.5px;fill:var(--mut)}
+.dd3-arr{font-size:24px;font-weight:800;fill:var(--acc)}
+.revealed .dd3-e{animation:fadeIn .4s ease both;animation-delay:calc(var(--i)*.12s)}
 /* پلکان صادق — سطح بالا خط‌چین (اسلاید ۱۷) */
 .ldz{display:flex;flex-direction:column;align-items:center;margin-top:4px;width:100%}
 .ld-row{display:flex;align-items:flex-end;justify-content:center;gap:12px;width:100%;margin-top:6px}
@@ -1524,12 +1541,18 @@ const EXTRA_CSS = `/* رویهٔ تیتر: قاب «سه»ی ۲۸×۲۸ (فری�
 .wkz{display:flex;flex-direction:column;align-items:center;margin-top:4px}
 .wk-svg{width:100%;max-width:620px;height:auto}
 .wk-svg text{font-family:inherit}
-.wk-edge{stroke:var(--acc);stroke-width:1;opacity:.4}
-.wk-dot{fill:var(--soft);stroke:#B9C4D2;stroke-width:1.5;opacity:.75}
-.wk-lab{font-size:15px;font-weight:800;fill:var(--mut);opacity:.6}
+.wk-num{font-size:7.5px;fill:#98A4B3}
+.wk-num.hot{fill:#C9A227;font-weight:700}
+.wk-sel{fill:none;stroke:var(--navy);stroke-width:1.5;stroke-dasharray:4 3}
+.wk-link{stroke:var(--navy);stroke-width:1.5;stroke-dasharray:4 3;opacity:.5}
+.wk-bigbox{fill:var(--light);stroke:var(--soft);stroke-width:2}
+.wk-bigtext{font-size:30px;font-weight:800;fill:var(--navy)}
+.wk-q{font-size:20px;font-weight:800;fill:var(--gold)}
+.wk-lab{font-size:13px;fill:var(--mut)}
+.wk-lab2{font-size:14px;font-weight:800;fill:var(--navy)}
+.wk-mid{font-size:10.5px;fill:var(--mut)}
 .wk-tag rect{fill:#E3F2F2;stroke:var(--acc);stroke-width:2}
 .wk-tag text{font-size:17px;font-weight:800;fill:var(--acc)}
-.revealed .wk-edges{animation:fadeIn .6s ease both}
 /* یادگیری — دست روی پیچ‌ها (اسلاید ۲۸) */
 .lsz{display:flex;flex-direction:column;align-items:center;margin-top:4px}
 .ls-svg{width:100%;max-width:600px;height:auto}

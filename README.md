@@ -63,7 +63,7 @@ ai-training/
 │
 └── .agents/skills/               # مهارت‌های دستیار
     ├── workshop-generator/       # تولید محتوای کارگاه
-    ├── slide-generator/          # تولید اسلاید پاورپوینت
+    ├── slide-generator/          # تولید دک اسلاید HTML (سازندهٔ مشترک lib/deck.mjs)
     ├── video-frame-extractor/    # واکشی بخش‌های مهم ویدیو به‌شکل فریم + مستندات
     │   ├── SKILL.md              # دستورالعمل مهارت
     │   └── scripts/

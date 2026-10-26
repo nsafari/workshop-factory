@@ -64,18 +64,11 @@
 ### مرحله ۵: ساخت دک
 فایل: `study/generate-slides.mjs` (هر مطالعه یک فایل سازندهٔ خودش را دارد).
 
-- سازندهٔ مشترک: `import { buildDeck, ACC, GOLD, WHT, fa, esc } from '../workshops/lib/deck.mjs';`
-- **`workshops/lib/deck.mjs` را برای دکِ واحد تغییر ندهید** — نیازهای خاص (مثلاً تصویر روی روی‌جلد) با `EXTRA_CSS` و ویژوال‌های اختصاصی داخل فایل مطالعه حل می‌شوند.
-- نهفتن فریم‌ها به‌شکل base64:
-  ```js
-  const FR_DIR = path.join(HERE, 'frames', '<video_slug>');
-  const imgData = p => `data:image/jpeg;base64,${readFileSync(p).toString('base64')}`;
-  const frame = (folder, file) => imgData(path.join(FR_DIR, folder, file));
-  const S1 = '01_اسم_فارسی_بخش';
-  const FR_0015 = frame(S1, '00_00_15.jpg'); // «سه»ی دست‌نویس روی شبکهٔ ۲۸×۲۸
-  ```
+**قرارداد کامل سازنده، ساختار فایل داده، سبک خانه و چک‌لیست عمومی راستی‌آزمایی در مهارت `slide-generator` است** — اینجا فقط قوانین خاصِ دک خودآموز:
+
+- سازندهٔ مشترک: `import { buildDeck, ACC, GOLD, WHT, fa, esc, imgData } from '../workshops/lib/deck.mjs';`
+- نهفتن فریم‌ها: `const frame = (folder, file) => imgData(path.join(FR_DIR, folder, file));` (`FR_DIR` = `study/frames/<video_slug>`) — هر ثابتِ فریم با کامنتِ ادعایش.
 - دو شکل از فریم استفاده کنید: **تک‌فریم** (imgCard با کپشن) و **نوار ۲ تا ۳ فریم** (frameStrip) برای نشان‌دادن توالی یک تغییر.
-- تصویرهای جدید: SVG اختصاصی با **سبک خانه** — فونت Vazirmatn (در دک نهفته است)، چیدمان RTL، پالت رنگ سازنده، بدون هیچ درخواست خارجی. نمونه: `study/generate-slides.mjs` (مطالعهٔ ۱).
 - **روی‌جلدِ سازنده فقط متن است** (kicker/عنوان/زیرعنوان/پانوشت) — اگر روی‌جلد به تصویر نیاز دارد، با `EXTRA_CSS` پس‌زمینهٔ تمام‌عرض روی `.cover` تزریق می‌شود.
 - یادداشت سخنران: جملهٔ کامل برای ارائه‌دهنده + کد زمانی `[mm:ss]` لحظهٔ ویدیو.
 - اجرا (از ریشهٔ مخزن): `node study/generate-slides.mjs`
@@ -94,23 +87,15 @@ study/
 - **توجه**: جابه‌جایی فریم‌ها را زمانی انجام دهید که بازسازی دک در حال اجرا نباشد — در غیر این صورت `node study/generate-slides.mjs` به‌خاطر ناپدیدشدن مسیر، خطا می‌دهد.
 
 ### مرحله ۷: راستی‌آزمایی (قبل از تحویل، همه را بزنید)
-۱. `node --check study/generate-slides.mjs`
-۲. `node study/generate-slides.mjs` — بدون خطا.
-۳. **تعداد اسلاید** == تعداد اسلایدهای MD:
+**اول، چک‌لیست عمومی دک را از مهارت `slide-generator` اجرا کنید** (node --check، بیلد، تعداد اسلاید، هیچ اسلایدی بدون تصویر، فرگمنت‌ها، دک‌های دیگر دست‌نخورده، برخورد چیدمان با `qa_overflow.cjs`، lint فارسی، مرورگر با hard refresh).
+
+سپس چک‌های **خاصِ دک خودآموز**:
+۱. **تعداد اسلاید** == تعداد اسلایدهای MD:
    `grep -c '<section class="slide' study/slides/study-N-slides.html`
-۴. **هیچ اسلایدی بدون تصویر نیست**: برای هر `<section>` چک کنید که `<img>` یا `<svg>` یا کلاس `viz` داشته باشد.
-۵. **کد زمانی فقط در یادداشت**: همهٔ جفت‌های `[mm:ss]` داخل `<aside id="notes">` باشند (grep روی فایل، مطمئن شوید هیچ‌کدام خارج از notes نیست).
-۶. **ارجاع به کارگاه ندارد**: `grep -c 'کارگاه' study/slides/study-N-slides.html` == 0 و در MD == 0.
-۷. **لحن بازبینی ندارد**: grep عباراتی مثل «ویدیو می‌گوید|دک نشان می‌دهد|در این ویدیو می‌بینیم|صادقانه|در کارگاه».
-۸. **دک‌های دیگر دست‌نخورده**: `sha256sum workshops/slides/*.html` و دک‌های مطالعهٔ ساخته‌شده را قبل و بعد مقایسه کنید.
-۹. **برخورد چیدمان / اسکرول**:
-   ```bash
-   node .agents/skills/self-study-generator/scripts/qa_overflow.cjs study/slides/study-N-slides.html
-   ```
-   خروجی مورد انتظار: `"issues": []`
-۱۰. **فریم‌ها نهفته‌اند**: `grep -o 'data:image/jpeg;base64' study/slides/study-N-slides.html | wc -l` با تعداد استفاده‌های فریم هم‌خوانی داشته باشد.
-۱۱. **lint فارسی**: fa_lint.py از مهارت persian-writing (اگر در دسترس است) — هشدارهای داخل بلوک کد و timestampها نادیده گرفته می‌شوند.
-۱۲. **مرورگر**: باز کردن خروجی با hard refresh (`Ctrl+Shift+R`) — مرورگر HTML قدیمی را کش می‌کند.
+۲. **کد زمانی فقط در یادداشت**: همهٔ جفت‌های `[mm:ss]` داخل `<aside id="notes">` باشند (grep روی فایل، مطمئن شوید هیچ‌کدام خارج از notes نیست).
+۳. **ارجاع به کارگاه ندارد**: `grep -c 'کارگاه' study/slides/study-N-slides.html` == 0 و در MD == 0.
+۴. **لحن بازبینی ندارد**: grep عباراتی مثل «ویدیو می‌گوید|دک نشان می‌دهد|در این ویدیو می‌بینیم|صادقانه|در کارگاه».
+۵. **فریم‌ها نهفته‌اند**: `grep -o 'data:image/jpeg;base64' study/slides/study-N-slides.html | wc -l` با تعداد استفاده‌های فریم هم‌خوانی داشته باشد.
 
 ## نکات مهم
 
@@ -127,7 +112,7 @@ MD منبع واحد حقیقت است. هر تغییر ساختاری (جابه
 یادداشت خلاصهٔ اسلاید نیست؛ چیزی است که ارائه‌دهنده می‌گوید، با کد زمانی تا مخاطب هنگام تماشای ویدیو بتواند به همان لحظه بپرد.
 
 ### سبکِ خانه
-ویژوال‌های `study/generate-slides.mjs` (مطالعهٔ ۱) الگوی کامل‌اند: imgCard / frameStrip / SVG اختصاصی / پالت / کپشن. دک جدید را از همان سبک شروع کنید.
+ویژوال‌های `study/generate-slides.mjs` (مطالعهٔ ۱) الگوی کامل‌اند: imgCard (از سازندهٔ مشترک) / frameStrip / SVG اختصاصی / پالت / کپشن. دک جدید را از همان سبک شروع کنید — قرارداد کامل سبک خانه در مهارت `slide-generator`.
 
 ### دک‌های هم‌سازنده
 چون `workshops/lib/deck.mjs` مشترک است، هر تغییری در آن همهٔ دک‌ها (کارگاه‌ها + مطالعات) را درگیر می‌کند. قانون: تغییر در lib فقط وقتی که برای همهٔ دک‌ها درست باشد؛ بعدش همهٔ خروجی‌ها را بازسازی و هاش بگیرید.
@@ -135,11 +120,12 @@ MD منبع واحد حقیقت است. هر تغییر ساختاری (جابه
 ## الگوی خروجی
 نمونهٔ کامل: **مطالعهٔ ۱** (شبکهٔ عصبی چیست؟ از ویدیوی 3Blue1Brown):
 - `study/study-1-neural-networks.md` — ۴۲ اسلاید، ۳ بخش، مشخصهٔ تصویر برای هر اسلاید، بدون ارجاع به کارگاه
-- `study/generate-slides.mjs` — ۴۱ فریم نهفته، ده‌ها SVG اختصاصی، کد زمانی فقط در notes
+- `study/generate-slides.mjs` — ۳۷ فریم نهفته، ده‌ها SVG اختصاصی، کد زمانی فقط در notes
 - `study/slides/study-1-slides.html` — خروجی خودکفا
 - فریم‌ها: `study/frames/but_what_is_a_neural_network_chapter_1/`
 
 ## منابع
+- [slide-generator](../slide-generator/SKILL.md): قرارداد سازندهٔ مشترک، سبک خانه و چک‌لیست عمومی دک (این Skill برای مرحلهٔ ۵ و ۷ به آن ارجاع می‌دهد)
 - [video-frame-extractor](../video-frame-extractor/SKILL.md): واکشی فریم از ویدیو (بالادست این Skill)
 - [workshops/lib/deck.mjs](../../../workshops/lib/deck.mjs): سازندهٔ مشترک دک
 - [study/generate-slides.mjs](../../../study/generate-slides.mjs): نمونهٔ کاملِ اولین دک
