@@ -27,15 +27,15 @@ jobs:
 
       - name: Generate runtime config
         env:
-          WS_SCRIPT_URL: ${{ secrets.WS_SCRIPT_URL }}
+          WS_SCRIPT_URL: ${{ secrets.WS_SCRIPT_URL || vars.WS_SCRIPT_URL }}
         run: |
           mkdir -p workshop-infra/frontend
-          cat > workshop-infra/frontend/runtime-config.js << 'EOF'
-          window.WS_RUNTIME_CONFIG = {
-            scriptUrl: "${WS_SCRIPT_URL}"
-          };
-          EOF
-          echo "Generated runtime-config.js"
+          printf 'window.WS_RUNTIME_CONFIG = {\n  scriptUrl: "%s"\n};\n' "$WS_SCRIPT_URL" > workshop-infra/frontend/runtime-config.js
+          if [ -z "$WS_SCRIPT_URL" ]; then
+            echo "::warning::WS_SCRIPT_URL is empty — set it as a GitHub Secret or Variable"
+          else
+            echo "Generated runtime-config.js with URL: ${WS_SCRIPT_URL:0:50}..."
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
