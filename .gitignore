@@ -18,3 +18,8 @@ Thumbs.db
 
 # فریم‌های ویدیو (تصاویر سنگین)
 study/frames/
+
+# Temporary verification and scratch files
+.tmp-verify/
+tmp/
+.script-url
