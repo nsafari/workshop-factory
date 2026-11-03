@@ -19,6 +19,7 @@
 ### ۲. [اصول ارائه](presentation/)
 - [اصول ارائه مطالب و مثال‌های کارشده](presentation/README.md)
 - [ابزارهای تولید پاورپوینت](presentation/pptx-tools.md)
+- [طراحی سؤالات تعاملی کارگاه](presentation/interactive-questions.md)
 
 ### ۳. [آموزش هوش مصنوعی](ai-literacy/)
 - [چارچوب‌های سواد هوش مصنوعی](ai-literacy/frameworks.md)
@@ -51,6 +52,7 @@
 ### [.agents/skills/](../.agents/skills/)
 - [تولید محتوای کارگاه](../.agents/skills/workshop-generator/SKILL.md)
 - [تولید اسلاید](../.agents/skills/slide-generator/SKILL.md)
+- [تولید سؤالات تعاملی کارگاه (LLM)](../.agents/skills/question-generator/SKILL.md)
 
 ---
 

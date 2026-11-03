@@ -1,0 +1,47 @@
+name: Deploy Workshop Infra
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - name: Generate runtime config
+        env:
+          WS_SCRIPT_URL: ${{ secrets.WS_SCRIPT_URL }}
+        run: |
+          mkdir -p workshop-infra/frontend
+          cat > workshop-infra/frontend/runtime-config.js << 'EOF'
+          window.WS_RUNTIME_CONFIG = {
+            scriptUrl: "${WS_SCRIPT_URL}"
+          };
+          EOF
+          echo "Generated runtime-config.js"
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: workshop-infra/frontend
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

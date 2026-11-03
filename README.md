@@ -48,7 +48,7 @@ ai-training/
 │   │   └── deck.mjs              # سازندهٔ مشترکِ دک‌های HTML (راست‌به‌چپ/فارسی)
 │   ├── fonts/                    # فونت Vazirmatn (woff2) که در دک نهفته می‌شود
 │   ├── slides/
-│   │   └── workshop-1-slides.html # دک ۲۴ اسلایدی کارگاه ۱ (خروجی خودکفا)
+│   │   └── workshop-1-slides.html # دک ۲۲ اسلایدی کارگاه ۱ (خروجی خودکفا)
 │   ├── workshop-1-ai-concepts.md # کارگاه ۱
 │   ├── workshop-2-agents.md      # کارگاه ۲
 │   ├── workshop-3-opencode.md    # کارگاه ۳
@@ -151,6 +151,16 @@ ai-training/
 - کد زمانی فقط در یادداشت‌های سخنران؛ بدون ارجاع به کارگاه‌ها؛ لحن مستقیم
 - یکپارچه‌سازی فریم‌ها و اسلایدها زیر `study/` + چک‌لیست کامل راستی‌آزمایی
 
+### ۵. `question-generator`
+
+تولید سؤالات خلاقانه و تعاملی کارگاه با LLM:
+
+- خواندن محتوای کارگاه + اصول سؤال‌پرسی تعاملی + بلوم
+- تولید ۱-۳ سؤال برای هر بخش (بازتابی، سناریویی، چالشی، خلاقانه)
+- تنوع سطوح شناختی (دانش ۲۰٪، کاربرد/تحلیل ۴۰٪، ارزیابی/خلق ۴۰٪)
+- سؤالات نظرسنجی پایانی (rating + متنی + چندگزینه‌ای)
+- خروجی JSON سازگار با `workshop-infra/`
+
 ---
 
 ## نحوه استفاده
@@ -227,7 +237,7 @@ python3 .agents/skills/video-frame-extractor/scripts/yt_frames.py "URL" -t 12:30
 
 ۱. **ساختار**: دو جلسه‌ی ۲۰ دقیقه‌ای + ۱۵ دقیقه استراحت
 ۲. **محتوا**: `workshops/workshop-1-ai-concepts.md`
-۳. **اسلایدها**: `workshops/slides/workshop-1-slides.html` (۲۴ اسلاید، یک فایل خودکفا)
+۳. **اسلایدها**: `workshops/slides/workshop-1-slides.html` (۲۲ اسلاید، یک فایل خودکفا)
 ۴. **کد**: `workshops/generate-slides.mjs`
 
 ---

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل ادمین کارگاه</title>
+  <style>
+    :root {
+      --navy: #1F3A5F;
+      --navy2: #16324F;
+      --acc: #0E7C7B;
+      --gold: #C9A227;
+      --light: #F2F4F7;
+      --soft: #DDE3EA;
+      --wht: #FFFFFF;
+      --ink: #333333;
+      --mut: #6B7280;
+      --danger: #DC2626;
+      --success: #16A34A;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+      background: var(--light);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* هدر */
+    .header {
+      background: var(--navy);
+      color: var(--wht);
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,15);
+    }
+
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .header .actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* کارت‌ها */
+    .card {
+      background: var(--wht);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .card h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* فرم */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--mut);
+      margin-bottom: 6px;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--soft);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 15px;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--acc);
+      box-shadow: 0 0 0 3px rgba(14, 124, 123, 0.15);
+    }
+
+    .form-group .hint {
+      font-size: 12px;
+      color: var(--mut);
+      margin-top: 4px;
+    }
+
+    /* دکمه‌ها */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--navy);
+      color: var(--wht);
+    }
+
+    .btn-primary:hover { background: var(--navy2); }
+
+    .btn-acc {
+      background: var(--acc);
+      color: var(--wht);
+    }
+
+    .btn-acc:hover { opacity: 0.9; }
+
+    .btn-danger {
+      background: var(--danger);
+      color: var(--wht);
+    }
+
+    .btn-sm {
+      padding: 6px 14px;
+      font-size: 13px;
+    }
+
+    /* لیست بخش‌ها */
+    .sections-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .section-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border: 1px solid var(--soft);
+      border-radius: 10px;
+      transition: all 0.2s;
+    }
+
+    .section-item.active {
+      border-color: var(--acc);
+      background: rgba(14, 124, 123, 0.05);
+    }
+
+    .section-info {
+      flex: 1;
+    }
+
+    .section-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .section-meta {
+      font-size: 12px;
+      color: var(--mut);
+      display: flex;
+      gap: 12px;
+    }
+
+    .section-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Toggle Switch */
+    .toggle {
+      position: relative;
+      width: 48px;
+      height: 26px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle .slider {
+      position: absolute;
+      inset: 0;
+      background: var(--soft);
+      border-radius: 13px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .toggle .slider::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      right: 3px;
+      bottom: 3px;
+      background: var(--wht);
+      border-radius: 50%;
+      transition: 0.3s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .toggle input:checked + .slider {
+      background: var(--acc);
+    }
+
+    .toggle input:checked + .slider::before {
+      transform: translateX(-22px);
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--light);
+      color: var(--mut);
+    }
+
+    .badge.active {
+      background: var(--acc);
+      color: var(--wht);
+    }
+
+    /* پیام خالی */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--mut);
+    }
+
+    .empty-state .icon {
+      font-size: 48px;
+      margin-bottom: 12px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--wht);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast-success { background: var(--success); }
+    .toast-error { background: var(--danger); }
+    .toast-info { background: var(--navy); }
+
+    /* Loading */
+    .loading-spinner {
+      text-align: center;
+      padding: 40px;
+      color: var(--mut);
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--soft);
+      border-top-color: var(--acc);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* لیست پاسخ‌ها */
+    .responses-list {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid var(--soft);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .response-item {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--soft);
+      font-size: 14px;
+    }
+
+    .response-item:last-child {
+      border-bottom: none;
+    }
+
+    .response-item .question-ref {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .response-item .answer {
+      color: var(--ink);
+    }
+
+    .response-item .time {
+      font-size: 11px;
+      color: var(--mut);
+      margin-top: 4px;
+    }
+
+    /* لینک شرکت‌کننده */
+    .participant-link {
+      background: var(--light);
+      border: 1px solid var(--soft);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-family: monospace;
+      direction: ltr;
+      text-align: left;
+      word-break: break-all;
+      user-select: all;
+    }
+
+    /* Grid دو ستونه */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .container { padding: 16px; }
+    }
+
+    /* Status bar */
+    .status-bar {
+      display: flex;
+      gap: 24px;
+      padding: 12px 16px;
+      background: var(--wht);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border: 1px solid var(--soft);
+    }
+
+    .status-item {
+      text-align: center;
+    }
+
+    .status-item .number {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--navy);
+    }
+
+    .status-item .label {
+      font-size: 12px;
+      color: var(--mut);
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎓 پنل ادمین کارگاه</h1>
+  <div class="actions">
+    <button class="btn btn-sm btn-acc" onclick="refreshData()">🔄 بروزرسانی</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- وضعیت -->
+  <div class="status-bar" id="statusBar">
+    <div class="status-item">
+      <div class="number" id="totalSections">—</div>
+      <div class="label">بخش</div>
+    </div>
+    <div class="status-item">
+      <div class="number" id="activeSections">—</div>
+      <div class="label">فعال</div>
+    </div>
+    <div class="status-item">
+      <div class="number" id="totalResponses">—</div>
+      <div class="label">پاسخ</div>
+    </div>
+    <div class="status-item">
+      <div class="number" id="surveyResponses">—</div>
+      <div class="label">نظرسنجی</div>
+    </div>
+  </div>
+
+  <!-- اتصال -->
+  <div class="card">
+    <h2>⚙️ اتصال به Google Sheets</h2>
+    <div class="form-group">
+      <label>Apps Script Web App URL</label>
+      <input type="url" id="scriptUrl" placeholder="https://script.google.com/macros/s/AKfycb.../exec">
+      <div class="hint">bbپس از استقرار Apps Script، URL در اینجا وارد کنید</div>
+    </div>
+    <div style="display: flex; gap: 8px;">
+      <button class="btn btn-primary" onclick="connectScript()">اتصال</button>
+      <button class="btn btn-sm" onclick="disconnectScript()">قطع</button>
+    </div>
+  </div>
+
+  <!-- لینک شرکت‌کننده -->
+  <div class="card" id="linkCard" style="display: none;">
+    <h2>🔗 لینک شرکت‌کننده</h2>
+    <p style="font-size: 14px; color: var(--mut); margin-bottom: 8px;">
+      این لینک را در اختیار شرکت‌کنندگان قرار دهید. نیازی به لاگین ندارند:
+    </p>
+    <div class="participant-link" id="participantLink"></div>
+    <button class="btn btn-sm btn-acc" style="margin-top: 8px;" onclick="copyLink()">📋 کپی لینک</button>
+  </div>
+
+  <!-- مدیریت بخش‌ها -->
+  <div class="card" id="sectionsCard" style="display: none;">
+    <h2>📋 مدیریت بخش‌ها</h2>
+    <p style="font-size: 14px; color: var(--mut); margin-bottom: 12px;">
+      هر بخش را بعد از پایان ارائه‌اش فعال کنید تا سؤالاتش برای شرکت‌کنندگان باز شود.
+    </p>
+    <div id="sectionsList" class="sections-list">
+      <div class="loading-spinner"><div class="spinner"></div></div>
+    </div>
+  </div>
+
+  <!-- مشاهده پاسخ‌ها -->
+  <div class="card" id="responsesCard" style="display: none;">
+    <h2>💬 پاسخ‌های شرکت‌کنندگان</h2>
+    <div class="form-group">
+      <label>بخش:</label>
+      <select id="responseFilter" onchange="loadResponses()">
+        <option value="">همه بخش‌ها</option>
+      </select>
+    </div>
+    <div class="responses-list" id="responsesList">
+      <div class="empty-state">پاسخی دریافت نشده است</div>
+    </div>
+  </div>
+
+  <!-- نظرسنجی پایانی -->
+  <div class="card" id="surveyCard" style="display: none;">
+    <h2>📊 نظرسنجی پایانی</h2>
+    <p style="font-size: 14px; color: var(--mut); margin-bottom: 12px;">
+      در پایان کارگاه، نظرسنجی را فعال کنید تا شرکت‌کنندگان بتوانند به ابعاد مختلف کارگاه نمره دهند (۱ تا ۱۰).
+    </p>
+    
+    <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--light); border-radius: 8px; margin-bottom: 12px;">
+      <div>
+        <span id="surveyStatusText" style="font-weight: 700;">—</span>
+        <span id="surveyStatusIcon" style="margin-left: 6px;"></span>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="surveyToggle" onchange="toggleSurvey(this.checked)">
+        <span class="slider"></span>
+      </label>
+    </div>
+    
+    <div class="participant-link" id="surveyLink"></div>
+    <div style="margin-top: 8px; display: flex; gap: 8px;">
+      <button class="btn btn-sm btn-acc" onclick="copySurveyLink()">📋 کپی لینک</button>
+    </div>
+    
+    <p style="font-size: 12px; color: var(--mut); margin-top: 8px;">
+      ⏳ لینک فقط وقتی فعال باشد کار می‌کند. غیرفعال کردن = قفل شدن نظرسنجی.
+    </p>
+  </div>
+
+</div>
+
+<script src="runtime-config.js"></script>
+<script src="config.js"></script>
+<script>
+  // متغیر‌های سراسری
+  let sectionsData = [];
+  let questionsData = [];
+  let responsesData = [];
+
+  // ============================================================
+  //  راه‌اندازی
+  // ============================================================
+  window.addEventListener('DOMContentLoaded', () => {
+    // خوانده scriptUrl از config
+    document.getElementById('scriptUrl').value = WorkshopConfig.scriptUrl;
+    
+    if (WorkshopConfig.isConfigured()) {
+      loadAllData();
+    }
+  });
+
+  function connectScript() {
+    const url = document.getElementById('scriptUrl').value.trim();
+    if (!url) {
+      UI.showToast('لطفاً URL را وارد کنید', 'error');
+      return;
+    }
+    
+    WorkshopConfig.saveScriptUrl(url);
+    loadAllData();
+    UI.showToast('اتصال برقرار شد', 'success');
+  }
+
+  function disconnectScript() {
+    WorkshopConfig.saveScriptUrl('');
+    localStorage.removeItem('ws_script_url');
+    document.getElementById('scriptUrl').value = '';
+    document.getElementById('sectionsCard').style.display = 'none';
+    document.getElementById('linkCard').style.display = 'none';
+    document.getElementById('responsesCard').style.display = 'none';
+    document.getElementById('surveyCard').style.display = 'none';
+    UI.showToast('اتصال قطع شد', 'info');
+  }
+
+  // ============================================================
+  //  بارگذاری دیتا
+  // ============================================================
+  async function loadAllData() {
+    if (!WorkshopConfig.isConfigured()) return;
+    
+    try {
+      const [sections, questions, status, surveyStatus] = await Promise.all([
+        API.get('sections'),
+        API.get('questions'),
+        API.get('status'),
+        API.get('survey-status')
+      ]);
+      
+      sectionsData = sections;
+      questionsData = questions;
+      
+      updateStatus(status);
+      renderSections();
+      renderResponseFilter();
+      updateParticipantLink();
+      updateSurveyLink();
+      
+      document.getElementById('surveyToggle').checked = surveyStatus.active;
+      updateSurveyStatus(surveyStatus.active);
+      
+      // نمایش کارت‌ها
+      document.getElementById('sectionsCard').style.display = '';
+      document.getElementById('linkCard').style.display = '';
+      document.getElementById('responsesCard').style.display = '';
+      document.getElementById('surveyCard').style.display = '';
+      
+    } catch (err) {
+      UI.showToast('خطا در بارگذاری: ' + err.message, 'error');
+    }
+  }
+
+  function updateStatus(status) {
+    document.getElementById('totalSections').textContent = status.totalSections;
+    document.getElementById('activeSections').textContent = status.activeSections;
+    document.getElementById('totalResponses').textContent = status.totalResponses;
+    document.getElementById('surveyResponses').textContent = status.totalSurveyResponses;
+  }
+
+  // ============================================================
+  //  رندر بخش‌ها
+  // ============================================================
+  function renderSections() {
+    const container = document.getElementById('sectionsList');
+    
+    if (!sectionsData.length) {
+      container.innerHTML = '<div class="empty-state"><div class="icon">📋</div><p>بخشی تعریف نشده</p></div>';
+      return;
+    }
+    
+    container.innerHTML = sectionsData.map(s => {
+      const qCount = questionsData.filter(q => q.sectionId === s.id).length;
+      const rCount = responsesData.filter(r => r.sectionId === s.id).length;
+      
+      return `
+        <div class="section-item ${s.active ? 'active' : ''}" id="section-${s.id}">
+          <div class="section-info">
+            <div class="section-title">${UI.escapeHtml(s.title)}</div>
+            <div class="section-meta">
+              <span>جلسه ${s.session}</span>
+              <span>${qCount} سؤال</span>
+              <span class="badge ${s.active ? 'active' : ''}">${rCount} پاسخ</span>
+            </div>
+          </div>
+          <div class="section-actions">
+            <label class="toggle">
+              <input type="checkbox" ${s.active ? 'checked' : ''} 
+                onchange="toggleSection('${s.id}', this.checked)">
+              <span class="slider"></span>
+            </label>
+            <button class="btn btn-sm" onclick="viewSectionResponses('${s.id}')">مشاهده</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function toggleSection(sectionId, active) {
+    try {
+      await API.post('toggle-section', { sectionId, active });
+      UI.showToast(active ? 'بخش فعال شد' : 'بخش غیرفعال شد', 'success');
+      
+      const section = sectionsData.find(s => s.id === sectionId);
+      if (section) section.active = active;
+      renderSections();
+    } catch (err) {
+      UI.showToast('خطا: ' + err.message, 'error');
+      renderSections(); // revert UI
+    }
+  }
+
+  // ============================================================
+  //  فیلتر پاسخ‌ها
+  // ============================================================
+  function renderResponseFilter() {
+    const select = document.getElementById('responseFilter');
+    select.innerHTML = '<option value="">همه بخش‌ها</option>';
+    
+    for (const s of sectionsData) {
+      const option = document.createElement('option');
+      option.value = s.id;
+      option.textContent = `${s.session}.${s.order} ${s.title.substring(0, 30)}`;
+      select.appendChild(option);
+    }
+    
+    loadResponses();
+  }
+
+  async function loadResponses() {
+    const filter = document.getElementById('responseFilter').value;
+    const container = document.getElementById('responsesList');
+    
+    try {
+      const responses = await API.get('responses', filter ? { sectionId: filter } : {});
+      responsesData = responses;
+      
+      if (!responses.length) {
+        container.innerHTML = '<div class="empty-state">پاسخی در یافت نشد</div>';
+        return;
+      }
+      
+      // گروه‌بندی بر اساس سؤال
+      const byQuestion = {};
+      for (const r of responses) {
+        const key = r.questionId;
+        if (!byQuestion[key]) byQuestion[key] = { text: r.questionText, answers: [] };
+        byQuestion[key].answers.push(r);
+      }
+      
+      container.innerHTML = Object.entries(byQuestion).map(([qId, data]) => `
+        <div class="response-item">
+          <div class="question-ref">${UI.escapeHtml(data.text)} (${data.answers.length} پاسخ)</div>
+          ${data.answers.slice(0, 5).map(a => `
+            <div class="answer">• ${UI.escapeHtml(a.answer)}</div>
+          `).join('')}
+          ${data.answers.length > 5 ? `<div style="color: var(--mut); font-size: 12px; margin-top: 4px;">و ${data.answers.length - 5} پاسخ دیگر...</div>` : ''}
+        </div>
+      `).join('');
+      
+      // آپدیت شمارش پاسخ‌ها
+      renderSections();
+      
+    } catch (err) {
+      container.innerHTML = '<div class="empty-state">خطا در بارگذاری</div>';
+    }
+  }
+
+  function viewSectionResponses(sectionId) {
+    document.getElementById('responseFilter').value = sectionId;
+    loadResponses();
+    document.getElementById('responsesCard').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ============================================================
+  //  لینک‌ها
+  // ============================================================
+  function updateParticipantLink() {
+    const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
+    document.getElementById('participantLink').textContent = base + 'participant.html';
+  }
+
+  function updateSurveyLink() {
+    const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
+    document.getElementById('surveyLink').textContent = base + 'survey.html';
+  }
+
+  function copyLink() {
+    const link = document.getElementById('participantLink').textContent;
+    navigator.clipboard.writeText(link);
+    UI.showToast('لینک کپی شد', 'success');
+  }
+
+  function copySurveyLink() {
+    const link = document.getElementById('surveyLink').textContent;
+    navigator.clipboard.writeText(link);
+    UI.showToast('لینک کپی شد', 'success');
+  }
+
+  async function toggleSurvey(active) {
+    try {
+      await API.post('toggle-survey', { active });
+      UI.showToast(active ? 'نظرسنجی فعال شد' : 'نظرسنجی غیرفعال شد', 'success');
+      updateSurveyStatus(active);
+    } catch (err) {
+      UI.showToast('خطا: ' + err.message, 'error');
+      document.getElementById('surveyToggle').checked = !active;
+    }
+  }
+
+  function updateSurveyStatus(active) {
+    const text = document.getElementById('surveyStatusText');
+    const icon = document.getElementById('surveyStatusIcon');
+    if (active) {
+      text.textContent = 'فعال';
+      text.style.color = 'var(--success)';
+      icon.textContent = '🟢';
+    } else {
+      text.textContent = 'غیرفعال';
+      text.style.color = 'var(--mut)';
+      icon.textContent = '🔴';
+    }
+  }
+
+  // ============================================================
+  //  بروزرسانی
+  // ============================================================
+  async function refreshData() {
+    UI.showToast('در حال بروزرسانی...', 'info');
+    await loadAllData();
+  }
+</script>
+
+</body>
+</html>

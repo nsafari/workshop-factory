@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>کارگاه آموزشی</title>
+  <style>
+    :root {
+      --navy: #1F3A5F;
+      --navy2: #16324F;
+      --acc: #0E7C7B;
+      --gold: #C9A227;
+      --light: #F2F4F7;
+      --soft: #DDE3EA;
+      --wht: #FFFFFF;
+      --ink: #333333;
+      --mut: #6B7280;
+      --danger: #DC2626;
+      --success: #16A34A;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+      background: var(--light);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* هدر */
+    .header {
+      background: var(--navy);
+      color: var(--wht);
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .header .subtitle {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* نوار پیشرفت */
+    .progress-bar {
+      background: var(--wht);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .progress-text {
+      font-size: 14px;
+      color: var(--mut);
+    }
+
+    .progress-text strong {
+      color: var(--navy);
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: var(--soft);
+      border-radius: 4px;
+      margin: 0 16px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--acc);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* بخش */
+    .section-card {
+      background: var(--wht);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+      border: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .section-card.active {
+      border-color: var(--acc);
+    }
+
+    .section-card.locked {
+      opacity: 0.6;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .section-status {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .status-active {
+      background: rgba(14, 124, 123, 0.1);
+      color: var(--acc);
+    }
+
+    .status-locked {
+      background: var(--light);
+      color: var(--mut);
+    }
+
+    .status-done {
+      background: rgba(22, 163, 74, 0.1);
+      color: var(--success);
+    }
+
+    /* سؤال */
+    .question-item {
+      padding: 14px 16px;
+      border: 1px solid var(--soft);
+      border-radius: 10px;
+      margin-bottom: 12px;
+      transition: all 0.2s;
+    }
+
+    .question-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .question-item.answered {
+      border-color: var(--success);
+      background: rgba(22, 163, 74, 0.03);
+    }
+
+    .question-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--soft);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.2s;
+    }
+
+    .answer-input:focus {
+      outline: none;
+      border-color: var(--acc);
+    }
+
+    .btn-submit {
+      margin-top: 8px;
+      padding: 8px 20px;
+      background: var(--acc);
+      color: var(--wht);
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-submit:hover { opacity: 0.9; }
+    .btn-submit:disabled { background: var(--mut); cursor: not-allowed; }
+
+    /* پیام منتظر */
+    .waiting {
+      text-align: center;
+      padding: 24px;
+      color: var(--mut);
+    }
+
+    .waiting .icon {
+      font-size: 36px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* پیام اتمام */
+    .all-done {
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--wht);
+      border-radius: 12px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .all-done .icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+    }
+
+    .all-done h2 {
+      font-size: 20px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .all-done p {
+      color: var(--mut);
+      font-size: 14px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--wht);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast-success { background: var(--success); }
+    .toast-error { background: var(--danger); }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 60px;
+      color: var(--mut);
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--soft);
+      border-top-color: var(--acc);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* نظرسنجی فعال */
+    .survey-link {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 12px 24px;
+      background: var(--gold);
+      color: var(--navy2);
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+
+    .survey-link:hover { opacity: 0.9; }
+
+    @media (max-width: 768px) {
+      .container { padding: 16px; }
+      .header h1 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1 id="workshopTitle">کارگاه آموزشی</h1>
+  <div class="subtitle" id="workshopSubtitle">در حال بارگذاری...</div>
+</div>
+
+<div class="container">
+  <!-- پیشرفت -->
+  <div class="progress-bar" id="progressBar" style="display: none;">
+    <span class="progress-text">
+      <strong id="answeredCount">0</strong> از <strong id="totalQuestions">0</strong> سؤال
+    </span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+    </div>
+    <span class="progress-text" id="progressPercent">0%</span>
+  </div>
+
+  <!-- لیست بخش‌ها -->
+  <div id="sectionsList">
+    <div class="loading">
+      <div class="spinner"></div>
+      <p>در حال بارگذاری...</p>
+    </div>
+  </div>
+
+  <!-- پایان -->
+  <div class="all-done" id="allDone" style="display: none;">
+    <div class="icon">🎉</div>
+    <h2>کارگاه به پایان رسید</h2>
+    <p>از مشارکت شما متشکریم!</p>
+    <a class="survey-link" id="surveyLink" href="survey.html">📊 نظرسنجی پایانی</a>
+  </div>
+</div>
+
+<script src="runtime-config.js"></script>
+<script src="config.js"></script>
+<script>
+  // ============================================================
+  //  متغیر‌ها
+  // ============================================================
+  let scriptUrl = '';
+  let sections = [];
+  let questions = [];
+  let allAnswered = false;
+
+  // ============================================================
+  //  راه‌اندازی
+  // ============================================================
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    scriptUrl = params.get('scriptUrl') || localStorage.getItem('ws_participant_script_url');
+    
+    if (!scriptUrl) {
+      document.getElementById('sectionsList').innerHTML = 
+        '<div class="loading"><p style="color: var(--danger);">⚠️ لینک نامعتبر. لطفاً لینک جدید از ارائه‌کننده دریافت کنید.</p></div>';
+      return;
+    }
+    
+    localStorage.setItem('ws_participant_script_url', scriptUrl);
+    WorkshopConfig.scriptUrl = scriptUrl;
+    loadData();
+  });
+
+  // ============================================================
+  //  بارگذاری
+  // ============================================================
+  async function loadData() {
+    try {
+      const [sectionsData, questionsData, configData] = await Promise.all([
+        API.get('sections'),
+        API.get('questions'),
+        API.get('config')
+      ]);
+      
+      sections = sectionsData;
+      questions = questionsData;
+      
+      // عنوان
+      document.getElementById('workshopTitle').textContent = configData.config?.workshopTitle || 'کارگاه آموزشی';
+      document.getElementById('workshopSubtitle').textContent = configData.spreadsheetName || '';
+      
+      renderSections();
+      updateProgress();
+      
+    } catch (err) {
+      document.getElementById('sectionsList').innerHTML = 
+        '<div class="loading"><p style="color: var(--danger);">⚠️ خطا در بارگذاری: ' + err.message + '</p></div>';
+    }
+  }
+
+  // ============================================================
+  //  رندر بخش‌ها
+  // ============================================================
+  function renderSections() {
+    const container = document.getElementById('sectionsList');
+    
+    // فقط بخش‌ها را نشان بده که سؤال دارند
+    const sectionsWithQuestions = sections.filter(s => 
+      questions.some(q => q.sectionId === s.id)
+    );
+    
+    if (!sectionsWithQuestions.length) {
+      container.innerHTML = '<div class="loading"><p>هنوز سؤالی فعال نشده. لطفاً صبر کنید...</p></div>';
+      return;
+    }
+    
+    container.innerHTML = sectionsWithQuestions.map(s => {
+      const sectionQuestions = questions.filter(q => q.sectionId === s.id);
+      const answeredQs = ProgressStore.getAnsweredQuestions(s.id);
+      const allSectionAnswered = sectionQuestions.every(q => answeredQs[q.id]);
+      
+      if (s.active) {
+        // بخش فعال
+        return `
+          <div class="section-card active" id="card-${s.id}">
+            <div class="section-header">
+              <span class="section-title">${UI.escapeHtml(s.title)}</span>
+              <span class="section-status ${allSectionAnswered ? 'status-done' : 'status-active'}">
+                ${allSectionAnswered ? '✓ انجام شد' : 'باز'}
+              </span>
+            </div>
+            ${sectionQuestions.map(q => renderQuestion(q, s)).join('')}
+          </div>
+        `;
+      } else {
+        // بخش قفل
+        return `
+          <div class="section-card locked">
+            <div class="section-header">
+              <span class="section-title">${UI.escapeHtml(s.title)}</span>
+              <span class="section-status status-locked">🔒 در انتظار ارائه</span>
+            </div>
+            <div class="waiting">
+              <span class="icon">⏳</span>
+              <p>این بخش هنوز باز نشده. ارائه‌کننده در حال آماده‌سازی است.</p>
+            </div>
+          </div>
+        `;
+      }
+    }).join('');
+    
+    // نمایش/عدم نمایش المان پایان
+    checkAllDone();
+  }
+
+  function renderQuestion(question, section) {
+    const answered = ProgressStore.getAnsweredQuestions(section.id);
+    const isAnswered = !!answered[question.id];
+    
+    return `
+      <div class="question-item ${isAnswered ? 'answered' : ''}" id="q-${question.id}">
+        <div class="question-text">${UI.escapeHtml(question.text)}</div>
+        ${question.type === 'rating' && question.options ? `
+          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+            ${question.options.map(opt => `
+              <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                <input type="radio" name="${question.id}" value="${UI.escapeHtml(opt)}">
+                <span>${UI.escapeHtml(opt)}</span>
+              </label>
+            `).join('')}
+          </div>
+        ` : question.type === 'choice' && question.options ? `
+          <select class="answer-input" style="min-height: auto;" id="input-${question.id}">
+            <option value="">انتخاب کنید...</option>
+            ${question.options.map(opt => `<option value="${UI.escapeHtml(opt)}">${UI.escapeHtml(opt)}</option>`).join('')}
+          </select>
+        ` : `
+          <textarea class="answer-input" id="input-${question.id}" placeholder="پاسخ خود را بنویسید..."></textarea>
+        `}
+        <button class="btn-submit" onclick="submitAnswer('${question.id}', '${section.id}', '${UI.escapeText(question.text)}')" ${isAnswered ? 'disabled' : ''}>
+          ${isAnswered ? '✓ ثبت شد' : 'ارسال پاسخ'}
+        </button>
+      </div>
+    `;
+  }
+
+  // تبدیل برای استفاده در JS string
+  UI.escapeText = (text) => text.replace(/'/g, "\\'").replace(/"/g, '\\"');
+
+  // ============================================================
+  //  ارسال پاسخ
+  // ============================================================
+  async function submitAnswer(questionId, sectionId, questionText) {
+    let answer = '';
+    
+    const input = document.getElementById('input-' + questionId);
+    if (input) {
+      answer = input.value.trim();
+    } else {
+      // radio
+      const radios = document.getElementsByName(questionId);
+      for (const r of radios) {
+        if (r.checked) answer = r.value;
+      }
+    }
+    
+    if (!answer) {
+      UI.showToast('لطفاً پاسخ را وارد کنید', 'error');
+      return;
+    }
+    
+    try {
+      await API.post('submit-answer', {
+        sectionId,
+        questionId,
+        questionText,
+        answer
+      });
+      
+      ProgressStore.markAnswered(sectionId, questionId);
+      UI.showToast('پاسخ ثبت شد', 'success');
+      renderSections();
+      updateProgress();
+      
+    } catch (err) {
+      UI.showToast('خطا: ' + err.message, 'error');
+    }
+  }
+
+  // ============================================================
+  //  پیشرفت
+  // ============================================================
+  function updateProgress() {
+    const total = questions.filter(q => {
+      const section = sections.find(s => s.id === q.sectionId);
+      return section && section.active;
+    }).length;
+    
+    const answered = sections.reduce((count, s) => {
+      if (!s.active) return count;
+      return count + ProgressStore.getAnsweredCount(s.id);
+    }, 0);
+    
+    document.getElementById('progressBar').style.display = total > 0 ? 'flex' : 'none';
+    document.getElementById('totalQuestions').textContent = total;
+    document.getElementById('answeredCount').textContent = answered;
+    
+    const pct = total > 0 ? Math.round((answered / total) * 100) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPercent').textContent = pct + '%';
+  }
+
+  function checkAllDone() {
+    // آیا همه سؤالات پاسخ داده‌اند AND همه بخش‌ها بسته شده؟
+    const allSectionsDone = sections.every(s => {
+      if (!s.active) return true; // بخش‌های قفل = بدون سؤال
+      const sectionQuestions = questions.filter(q => q.sectionId === s.id);
+      return sectionQuestions.every(q => ProgressStore.getAnsweredQuestions(s.id)[q.id]);
+    });
+    
+    if (allSectionsDone && sections.length > 0 && questions.length > 0) {
+      document.getElementById('allDone').style.display = '';
+      
+      // لینک نظرسنجی
+      const surveyLink = document.getElementById('surveyLink');
+      surveyLink.href = 'survey.html?scriptUrl=' + encodeURIComponent(scriptUrl);
+    }
+  }
+</script>
+
+</body>
+</html>

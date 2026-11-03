@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظرسنجی پایانی کارگاه</title>
+  <style>
+    :root {
+      --navy: #1F3A5F;
+      --navy2: #16324F;
+      --acc: #0E7C7B;
+      --gold: #C9A227;
+      --light: #F2F4F7;
+      --soft: #DDE3EA;
+      --wht: #FFFFFF;
+      --ink: #333333;
+      --mut: #6B7280;
+      --danger: #DC2626;
+      --success: #16A34A;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Vazirmatn', Tahoma, 'Segoe UI', sans-serif;
+      background: var(--light);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--navy), var(--navy2));
+      color: var(--wht);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .header h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+    .header p { font-size: 15px; opacity: 0.85; }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--wht);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .question-group {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--soft);
+    }
+
+    .question-group:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .question-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+
+    .rating-options {
+      display: flex;
+      gap: 8px;
+    }
+
+    .rating-option {
+      flex: 1;
+      text-align: center;
+    }
+
+    .rating-option input {
+      display: none;
+    }
+
+    .rating-option label {
+      display: block;
+      padding: 12px 8px;
+      border: 2px solid var(--soft);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .rating-option input:checked + label {
+      background: var(--acc);
+      color: var(--wht);
+      border-color: var(--acc);
+    }
+
+    .rating-option label:hover {
+      border-color: var(--acc);
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--soft);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 100px;
+      transition: border-color 0.2s;
+    }
+
+    .text-input:focus {
+      outline: none;
+      border-color: var(--acc);
+      box-shadow: 0 0 0 3px rgba(14, 124, 123, 0.1);
+    }
+
+    .choice-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .choice-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--soft);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .choice-option:hover {
+      border-color: var(--acc);
+      background: rgba(14, 124, 123, 0.03);
+    }
+
+    .choice-option input:checked ~ .choice-text {
+      color: var(--acc);
+      font-weight: 700;
+    }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: var(--navy);
+      color: var(--wht);
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 20px;
+    }
+
+    .btn-submit:hover { background: var(--navy2); }
+    .btn-submit:disabled { background: var(--mut); cursor: not-allowed; }
+
+    .success-msg {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-msg .icon { font-size: 64px; margin-bottom: 16px; }
+    .success-msg h2 { color: var(--navy); margin-bottom: 8px; }
+    .success-msg p { color: var(--mut); }
+
+    .loading {
+      text-align: center;
+      padding: 60px;
+      color: var(--mut);
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--soft);
+      border-top-color: var(--acc);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--wht);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast-success { background: var(--success); }
+    .toast-error { background: var(--danger); }
+
+    .already-done {
+      text-align: center;
+      padding: 30px;
+      color: var(--success);
+    }
+
+    .already-done .icon { font-size: 48px; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>📊 نظرسنجی پایانی کارگاه</h1>
+  <p>پاسخ‌های شما ناشناس و  confidential است</p>
+</div>
+
+<div class="container" id="surveyContainer">
+  <div class="loading">
+    <div class="spinner"></div>
+    <p>در حال بارگذاری...</p>
+  </div>
+</div>
+
+<script src="runtime-config.js"></script>
+<script src="config.js"></script>
+<script>
+  let scriptUrl = '';
+  let surveyQuestions = [];
+  let alreadySubmitted = false;
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    scriptUrl = params.get('scriptUrl') || localStorage.getItem('ws_participant_script_url');
+    
+    if (!scriptUrl) {
+      document.getElementById('surveyContainer').innerHTML = 
+        '<div class="loading"><p style="color: var(--danger);">⚠️ لینک نامعتبر</p></div>';
+      return;
+    }
+    
+    WorkshopConfig.scriptUrl = scriptUrl;
+    loadSurvey();
+  });
+
+  async function loadSurvey() {
+    try {
+      const sid = btoa(scriptUrl).slice(0, 12);
+      if (localStorage.getItem('ws_survey_done_' + sid)) {
+        showAlreadyDone();
+        return;
+      }
+      
+      const [questions, config, surveyStatus] = await Promise.all([
+        API.get('survey-questions'),
+        API.get('config'),
+        API.get('survey-status')
+      ]);
+      
+      if (!surveyStatus.active) {
+        showSurveyClosed();
+        return;
+      }
+      
+      surveyQuestions = questions;
+      
+      document.querySelector('.header h1').textContent = 
+        '📊 نظرسنجی — ' + (config.config?.workshopTitle || 'کارگاه');
+      
+      renderSurvey(questions);
+      
+    } catch (err) {
+      document.getElementById('surveyContainer').innerHTML = 
+        '<div class="loading"><p style="color: var(--danger);">⚠️ خطا: ' + err.message + '</p></div>';
+    }
+  }
+
+  function showSurveyClosed() {
+    document.getElementById('surveyContainer').innerHTML = `
+      <div class="card" style="text-align: center; padding: 40px 20px;">
+        <div style="font-size: 48px; margin-bottom: 16px;">🔒</div>
+        <h2 style="color: var(--navy); margin-bottom: 8px;">نظرسنجی فعال نیست</h2>
+        <p style="color: var(--mut);">این لینک هنوز توسط ارائه‌دهنده باز نشده است.</p>
+        <p style="color: var(--mut); font-size: 13px; margin-top: 12px;">لطفاً بعداً دوباره تلاش کنید یا با ارائه‌دهنده تماس بگیرید.</p>
+      </div>
+    `;
+  }
+
+  function renderSurvey(questions) {
+    const container = document.getElementById('surveyContainer');
+    
+    if (!questions.length) {
+      container.innerHTML = '<div class="loading"><p>سؤالات نظرسنجی هنوز آماده نشده.</p></div>';
+      return;
+    }
+    
+    let html = '<div class="card">';
+    
+    for (const q of questions) {
+      html += `<div class="question-group">
+        <div class="question-label">${q.order}. ${UI.escapeHtml(q.text)}</div>`;
+      
+      if (q.type === 'rating' && q.options) {
+        html += '<div class="rating-options">';
+        for (const opt of q.options) {
+          html += `
+            <div class="rating-option">
+              <input type="radio" name="${q.id}" id="${q.id}_${opt}" value="${UI.escapeHtml(opt)}">
+              <label for="${q.id}_${opt}">${UI.escapeHtml(opt)}</label>
+            </div>
+          `;
+        }
+        html += '</div>';
+      } else if (q.type === 'choice' && q.options) {
+        html += '<div class="choice-options">';
+        for (const opt of q.options) {
+          html += `
+            <label class="choice-option">
+              <input type="radio" name="${q.id}" value="${UI.escapeHtml(opt)}">
+              <span class="choice-text">${UI.escapeHtml(opt)}</span>
+            </label>
+          `;
+        }
+        html += '</div>';
+      } else {
+        html += `<textarea class="text-input" id="${q.id}" placeholder="پاسخ خود را بنویسید..."></textarea>`;
+      }
+      
+      html += '</div>';
+    }
+    
+    html += `
+      <button class="btn-submit" onclick="submitSurvey()">ارسال نظرسنجی</button>
+      </div>
+    `;
+    
+    container.innerHTML = html;
+  }
+
+  async function submitSurvey() {
+    const answers = {};
+    
+    for (const q of surveyQuestions) {
+      if (q.type === 'rating' || q.type === 'choice') {
+        const selected = document.querySelector(`input[name="${q.id}"]:checked`);
+        if (selected) answers[q.id] = selected.value;
+      } else {
+        const textarea = document.getElementById(q.id);
+        if (textarea) answers[q.id] = textarea.value.trim();
+      }
+    }
+    
+    // بررسی حداقل یک پا�خ
+    const filledCount = Object.values(answers).filter(a => a).length;
+    if (filledCount === 0) {
+      UI.showToast('لطفاً حداقل به یک سؤال پاسخ دهید', 'error');
+      return;
+    }
+    
+    try {
+      await API.post('submit-survey', { answers });
+      
+      // علامت‌گذاری ارسال
+      const sid = btoa(scriptUrl).slice(0, 12);
+      localStorage.setItem('ws_survey_done_' + sid, new Date().toISOString());
+      
+      showSuccess();
+    } catch (err) {
+      UI.showToast('خطا: ' + err.message, 'error');
+    }
+  }
+
+  function showSuccess() {
+    document.getElementById('surveyContainer').innerHTML = `
+      <div class="card success-msg">
+        <div class="icon">✅</div>
+        <h2>متشکریم!</h2>
+        <p>نظر شما ثبت شد.</p>
+      </div>
+    `;
+  }
+
+  function showAlreadyDone() {
+    document.getElementById('surveyContainer').innerHTML = `
+      <div class="card already-done">
+        <div class="icon">✓</div>
+        <h2>قبلاً شرکت کرده‌اید</h2>
+        <p>شما قبلاً در این نظرسنجی شرکت کرده‌اید.</p>
+      </div>
+    `;
+  }
+</script>
+
+</body>
+</html>
