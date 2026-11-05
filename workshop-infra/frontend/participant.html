@@ -61,7 +61,7 @@
   // ============================================================
   window.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
-    scriptUrl = params.get('scriptUrl') || localStorage.getItem('ws_participant_script_url');
+    scriptUrl = params.get('scriptUrl') || window.WS_RUNTIME_CONFIG?.scriptUrl || localStorage.getItem('ws_participant_script_url');
     
     if (!scriptUrl) {
       document.getElementById('sectionsList').innerHTML = 
