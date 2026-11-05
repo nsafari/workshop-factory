@@ -99,7 +99,7 @@ async function main() {
     console.log('');
   }
 
-  const surveyQuestions = data.survey || data.questions || [];
+  const surveyQuestions = isSurveyFile ? (rawData.questions || []) : (rawData.survey || []);
   if (surveyQuestions.length) {
     console.log(`📊 اضافه کردن سؤالات نظرسنجی (${surveyQuestions.length})...`);
     for (const q of surveyQuestions) {
