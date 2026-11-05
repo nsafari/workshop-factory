@@ -63,9 +63,10 @@ const API = {
     const url = new URL(WorkshopConfig.scriptUrl);
     url.searchParams.set('action', action);
     
+    // text/plain (not application/json): keeps the POST a CORS "simple request" — Apps Script does not answer OPTIONS preflights
     const resp = await fetch(url.toString(), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(body)
     });
     
