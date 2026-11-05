@@ -323,18 +323,14 @@
   // ============================================================
   //  لینک‌ها
   // ============================================================
-  function linkSuffix() {
-    return WorkshopConfig.scriptUrl ? '?scriptUrl=' + encodeURIComponent(WorkshopConfig.scriptUrl) : '';
-  }
-
   function updateParticipantLink() {
     const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
-    document.getElementById('participantLink').textContent = base + 'participant.html' + linkSuffix();
+    document.getElementById('participantLink').textContent = base + 'participant.html';
   }
 
   function updateSurveyLink() {
     const base = window.location.origin + window.location.pathname.replace(/[^/]*$/, '');
-    document.getElementById('surveyLink').textContent = base + 'survey.html' + linkSuffix();
+    document.getElementById('surveyLink').textContent = base + 'survey.html';
   }
 
   function copyLink() {
