@@ -37,6 +37,11 @@ jobs:
             echo "Generated runtime-config.js with URL: ${WS_SCRIPT_URL:0:50}..."
           fi
 
+      - name: Copy slide deck
+        run: |
+          mkdir -p workshop-infra/frontend/slides
+          cp workshops/slides/workshop-1-slides.html workshop-infra/frontend/slides/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
