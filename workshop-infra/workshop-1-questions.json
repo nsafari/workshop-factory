@@ -3,16 +3,13 @@
   "generatedAt": "2026-11-05T12:00:00.000Z",
   "method": "llm-creative",
   "sections": [
-    { "id": "s1_sec1", "session": 1, "order": 1, "title": "جلد و دو هدف این کارگاه", "questionCount": 0 },
     { "id": "s1_sec2", "session": 1, "order": 2, "title": "یک صبح با دستیار هوشمند", "questionCount": 1 },
     { "id": "s1_sec3", "session": 1, "order": 3, "title": "چرا با چت کردن ساده کافی نیست؟ + سه رکن دستیار هوشمند", "questionCount": 1 },
     { "id": "s1_sec4", "session": 1, "order": 4, "title": "این کارگاه برای کیست؟ + نقشهٔ سه کارگاه", "questionCount": 1 },
     { "id": "s1_sec5", "session": 1, "order": 5, "title": "هماهنگی با اهداف شما", "questionCount": 2 },
-    { "id": "s2_sec1", "session": 2, "order": 1, "title": "جلد و مرور", "questionCount": 0 },
     { "id": "s2_sec2", "session": 2, "order": 2, "title": "بازی ۱: قیمت خانه", "questionCount": 1 },
     { "id": "s2_sec3", "session": 2, "order": 3, "title": "بازی ۲: «آسمان امروز ...»", "questionCount": 1 },
     { "id": "s2_sec4", "session": 2, "order": 4, "title": "بدون معلم یاد گرفت؟ (خودنظارتی)", "questionCount": 1 },
-    { "id": "s2_sec5", "session": 2, "order": 5, "title": "داخل مدل: ردیفی از داورها", "questionCount": 0 },
     { "id": "s2_sec6", "session": 2, "order": 6, "title": "LLM در یک جمله", "questionCount": 1 },
     { "id": "s2_sec7", "session": 2, "order": 7, "title": "پارامتر چیست؟", "questionCount": 1 },
     { "id": "s2_sec8", "session": 2, "order": 8, "title": "مغز مدل‌های امروزی: Transformer + بازی «او»", "questionCount": 2 },
@@ -163,7 +160,7 @@
     }
   ],
   "summary": {
-    "totalSections": 14,
+    "totalSections": 11,
     "sectionsWithQuestions": 11,
     "totalQuestions": 13,
     "bloomDistribution": {
