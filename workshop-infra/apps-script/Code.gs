@@ -105,7 +105,7 @@ function getSections() {
   
   const sections = [];
   const data = sheet.getDataRange().getValues();
-  for (let i = 1; i < data.length; i) {
+  for (let i = 1; i < data.length; i++) {
     if (data[i][0]) {
       sections.push({
         id: data[i][0],
