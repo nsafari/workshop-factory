@@ -117,6 +117,17 @@
     </p>
   </div>
 
+  <!-- نتایج نظرسنجی -->
+  <div class="card" id="surveyResultsCard" style="display: none;">
+    <h2>📈 نتایج نظرسنجی</h2>
+    <p style="font-size: 14px; color: var(--mut); margin-bottom: 12px;">
+      میانگین امتیازها و پاسخ‌های هر بُعد:
+    </p>
+    <div class="responses-list" id="surveyResultsList">
+      <div class="empty-state">هنوز پاسخی دریافت نشده است</div>
+    </div>
+  </div>
+
 </div>
 
 <script src="runtime-config.js?v=2"></script>
@@ -159,6 +170,7 @@
     document.getElementById('linkCard').style.display = 'none';
     document.getElementById('responsesCard').style.display = 'none';
     document.getElementById('surveyCard').style.display = 'none';
+    document.getElementById('surveyResultsCard').style.display = 'none';
     UI.showToast('اتصال قطع شد', 'info');
   }
 
@@ -187,12 +199,14 @@
       
       document.getElementById('surveyToggle').checked = surveyStatus.active;
       updateSurveyStatus(surveyStatus.active);
-      
+      loadSurveyResults();
+
       // نمایش کارت‌ها
       document.getElementById('sectionsCard').style.display = '';
       document.getElementById('linkCard').style.display = '';
       document.getElementById('responsesCard').style.display = '';
       document.getElementById('surveyCard').style.display = '';
+      document.getElementById('surveyResultsCard').style.display = '';
       
     } catch (err) {
       UI.showToast('خطا در بارگذاری: ' + err.message, 'error');
@@ -367,6 +381,76 @@
       text.textContent = 'غیرفعال';
       text.style.color = 'var(--mut)';
       icon.textContent = '🔴';
+    }
+  }
+
+  // ============================================================
+  //  نتایج نظرسنجی
+  // ============================================================
+  function parseScore(v) {
+    if (typeof v === 'number') return v;
+    const s = String(v)
+      .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+      .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+    const n = parseFloat(s);
+    return isNaN(n) ? null : n;
+  }
+
+  function toFa(n) {
+    return String(n).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]).replace('.', '٫');
+  }
+
+  async function loadSurveyResults() {
+    const container = document.getElementById('surveyResultsList');
+
+    try {
+      const [questions, responses] = await Promise.all([
+        API.get('survey-questions'),
+        API.get('survey-responses')
+      ]);
+
+      if (!responses.length) {
+        container.innerHTML = '<div class="empty-state">هنوز پاسخی دریافت نشده است</div>';
+        return;
+      }
+
+      const items = questions.map(q => {
+        const answers = responses
+          .map(r => (r.answers && r.answers[q.id]) || '')
+          .filter(a => a !== '');
+
+        if (q.type === 'rating') {
+          const scores = answers.map(parseScore).filter(n => n !== null);
+          const avg = scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
+          return `
+            <div class="response-item">
+              <div class="question-ref">${UI.escapeHtml(q.text)} <span class="badge">${toFa(answers.length)} پاسخ</span></div>
+              ${avg !== null ? `
+                <div style="font-size: 20px; font-weight: 800; margin: 6px 0;">${toFa(Math.round(avg * 10) / 10)} <span style="font-size: 12px; font-weight: 400; color: var(--mut);">میانگین از ۱۰</span></div>
+                <div style="background: var(--light); border-radius: 6px; height: 8px; overflow: hidden;">
+                  <div style="width: ${(avg / 10) * 100}%; background: var(--acc); height: 100%; border-radius: 6px;"></div>
+                </div>
+              ` : ''}
+            </div>`;
+        }
+
+        // متن و چندگزینه‌ای
+        return `
+          <div class="response-item">
+            <div class="question-ref">${UI.escapeHtml(q.text)} (${toFa(answers.length)} پاسخ)</div>
+            ${answers.slice(0, 5).map(a => `<div class="answer">• ${UI.escapeHtml(a)}</div>`).join('')}
+            ${answers.length > 5 ? `<div style="color: var(--mut); font-size: 12px; margin-top: 4px;">و ${toFa(answers.length - 5)} پاسخ دیگر...</div>` : ''}
+          </div>`;
+      });
+
+      container.innerHTML = `
+        <div class="response-item" style="background: var(--light); border-radius: 8px; padding: 10px 14px;">
+          <span style="font-weight: 700;">👥 ${toFa(responses.length)} نفر نظرسنجی را تکمیل کرده‌اند</span>
+        </div>
+        ${items.join('')}`;
+
+    } catch (err) {
+      container.innerHTML = '<div class="empty-state">خطا در بارگذاری نتایج</div>';
     }
   }
 
